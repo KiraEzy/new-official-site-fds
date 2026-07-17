@@ -822,7 +822,6 @@ export default function App() {
   const activeLatticeTuning = activeLatticeStyle
     ? latticeTuningByStyle[activeLatticeStyle]
     : DEFAULT_LATTICE_TUNING_BY_STYLE.skyHexagon;
-  const hexagonTuning = latticeTuningByStyle.skyHexagon;
 
   const showHeroMintBlend = bentoSectionAppearance !== 'dark' && heroMintBlendEnabled;
 
@@ -1082,6 +1081,14 @@ export default function App() {
     setForceNavbarTop(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
     window.setTimeout(() => setForceNavbarTop(false), 900);
+  };
+
+  const patchActiveLattice = (patch: Partial<LatticeTuning>) => {
+    if (!activeLatticeStyle) return;
+    setLatticeTuningByStyle((prev) => ({
+      ...prev,
+      [activeLatticeStyle]: { ...prev[activeLatticeStyle], ...patch }
+    }));
   };
 
   const newsArticleSlug = newsSlugFromHash(window.location.hash);
@@ -1583,6 +1590,10 @@ export default function App() {
             >
               <option value="softSky">{demo.heroStyleSoftSky}</option>
               <option value="skyHexagon">{demo.heroStyleSkyHexagon}</option>
+              <option value="skyRipple">{demo.heroStyleSkyRipple}</option>
+              <option value="skySpotlight">{demo.heroStyleSkySpotlight}</option>
+              <option value="skyConnect">{demo.heroStyleSkyConnect}</option>
+              <option value="skyPaint">{demo.heroStyleSkyPaint}</option>
               <option value="skyDeep">{demo.heroStyleSkyDeep}</option>
               <option value="skyGrid">{demo.heroStyleSkyGrid}</option>
               <option value="skyDots">{demo.heroStyleSkyDots}</option>
@@ -1590,17 +1601,17 @@ export default function App() {
             </select>
           </label>
 
-          {heroStyle === 'skyHexagon' ? (
+          {activeLatticeStyle !== null ? (
             <div className="mb-3 space-y-3 rounded-2xl border border-white/10 bg-white/8 p-4">
               <div>
-                <p className="text-sm font-semibold text-interactive">{demo.hexagonTuningTitle}</p>
-                <p className="mt-1 text-xs leading-5 text-white/55">{demo.hexagonTuningHelp}</p>
+                <p className="text-sm font-semibold text-interactive">{demo.latticeTuningTitle}</p>
+                <p className="mt-1 text-xs leading-5 text-white/55">{demo.latticeTuningHelp}</p>
               </div>
 
               <label className="block">
                 <span className="flex items-center justify-between gap-3">
                   <span className="text-sm font-semibold">{demo.hexagonGreyLabel}</span>
-                  <span className="text-xs font-bold text-interactive">{Math.round(hexagonTuning.grey)}</span>
+                  <span className="text-xs font-bold text-interactive">{Math.round(activeLatticeTuning.grey)}</span>
                 </span>
                 <span className="mt-1 block text-xs leading-5 text-white/55">{demo.hexagonGreyHelp}</span>
                 <input
@@ -1608,73 +1619,156 @@ export default function App() {
                   min="140"
                   max="240"
                   step="1"
-                  value={hexagonTuning.grey}
+                  value={activeLatticeTuning.grey}
                   aria-label={demo.hexagonGreyAria}
-                  onChange={(event) =>
-                    setLatticeTuningByStyle((prev) => ({
-                      ...prev,
-                      skyHexagon: { ...prev.skyHexagon, grey: Number(event.target.value) }
-                    }))
-                  }
+                  onChange={(event) => patchActiveLattice({ grey: Number(event.target.value) })}
                   className="mt-3 w-full accent-interactive"
                 />
               </label>
 
-              <label className="block">
-                <span className="flex items-center justify-between gap-3">
-                  <span className="text-sm font-semibold">{demo.hexagonInfluenceLabel}</span>
-                  <span className="text-xs font-bold text-interactive">{Math.round(hexagonTuning.influenceRadius)}px</span>
-                </span>
-                <span className="mt-1 block text-xs leading-5 text-white/55">{demo.hexagonInfluenceHelp}</span>
-                <input
-                  type="range"
-                  min="40"
-                  max="360"
-                  step="4"
-                  value={hexagonTuning.influenceRadius}
-                  aria-label={demo.hexagonInfluenceAria}
-                  onChange={(event) =>
-                    setLatticeTuningByStyle((prev) => ({
-                      ...prev,
-                      skyHexagon: {
-                        ...prev.skyHexagon,
-                        influenceRadius: Number(event.target.value)
-                      }
-                    }))
-                  }
-                  className="mt-3 w-full accent-interactive"
-                />
-              </label>
-
-              <label className="block">
-                <span className="flex items-center justify-between gap-3">
-                  <span className="text-sm font-semibold">{demo.hexagonAttractionLabel}</span>
-                  <span className="text-xs font-bold text-interactive">
-                    {hexagonTuning.attraction.toFixed(2)}×
+              {activeLatticeStyle !== 'skyPaint' ? (
+                <label className="block">
+                  <span className="flex items-center justify-between gap-3">
+                    <span className="text-sm font-semibold">{demo.hexagonInfluenceLabel}</span>
+                    <span className="text-xs font-bold text-interactive">{Math.round(activeLatticeTuning.influenceRadius)}px</span>
                   </span>
-                </span>
-                <span className="mt-1 block text-xs leading-5 text-white/55">{demo.hexagonAttractionHelp}</span>
-                <input
-                  type="range"
-                  min="0.15"
-                  max="2"
-                  step="0.05"
-                  value={hexagonTuning.attraction}
-                  aria-label={demo.hexagonAttractionAria}
-                  onChange={(event) =>
-                    setLatticeTuningByStyle((prev) => ({
-                      ...prev,
-                      skyHexagon: { ...prev.skyHexagon, attraction: Number(event.target.value) }
-                    }))
-                  }
-                  className="mt-3 w-full accent-interactive"
-                />
-              </label>
+                  <span className="mt-1 block text-xs leading-5 text-white/55">{demo.hexagonInfluenceHelp}</span>
+                  <input
+                    type="range"
+                    min="40"
+                    max="360"
+                    step="4"
+                    value={activeLatticeTuning.influenceRadius}
+                    aria-label={demo.hexagonInfluenceAria}
+                    onChange={(event) => patchActiveLattice({ influenceRadius: Number(event.target.value) })}
+                    className="mt-3 w-full accent-interactive"
+                  />
+                </label>
+              ) : null}
+
+              {activeLatticeStyle === 'skyHexagon' ? (
+                <label className="block">
+                  <span className="flex items-center justify-between gap-3">
+                    <span className="text-sm font-semibold">{demo.hexagonAttractionLabel}</span>
+                    <span className="text-xs font-bold text-interactive">{activeLatticeTuning.attraction.toFixed(2)}×</span>
+                  </span>
+                  <span className="mt-1 block text-xs leading-5 text-white/55">{demo.hexagonAttractionHelp}</span>
+                  <input
+                    type="range"
+                    min="0.15"
+                    max="2"
+                    step="0.05"
+                    value={activeLatticeTuning.attraction}
+                    aria-label={demo.hexagonAttractionAria}
+                    onChange={(event) => patchActiveLattice({ attraction: Number(event.target.value) })}
+                    className="mt-3 w-full accent-interactive"
+                  />
+                </label>
+              ) : null}
+
+              {activeLatticeStyle === 'skyRipple' ? (
+                <label className="block">
+                  <span className="flex items-center justify-between gap-3">
+                    <span className="text-sm font-semibold">{demo.hexagonWaveLabel}</span>
+                    <span className="text-xs font-bold text-interactive">{activeLatticeTuning.waveStrength.toFixed(2)}×</span>
+                  </span>
+                  <span className="mt-1 block text-xs leading-5 text-white/55">{demo.hexagonWaveHelp}</span>
+                  <input
+                    type="range"
+                    min="0.15"
+                    max="2"
+                    step="0.05"
+                    value={activeLatticeTuning.waveStrength}
+                    aria-label={demo.hexagonWaveAria}
+                    onChange={(event) => patchActiveLattice({ waveStrength: Number(event.target.value) })}
+                    className="mt-3 w-full accent-interactive"
+                  />
+                </label>
+              ) : null}
+
+              {activeLatticeStyle === 'skySpotlight' ? (
+                <label className="block">
+                  <span className="flex items-center justify-between gap-3">
+                    <span className="text-sm font-semibold">{demo.hexagonDensifyLabel}</span>
+                    <span className="text-xs font-bold text-interactive">{activeLatticeTuning.densifyStrength.toFixed(2)}×</span>
+                  </span>
+                  <span className="mt-1 block text-xs leading-5 text-white/55">{demo.hexagonDensifyHelp}</span>
+                  <input
+                    type="range"
+                    min="0.15"
+                    max="2"
+                    step="0.05"
+                    value={activeLatticeTuning.densifyStrength}
+                    aria-label={demo.hexagonDensifyAria}
+                    onChange={(event) => patchActiveLattice({ densifyStrength: Number(event.target.value) })}
+                    className="mt-3 w-full accent-interactive"
+                  />
+                </label>
+              ) : null}
+
+              {activeLatticeStyle === 'skyConnect' ? (
+                <label className="block">
+                  <span className="flex items-center justify-between gap-3">
+                    <span className="text-sm font-semibold">{demo.hexagonLinkCountLabel}</span>
+                    <span className="text-xs font-bold text-interactive">{activeLatticeTuning.linkCount}</span>
+                  </span>
+                  <span className="mt-1 block text-xs leading-5 text-white/55">{demo.hexagonLinkCountHelp}</span>
+                  <input
+                    type="range"
+                    min="3"
+                    max="6"
+                    step="1"
+                    value={activeLatticeTuning.linkCount}
+                    aria-label={demo.hexagonLinkCountAria}
+                    onChange={(event) => patchActiveLattice({ linkCount: Number(event.target.value) })}
+                    className="mt-3 w-full accent-interactive"
+                  />
+                </label>
+              ) : null}
+
+              {activeLatticeStyle === 'skyPaint' ? (
+                <>
+                  <label className="block">
+                    <span className="flex items-center justify-between gap-3">
+                      <span className="text-sm font-semibold">{demo.hexagonTrailLengthLabel}</span>
+                      <span className="text-xs font-bold text-interactive">{activeLatticeTuning.trailLength}</span>
+                    </span>
+                    <span className="mt-1 block text-xs leading-5 text-white/55">{demo.hexagonTrailLengthHelp}</span>
+                    <input
+                      type="range"
+                      min="8"
+                      max="64"
+                      step="1"
+                      value={activeLatticeTuning.trailLength}
+                      aria-label={demo.hexagonTrailLengthAria}
+                      onChange={(event) => patchActiveLattice({ trailLength: Number(event.target.value) })}
+                      className="mt-3 w-full accent-interactive"
+                    />
+                  </label>
+                  <label className="block">
+                    <span className="flex items-center justify-between gap-3">
+                      <span className="text-sm font-semibold">{demo.hexagonTrailBrightnessLabel}</span>
+                      <span className="text-xs font-bold text-interactive">{activeLatticeTuning.trailBrightness.toFixed(2)}×</span>
+                    </span>
+                    <span className="mt-1 block text-xs leading-5 text-white/55">{demo.hexagonTrailBrightnessHelp}</span>
+                    <input
+                      type="range"
+                      min="0.15"
+                      max="2"
+                      step="0.05"
+                      value={activeLatticeTuning.trailBrightness}
+                      aria-label={demo.hexagonTrailBrightnessAria}
+                      onChange={(event) => patchActiveLattice({ trailBrightness: Number(event.target.value) })}
+                      className="mt-3 w-full accent-interactive"
+                    />
+                  </label>
+                </>
+              ) : null}
 
               <label className="block">
                 <span className="flex items-center justify-between gap-3">
                   <span className="text-sm font-semibold">{demo.hexagonWidthLabel}</span>
-                  <span className="text-xs font-bold text-interactive">{Math.round(hexagonTuning.hexWidth)}px</span>
+                  <span className="text-xs font-bold text-interactive">{Math.round(activeLatticeTuning.hexWidth)}px</span>
                 </span>
                 <span className="mt-1 block text-xs leading-5 text-white/55">{demo.hexagonWidthHelp}</span>
                 <input
@@ -1682,14 +1776,9 @@ export default function App() {
                   min="10"
                   max="40"
                   step="1"
-                  value={hexagonTuning.hexWidth}
+                  value={activeLatticeTuning.hexWidth}
                   aria-label={demo.hexagonWidthAria}
-                  onChange={(event) =>
-                    setLatticeTuningByStyle((prev) => ({
-                      ...prev,
-                      skyHexagon: { ...prev.skyHexagon, hexWidth: Number(event.target.value) }
-                    }))
-                  }
+                  onChange={(event) => patchActiveLattice({ hexWidth: Number(event.target.value) })}
                   className="mt-3 w-full accent-interactive"
                 />
               </label>
