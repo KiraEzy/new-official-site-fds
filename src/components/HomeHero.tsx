@@ -1,13 +1,13 @@
 import type { ComponentType, Ref } from 'react';
 import { motion } from 'motion/react';
-import type { HeroSlide, HeroStyle, HexagonHeroTuning } from './homeHeroTypes';
-import { HomeHeroP5Sky } from './HomeHeroP5Sky';
+import type { HeroSlide, HeroStyle, LatticeHeroMode, LatticeTuning } from './homeHeroTypes';
+import { isLatticeHeroStyle } from './homeHeroTypes';
 import { HomeHeroP5Hexagons } from './HomeHeroP5Hexagons';
 
 function skyBaseClass(style: HeroStyle): string {
   if (style === 'skyDeep') return 'home-sky-drift home-sky-drift--deep';
   if (style === 'skyCalm') return 'home-sky-drift home-sky-drift--calm';
-  if (style === 'skyHard' || style === 'skyHexagon') return 'bg-white';
+  if (isLatticeHeroStyle(style)) return 'bg-white';
   return 'home-sky-drift';
 }
 
@@ -23,7 +23,8 @@ export function HomeHero({
   mintBlendAppearance,
   onCtaClick,
   CtaButton,
-  hexagonTuning
+  latticeMode,
+  latticeTuning
 }: {
   heroRef: Ref<HTMLElement>;
   heroNavPortalRef: (el: HTMLDivElement | null) => void;
@@ -36,14 +37,17 @@ export function HomeHero({
   mintBlendAppearance: 'pastel' | 'mint' | 'dark';
   onCtaClick?: () => void;
   CtaButton: ComponentType<{ label: string; colorProfile?: 'default' | 'navy'; onClick?: () => void }>;
-  hexagonTuning: HexagonHeroTuning;
+  latticeMode: LatticeHeroMode;
+  latticeTuning: LatticeTuning;
 }) {
-  const p5Background =
-    style === 'skyHard' ? (
-      <HomeHeroP5Sky className="absolute inset-0 z-0 h-full w-full" />
-    ) : style === 'skyHexagon' ? (
-      <HomeHeroP5Hexagons className="absolute inset-0 z-0 h-full w-full" tuning={hexagonTuning} />
-    ) : null;
+  const p5Background = isLatticeHeroStyle(style) ? (
+    <HomeHeroP5Hexagons
+      key={style}
+      className="absolute inset-0 z-0 h-full w-full"
+      mode={latticeMode}
+      tuning={latticeTuning}
+    />
+  ) : null;
 
   return (
     <section

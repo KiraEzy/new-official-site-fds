@@ -35,7 +35,15 @@ import { motion, AnimatePresence, useAnimationControls } from 'motion/react';
 // import Marquee from 'react-fast-marquee';
 import { ArrowRight, ArrowUp, X, Globe, Users, CheckCircle2, Database, Cpu, Phone, Mail, MapPin, Clock3, Send, SlidersHorizontal, Cloud, PencilRuler, ShieldCheck, Route, RefreshCw, ListChecks, Search, BarChart3, PlugZap, BadgeCheck, Printer, Sparkles, Zap, Rocket, GitBranch, LayoutDashboard, Smartphone, Puzzle, Building2, ClipboardList, Bell, AlarmClock, AlertCircle, UsersRound, Share2, Ship, type LucideIcon } from 'lucide-react';
 import { HomeHero } from './components/HomeHero';
-import { getHeroLead, type HeroStyle, DEFAULT_HEXAGON_HERO_TUNING, type HexagonHeroTuning } from './components/homeHeroTypes';
+import {
+  getHeroLead,
+  getLatticeMode,
+  isLatticeHeroStyle,
+  DEFAULT_LATTICE_TUNING_BY_STYLE,
+  type HeroStyle,
+  type LatticeHeroStyle,
+  type LatticeTuning
+} from './components/homeHeroTypes';
 import '@xyflow/react/dist/style.css';
 
 const FESTIVAL_BAR_HEIGHT = 56;
@@ -799,7 +807,9 @@ export default function App() {
   const [heroMintBlendEnabled, setHeroMintBlendEnabled] = useState(false);
   const [heroStyle, setHeroStyle] = useState<HeroStyle>('softSky');
   const [heroCopyIndex, setHeroCopyIndex] = useState(0);
-  const [hexagonTuning, setHexagonTuning] = useState<HexagonHeroTuning>(DEFAULT_HEXAGON_HERO_TUNING);
+  const [latticeTuningByStyle, setLatticeTuningByStyle] = useState<Record<LatticeHeroStyle, LatticeTuning>>(
+    () => structuredClone(DEFAULT_LATTICE_TUNING_BY_STYLE)
+  );
   const [colorProfile, setColorProfile] = useState<'default' | 'navy'>('default');
   const [navLayoutDemo, setNavLayoutDemo] = useState<NavbarLayoutMode>('heroTransparent');
   const [showFestivalBar, setShowFestivalBar] = useState(true);
@@ -808,6 +818,11 @@ export default function App() {
   const safeCopyIndex = heroCopyIndex >= 0 && heroCopyIndex < heroSlides.length ? heroCopyIndex : 0;
   const activeHeroSlide = heroSlides[safeCopyIndex] ?? { title: '', cta: '', image: '' };
   const activeHeroLead = getHeroLead(home, safeCopyIndex);
+  const activeLatticeStyle: LatticeHeroStyle | null = isLatticeHeroStyle(heroStyle) ? heroStyle : null;
+  const activeLatticeTuning = activeLatticeStyle
+    ? latticeTuningByStyle[activeLatticeStyle]
+    : DEFAULT_LATTICE_TUNING_BY_STYLE.skyHexagon;
+  const hexagonTuning = latticeTuningByStyle.skyHexagon;
 
   const showHeroMintBlend = bentoSectionAppearance !== 'dark' && heroMintBlendEnabled;
 
@@ -1123,7 +1138,8 @@ export default function App() {
           colorProfile={colorProfile}
           showMintBlend={showHeroMintBlend}
           mintBlendAppearance={bentoSectionAppearance}
-          hexagonTuning={hexagonTuning}
+          latticeMode={activeLatticeStyle ? getLatticeMode(activeLatticeStyle) : 'magnetic'}
+          latticeTuning={activeLatticeTuning}
           onCtaClick={() => {
             bentoSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }}
@@ -1566,7 +1582,6 @@ export default function App() {
               className="mt-2 w-full rounded-xl border border-white/20 bg-[#07111f]/80 px-3 py-2.5 text-sm font-medium text-white outline-none"
             >
               <option value="softSky">{demo.heroStyleSoftSky}</option>
-              <option value="skyHard">{demo.heroStyleSkyHard}</option>
               <option value="skyHexagon">{demo.heroStyleSkyHexagon}</option>
               <option value="skyDeep">{demo.heroStyleSkyDeep}</option>
               <option value="skyGrid">{demo.heroStyleSkyGrid}</option>
@@ -1596,7 +1611,10 @@ export default function App() {
                   value={hexagonTuning.grey}
                   aria-label={demo.hexagonGreyAria}
                   onChange={(event) =>
-                    setHexagonTuning((prev) => ({ ...prev, grey: Number(event.target.value) }))
+                    setLatticeTuningByStyle((prev) => ({
+                      ...prev,
+                      skyHexagon: { ...prev.skyHexagon, grey: Number(event.target.value) }
+                    }))
                   }
                   className="mt-3 w-full accent-interactive"
                 />
@@ -1616,9 +1634,12 @@ export default function App() {
                   value={hexagonTuning.influenceRadius}
                   aria-label={demo.hexagonInfluenceAria}
                   onChange={(event) =>
-                    setHexagonTuning((prev) => ({
+                    setLatticeTuningByStyle((prev) => ({
                       ...prev,
-                      influenceRadius: Number(event.target.value)
+                      skyHexagon: {
+                        ...prev.skyHexagon,
+                        influenceRadius: Number(event.target.value)
+                      }
                     }))
                   }
                   className="mt-3 w-full accent-interactive"
@@ -1641,9 +1662,9 @@ export default function App() {
                   value={hexagonTuning.attraction}
                   aria-label={demo.hexagonAttractionAria}
                   onChange={(event) =>
-                    setHexagonTuning((prev) => ({
+                    setLatticeTuningByStyle((prev) => ({
                       ...prev,
-                      attraction: Number(event.target.value)
+                      skyHexagon: { ...prev.skyHexagon, attraction: Number(event.target.value) }
                     }))
                   }
                   className="mt-3 w-full accent-interactive"
@@ -1664,7 +1685,10 @@ export default function App() {
                   value={hexagonTuning.hexWidth}
                   aria-label={demo.hexagonWidthAria}
                   onChange={(event) =>
-                    setHexagonTuning((prev) => ({ ...prev, hexWidth: Number(event.target.value) }))
+                    setLatticeTuningByStyle((prev) => ({
+                      ...prev,
+                      skyHexagon: { ...prev.skyHexagon, hexWidth: Number(event.target.value) }
+                    }))
                   }
                   className="mt-3 w-full accent-interactive"
                 />

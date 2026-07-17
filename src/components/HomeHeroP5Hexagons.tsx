@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import type p5 from 'p5';
-import type { HexagonHeroTuning } from './homeHeroTypes';
+import type { LatticeHeroMode, LatticeTuning } from './homeHeroTypes';
 
 type HexCell = {
   cx: number;
@@ -15,10 +15,13 @@ type HexCell = {
  */
 export function HomeHeroP5Hexagons({
   className,
+  mode: _mode,
   tuning
 }: {
   className?: string;
-  tuning: HexagonHeroTuning;
+  key?: string;
+  mode: LatticeHeroMode;
+  tuning: LatticeTuning;
 }) {
   const hostRef = useRef<HTMLDivElement>(null);
   const tuningRef = useRef(tuning);
