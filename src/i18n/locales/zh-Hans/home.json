@@ -1,0 +1,89 @@
+{
+  "heroSlides": [
+    {
+      "image": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=2600",
+      "title": "以简驭繁，\n成就企业数字化转型。",
+      "cta": "了解更多"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2600",
+      "title": "以简驭繁，\n成就企业数字化转型。",
+      "cta": "了解更多"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1554469384-e58fac16e23a?auto=format&fit=crop&q=80&w=2600",
+      "title": "二十年技术精进，\n值得信赖。",
+      "cta": "立即开始"
+    }
+  ],
+  "heroSlideDesc0": "二十年技术精进，备受香港特区政府与领先金融机构信赖，承载关键业务系统。",
+  "heroSlideDesc1": "以精简可靠的技术，协助机构优化营运并降低总体拥有成本。",
+  "heroSlideDesc2": "备受香港特区政府与领先金融机构信赖，承载关键业务系统。",
+  "heroImageAlt": "主视觉背景",
+  "scrollHint": "向下浏览",
+  "bentoEyebrow": "FDS Solutions",
+  "bentoHeading": "我们能为您构建什么",
+  "bentoCardCtaLabel": "了解更多",
+  "bentoCard0Title": "采集",
+  "bentoCard0Desc": "将纸本、表单与记录数字化，并于入口把关，让后续流程准确顺畅。",
+  "bentoCard0CtaAria": "查看采集方案",
+  "bentoCard1Title": "Focal AI",
+  "bentoCard1Desc": "在 FDS 自有的统一层整合模型、提示与复核纪律——加速交付并保持治理。",
+  "bentoCard1CtaAria": "前往 Focal AI",
+  "bentoCard2Title": "工作流管理",
+  "bentoCard2Desc": "编排审批、队列与服务历程，责任清楚、步骤可稽核。",
+  "bentoCard2CtaAria": "查看工作流管理",
+  "bentoCard3Title": "文档管理",
+  "bentoCard3Desc": "企业级文档存储、审计轨迹与快速检索。",
+  "bentoCard3CtaAria": "查看文档管理",
+  "bentoCard4Title": "网站内容",
+  "bentoCard4Desc": "高流量门户网站—受控发布、多语更新与审批流程。",
+  "bentoCard4CtaAria": "查看网站内容管理",
+  "fdsEyebrow": "关于 FDS",
+  "fdsTitle": "逾二十年卓越实绩",
+  "fdsLead": "我们是香港系统集成商，专注自动化业务流程与客户服务营运。凭借本地研发、可重用的成熟模块与开放整合标准，协助机构打造务实系统、降低复杂度与总体拥有成本。",
+  "statYearsValue": "20+",
+  "statYearsLabel": "年业界经验",
+  "statSoaTitle": "SOA-QPS5",
+  "statSoaLabel": "认可供应商",
+  "statBodiesValue": "14",
+  "statBodiesLabel": "公营机构案例",
+  "statMatureTitle": "成熟组件",
+  "statMatureDesc": "可重用核心模块加快交付并降低部署风险。",
+  "newsEyebrow": "最新动态",
+  "newsTitle": "最新动态",
+  "festivalBarMessage": "🐲 端午安康 — 愿您阖家平安、身体健康、诸事顺遂",
+  "newsItems": [
+    {
+      "title": "FDS 获 OGCIO 颁授 SOA-QPS5 认可资格",
+      "category": "公司新闻",
+      "date": "2025-05-15"
+    },
+    {
+      "title": "全新文件管理系统成功部署于香港特区政府机构",
+      "category": "案例研究",
+      "date": "2025-04-08"
+    },
+    {
+      "title": "FDS Focal AI 平台引入新一代语言模型",
+      "category": "产品更新",
+      "date": "2025-03-22"
+    },
+    {
+      "title": "工作流程自动化助金融客户缩短处理时间逾六成",
+      "category": "案例研究",
+      "date": "2025-02-10"
+    },
+    {
+      "title": "与雇员再培训局成功推出 MyERBWeb 改版项目",
+      "category": "项目",
+      "date": "2024-11-18",
+      "slug": "my-erbweb-revamp"
+    },
+    {
+      "title": "网站内容管理系统升级 支持实时多语言发布",
+      "category": "产品更新",
+      "date": "2024-10-03"
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "heroBadge": "Professional IT Optimization",
+  "heroTitleLine1": "Realizing the Potential of",
+  "heroTitleAccent": "Your IT Investment.",
+  "heroSubtitle": "FDS services go beyond implementation. We work as partners to define your priorities, automate your processes, and ensure mission-critical stability.",
+  "careTitleLead": "FDS",
+  "careTitleAccent": "Customer Care.",
+  "careBody": "Our support team provides professional ongoing services to help you get the most out of your systems. We design support around individual client needs—from hot-line response to deep structural analysis.",
+  "maintenanceSchemesTitle": "Maintenance Schemes",
+  "maintM1Title": "Standard Business",
+  "maintM1Desc": "08:45 - 18:00 (Mon-Fri)",
+  "maintM2Title": "Extended Support",
+  "maintM2Desc": "08:30 - 23:00 (Mon-Fri) + Sat",
+  "maintM3Title": "24/7 Availability",
+  "maintM3Desc": "Zero-Downtime Monitoring (Daily)",
+  "supportServices": [
+    {
+      "title": "Hot-line Service",
+      "desc": "Dedicated team assigned to handle telephone/e-mail/fax support calls."
+    },
+    {
+      "title": "Software Update Service",
+      "desc": "Regular updates for production problem fixing and stability."
+    },
+    {
+      "title": "Problem Diagnosis",
+      "desc": "Deep-dive resolution and rapid fire-fighting to ensure minimum downtime."
+    },
+    {
+      "title": "System Administration",
+      "desc": "Expert support for navigating and managing enterprise system changes."
+    },
+    {
+      "title": "Impact Analysis",
+      "desc": "Decision support on minor application and system architectural changes."
+    },
+    {
+      "title": "Ongoing Refinement",
+      "desc": "Application minor changes to continuously tailor the solution to your evolving needs."
+    }
+  ],
+  "methodologyCardBadge": "Methodology",
+  "methodsEyebrow": "Methodology & Development",
+  "methodsHeading": "Built on Industry Best-Practice.",
+  "methodsLeadPart1": "We provide the flexibility of introducing industry-standard platforms like",
+  "methodsLeadPart2": "and",
+  "methodsLeadPart3": ", or offering tailor-made solutions like our own",
+  "methodsLeadPart4": "suite.",
+  "methodsLeadAccent1": "IBM FileNet",
+  "methodsLeadAccent2": "Qmatic",
+  "methodsLeadAccent3": "Focal",
+  "estimationRigidnessHeading": "Estimation Rigidness",
+  "estimationQuote": "Precise estimation is the anchor of every successful enterprise delivery.",
+  "estimationFREMName": "FREM",
+  "estimationFREMDesc": "Focal Resource Estimation Method (Derived from FPA)",
+  "estimationFPAName": "FPA",
+  "estimationFPADesc": "Function Point Analysis for precise measurement",
+  "estimationFORMName": "FORM",
+  "estimationFORMDesc": "Focal Quality Review Methodology",
+  "footerCheckFpa": "Function Point Analysis (FPA)",
+  "footerCheckFrem": "Resource Estimation Method (FREM)",
+  "closingTitle": "Design to Simplify. Built to Excel.",
+  "closingBody": "Ready to optimize your business processes with Hong Kong's leading system integrators?",
+  "closingCTA": "Consult with FDS Care",
+  "methodologies": [
+    {
+      "id": "prince",
+      "title": "Project Management",
+      "code": "PRINCE",
+      "subtitle": "Management by Exception",
+      "body": "Developed by the CCTA of the UK, PRINCE focus on process-based monitoring. It ensures function, time, resource, and quality are perfectly balanced.",
+      "stages": ["Starting a Project", "Managing Product Delivery", "Closing a Project"],
+      "color": "bg-blue-600"
+    },
+    {
+      "id": "slc3",
+      "title": "System Design",
+      "code": "SLC3",
+      "subtitle": "System Life Cycle V3",
+      "body": "FDS's proprietary SLC3 utilizes planned iterations of Define-Analyse-Design-Produce to minimize risks and enable fine-tuning.",
+      "stages": ["Define", "Analyse", "Design", "Produce", "Optimise", "Implement"],
+      "color": "bg-blue-500"
+    },
+    {
+      "id": "ssadm",
+      "title": "Structured Analysis",
+      "code": "SSADM",
+      "subtitle": "Stage-Gate Reliability",
+      "body": "Standard method for computer systems design. Breaks complex work into 7 discrete, manageable portions for total project control.",
+      "stages": ["Feasibility", "Investigation", "Requirements", "Logical Design", "Physical Design"],
+      "color": "bg-indigo-600"
+    },
+    {
+      "id": "rad",
+      "title": "Rapid Development",
+      "code": "RAD",
+      "subtitle": "Prototyping Speed",
+      "body": "Leverages CASE tools and user-driven prototyping to translate business decisions into high-quality software with reduced cycle times.",
+      "stages": ["Requirements Planning", "User Design", "Rapid Construction", "Transition"],
+      "color": "bg-purple-600"
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "heroBadge": "FOCAL Web Content Management",
+  "heroLine1": "Master Your",
+  "heroLine2Accent": "Digital Presence.",
+  "heroCtaPrimary": "Request demonstration",
+  "exploreEyebrow": "Explore",
+  "exploreTitle": "How teams use FOCAL WCM",
+  "tabOverview": "Overview",
+  "tabPublishingFlow": "Publishing flow",
+  "overviewChannelTitle": "Channel-ready web operations",
+  "overviewChannelLead": "FOCAL WCM unifies creating, managing, and publishing web content so the right people see the right message at the right time—with stronger editorial productivity.",
+  "overviewChannelUnified": "Deliver coherent experiences across channels; routine updates stay with business teams instead of IT backlogs.",
+  "officialBenefits": [
+    "Publish or refresh pages with minimal effort.",
+    "Steer look-and-feel and page content from one stack.",
+    "Site-wide search for faster discovery.",
+    "Schedule go-live by date, time, or recurring slots.",
+    "Extensions grow capability without replacing the core."
+  ],
+  "capabilitiesEyebrow": "Capabilities",
+  "modulesSidebarTitle": "Modules & components",
+  "modulesSidebarSummary": "Editorial tooling plus ready-made modules—navigation, media, search, syndication—so teams publish coherent sites without serial IT dependency.",
+  "modulesSidebarBenefitsTitle": "Benefits",
+  "modulesSidebarBenefits": [
+    "Publish & schedule with minimal friction.",
+    "Steer presentation and page content together.",
+    "Site-wide search and room to extend."
+  ],
+  "modulesFooterNote": "Mirrors the public module list—confirm packaging with FDS for your programme.",
+  "workflowSteps": [
+    {
+      "step": "Author & assemble",
+      "desc": "Contributors compose articles and plug in modular components (news flashes, banners, HTML blocks) aligned to their permissions."
+    },
+    {
+      "step": "Review & placement",
+      "desc": "Editors validate tone, links, and placement before modules appear in navigation slots—keeping public messaging coherent."
+    },
+    {
+      "step": "Schedule & publish",
+      "desc": "Use scheduling to align go-live moments with campaigns or maintenance windows instead of manual redeploy rituals."
+    },
+    {
+      "step": "Archive & retain",
+      "desc": "Automated archival preserves historical pages by period while the outward-facing site emphasises fresh, authoritative content."
+    }
+  ],
+  "productFeatures": [
+    {
+      "title": "Central Storage",
+      "desc": "Keeps pages, modules, and media flowing through one governed staging posture—reducing drift between environments while editors iterate on site-wide presentation."
+    },
+    {
+      "title": "Web Content Archive",
+      "desc": "Archives web content automatically on a pre-defined schedule—by month or year—so the live site stays current while historical pages remain available for internal and external obligations."
+    },
+    {
+      "title": "Banners and Feeds Management",
+      "desc": "Configure banners and feeds for business needs: define display windows, caps on impressions or clicks before retirement, and varied promotional placements."
+    },
+    {
+      "title": "Custom HTML",
+      "desc": "Author custom modules containing HTML-based content—text, imagery, and links—where bespoke layout is required alongside structured components."
+    },
+    {
+      "title": "Multiple Accounts",
+      "desc": "Multiple editorial accounts so designated contributors change only the sections they own—reducing accidental cross-site edits."
+    },
+    {
+      "title": "Menu Manager",
+      "desc": "Ready-to-use menu templates to define site navigation without rebuilding markup by hand each time."
+    },
+    {
+      "title": "Most read & latest news",
+      "desc": "Surface the most-read articles alongside the newest additions so high-interest stories stay visible."
+    },
+    {
+      "title": "News flash",
+      "desc": "Presents content items drawn from configured section/category lists for timely announcements."
+    },
+    {
+      "title": "Polls",
+      "desc": "Front-end delivery for the polls component—visitor input captured where your templates expose it."
+    },
+    {
+      "title": "Random image",
+      "desc": "Rotate imagery from a nominated folder to keep landing zones visually fresh within governed libraries."
+    },
+    {
+      "title": "Related items",
+      "desc": "Uses metadata keywords to recommend sibling articles—deepening topical journeys without manual link curation for every page."
+    },
+    {
+      "title": "Search",
+      "desc": "Lets visitors launch a basic search from their current location and jump straight into results."
+    },
+    {
+      "title": "Sections",
+      "desc": "Lists article sections configured in the site structure so browsing stays aligned with your taxonomy."
+    },
+    {
+      "title": "Syndicate",
+      "desc": "Shows feed types available for syndication—making outbound content programmes easier to discover."
+    },
+    {
+      "title": "Wrapper",
+      "desc": "Embeds another page by URL inside a chosen module position—useful for bridging legacy tools or external microsites."
+    }
+  ],
+  "channelHighlightTitleLine1": "Built for editorial velocity",
+  "channelHighlightTitleAccent": "& governed delivery",
+  "channelHighlights": [
+    "Single integrated backbone for immersive experiences across your digital surface area—not isolated microsites per initiative.",
+    "Business-led publishing cycles decouple everyday updates from central IT backlog risk.",
+    "Composable modules (polls, feeds, related reading, wrappers) extend functionality without abandoning governance templates.",
+    "Scheduling plus archival pairs outward freshness with internal retention discipline.",
+    "Central storage underpins repeatable layouts, predictable deployments, and fewer “snowflake” environments."
+  ],
+  "guardrailsTitle": "Operational guardrails",
+  "guardrailsBody": "Multiple accounts, modular placements, scheduling, and archival routines combine so contributors move quickly without forfeiting visibility into what is live, what is staged, and what must be retained.",
+  "guardrailAccount": "Scoped editorial accounts",
+  "guardrailSchedule": "Timed publishing windows",
+  "guardrailRetention": "Scheduled archival retention",
+  "ctaBandTitle": "Ship confident web experiences",
+  "ctaBandLead": "Pair editorial autonomy with the modular depth Hong Kong enterprises expect from the broader FOCAL portfolio.",
+  "ctaBandButton": "Contact specialist",
+  "heroVisualCaption": "Immersive digital content"
+}

@@ -1,0 +1,140 @@
+{
+  "heroBadge": "FOCAL Document Management System",
+  "heroLine1": "Your Institutional",
+  "heroLine2Accent": "Knowledge, Secured.",
+  "heroP1": "FOCAL Document Management System delivers a strategic and efficient information platform to help organizations convert rapidly growing unstructured information generated from daily business processes into useful business content.",
+  "heroP2": "It has broad capabilities with superior security and governance to centralize business content for efficient management, applications to deliver information within and beyond organizations, and collaborative tools to support dispersed workforces.",
+  "heroCta": "Request Solution Brief",
+  "floatingEncryptLabel": "Encryption",
+  "floatingEncryptValue": "AES-256 at rest",
+  "benefitsSectionTitle": "Benefits",
+  "officialBenefits": [
+    {
+      "keyword": "End-to-end document lifecycle management",
+      "detail": "Increase security and control while minimizing the risks of unauthorized access or unapproved changes."
+    },
+    {
+      "keyword": "Streamlined information sharing",
+      "detail": "Enhances collaboration and operational efficiency across teams and channels."
+    },
+    {
+      "keyword": "Cloud-based delivery",
+      "detail": "Publish, share, and access vital information assets from virtually any location."
+    },
+    {
+      "keyword": "Multi-device access",
+      "detail": "Consistent reach via desktop, smartphone, and tablet."
+    },
+    {
+      "keyword": "Ease of use",
+      "detail": "Straightforward experience so everyday adoption stays practical."
+    },
+    {
+      "keyword": "Unified FOCAL platform",
+      "detail": "Integrates with other FOCAL products for one coherent information backbone and effective collaboration."
+    }
+  ],
+  "platformEyebrow": "Platform overview",
+  "platformTitle": "Essential capabilities from creation to archiving",
+  "platformP1": "FOCAL Document Management System comes with essential capabilities to help users manage and control end-to-end document lifecycle from creation to archiving.",
+  "platformP2": "It provides unified storage to turn unstructured content into valuable information assets for more efficient document retrieval and processing. FOCAL DMS offers a robust and scalable architecture to manage your information assets.",
+  "capabilitiesEyebrow": "Capabilities",
+  "capabilitiesTitle": "Feature highlights",
+  "capabilitiesLead": "Capability areas referenced on the FOCAL DMS product description—condensed for scanning; engage FDS for programme-specific fit.",
+  "productFeatures": [
+    {
+      "title": "Cloud Central storage",
+      "desc": "Centralises documents and files from dispersed teams into one governed repository—so retention, permissions, and search stay consistent instead of scattered across drives and mailboxes."
+    },
+    {
+      "title": "256-bit Encryption",
+      "desc": "Protects information at rest on the server using AES 256-bit encryption."
+    },
+    {
+      "title": "Folder Tree",
+      "desc": "Build folder hierarchies under governed roots with permission control aligned to how teams organise work."
+    },
+    {
+      "title": "Document Control",
+      "desc": "Fine-grained privileges such as Read, Write, and Delete so only appropriate users reach sensitive documents."
+    },
+    {
+      "title": "Role Based Security",
+      "desc": "Maps access to the roles people perform—keeping rights aligned with organisational goals, security policies, and regulatory expectations."
+    },
+    {
+      "title": "User Group Management",
+      "desc": "Create groups and assign users for permission control based on roles and logical groupings across the organisation."
+    },
+    {
+      "title": "Version Control",
+      "desc": "Tracks edits over time with revision history, rollback to prior revisions, and corrections when mistakes occur."
+    },
+    {
+      "title": "Check-in / Check-out",
+      "desc": "Restricts edit rights to one user at a time to prevent conflicting saves—supporting simpler, safer versioning."
+    },
+    {
+      "title": "Search",
+      "desc": "Find folders and documents by name, description, and document indexes."
+    },
+    {
+      "title": "Content / Keyword search",
+      "desc": "Locate documents by words or phrases inside content for deeper discovery."
+    },
+    {
+      "title": "User-defined Document Index",
+      "desc": "Define filing indexes by document type and reuse them for faster search and consistent filing."
+    },
+    {
+      "title": "Audit Log",
+      "desc": "System-generated, tamper-evident records of actions such as logon, read, search, edit, and delete—for security, compliance, and discovery."
+    },
+    {
+      "title": "Sharing",
+      "desc": "Share folders and documents with security guardrails and optional time limits."
+    },
+    {
+      "title": "Dashboard",
+      "desc": "At-a-glance visibility into activity plus shortcuts to recently accessed documents and shared folders."
+    },
+    {
+      "title": "Notification",
+      "desc": "Alerts users when folders or documents are shared with them."
+    },
+    {
+      "title": "Life cycle Maintenance",
+      "desc": "Define lifecycle states (e.g. Draft, Review, Publish, Close) and the actions that move documents between states."
+    }
+  ],
+  "intelBandLine1": "Operational intelligence",
+  "intelBandAccent": "& governance signals",
+  "intelligenceHighlights": [
+    "Full lifecycle coverage—from creation and collaboration through archiving and disposition discipline.",
+    "Cloud-friendly operating model for publishing and sharing critical information assets.",
+    "Thin-client, web-based delivery suited to distributed teams and mixed device estates.",
+    "Lifecycle states with governed transitions (e.g. Draft → Review → Publish → Close).",
+    "Tamper-evident audit logging aligned to security enforcement and compliance verification.",
+    "Managed sharing with optional expiry—plus proactive notifications on inbound shares.",
+    "Dashboard insight into recent activity, documents, and shared folders.",
+    "Designed to interoperate with other FOCAL suite components as a unified collaboration backbone."
+  ],
+  "complianceTitle": "Security, audit & compliance posture",
+  "complianceBody": "FOCAL DMS targets demanding environments: encryption and privileged access reduce exposure, while audit trails and lifecycle tooling support verification—not anecdotal reporting—when regulators or legal workflows ask for proof.",
+  "badgeAes": "AES-256 Encryption",
+  "badgeAudit": "Tamper-evident Audit Log",
+  "badgeLifecycle": "Lifecycle State Control",
+  "specEyebrow": "Specifications",
+  "specTitle": "Representative technical baseline",
+  "specIntro": "Published stack guidance from the product materials—confirm current supported versions and sizing with your FDS engagement team before procurement or migration planning.",
+  "specLines": [
+    "Platforms: Red Hat Enterprise Linux 6 or above; Windows Server 2008 or above.",
+    "Application runtime: Java JDK/JRE 1.6 or above.",
+    "Application server: JBoss 7 or above.",
+    "Database: MySQL 5.5+; Microsoft SQL Server 2008+; Oracle Database 11g or above.",
+    "Web browsers (published baseline): Apple Safari 7+; Google Chrome 38+; Microsoft Internet Explorer 8+; Mozilla Firefox 31+."
+  ],
+  "ctaTitle": "Consolidate Your Digital Assets",
+  "ctaBody": "Bring policy, searchability, and collaboration together on the same FOCAL foundation Hong Kong organisations rely on for mission-critical programmes.",
+  "ctaButton": "Contact Specialist"
+}

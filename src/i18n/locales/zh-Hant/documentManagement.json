@@ -1,0 +1,140 @@
+{
+  "heroBadge": "FOCAL 文件管理系統",
+  "heroLine1": "機構級",
+  "heroLine2Accent": "知識，穩妥守護。",
+  "heroP1": "FOCAL 文件管理系統提供具策略與效率的資訊平台，協助組織將業務過程衍生的無結構資訊迅速轉化為可用的商業內容。",
+  "heroP2": "兼具廣泛能力與強大安全／治理機制：集中業務內容以利管理與對內對外發佈協同，並提供工具支援分布式團隊。",
+  "heroCta": "索取方案概要",
+  "floatingEncryptLabel": "加密",
+  "floatingEncryptValue": "待用 AES-256",
+  "benefitsSectionTitle": "效益",
+  "officialBenefits": [
+    {
+      "keyword": "端到端文件生命期管理",
+      "detail": "提升安全與管控，並降低未授權或未經批准的變動風險。"
+    },
+    {
+      "keyword": "資訊分享更順暢",
+      "detail": "增進跨團隊與跨渠道的協作與運營效率。"
+    },
+    {
+      "keyword": "雲端交付",
+      "detail": "隨時隨地發佈、分享與取用關鍵資訊資產。"
+    },
+    {
+      "keyword": "多裝置存取",
+      "detail": "桌面、手機與平板保持一致體驗。"
+    },
+    {
+      "keyword": "易於使用",
+      "detail": "操作流程直觀，利於日常使用推廣。"
+    },
+    {
+      "keyword": "統一 FOCAL 平台",
+      "detail": "與其他 FOCAL 產品整合，形成一致的資訊主幹與協同。"
+    }
+  ],
+  "platformEyebrow": "平台概覽",
+  "platformTitle": "由建立到封存的核心能力",
+  "platformP1": "FOCAL 文件管理系統具備端到端生命周期所需能力—由建立到归档均可管理與控管。",
+  "platformP2": "以統一儲存將無結構內容化為可查與可用的資訊資產。FOCAL DMS 架構強韌並可延展，適合管理資訊資產規模演進。",
+  "capabilitiesEyebrow": "能力",
+  "capabilitiesTitle": "功能亮點",
+  "capabilitiesLead": "對應產品介紹之重點摘要—實際範疇請與 FDS 項目團隊確認。",
+  "productFeatures": [
+    {
+      "title": "雲端集中儲存",
+      "desc": "把分散在各地的檔案彙總到受管制儲庫—備援、權限與搜尋統一於一處。"
+    },
+    {
+      "title": "256 位加密",
+      "desc": "在伺服器上以 AES 256 位為資訊靜態加密。"
+    },
+    {
+      "title": "資料夾樹狀結構",
+      "desc": "於受管控根之下建立資料夾層級並對齊組織工作方式調整權限。"
+    },
+    {
+      "title": "文件管制",
+      "desc": "細粒度權限如讀、寫與删除，確保敏感文件只看該看的對象。"
+    },
+    {
+      "title": "角色式安全",
+      "desc": "對應使用者職務角色，對齊目標政策、資安與規範預期。"
+    },
+    {
+      "title": "用戶群組管理",
+      "desc": "建立群組並指派使用者，按角色或邏輯分區控制權限。"
+    },
+    {
+      "title": "版本控制",
+      "desc": "紀錄修訂歷史、回滾與纠错。"
+    },
+    {
+      "title": "签入／签出",
+      "desc": "同一时间僅單一使用者編輯，降低衝突與並行覆寫。"
+    },
+    {
+      "title": "搜尋",
+      "desc": "以名稱、描述或索引字段尋找資料夾與文件。"
+    },
+    {
+      "title": "內容／關鍵字搜尋",
+      "desc": "以詞或片語深挖文件內文。"
+    },
+    {
+      "title": "自訂文件索引",
+      "desc": "按文件類型設定歸檔索引並復用以利搜尋與一致性。"
+    },
+    {
+      "title": "稽核日誌",
+      "desc": "系統產生、防篡改的登入、讀取、搜尋、編輯與刪除等动作紀錄。"
+    },
+    {
+      "title": "分享",
+      "desc": "在安全框與可有期限下分享資料夾與文件。"
+    },
+    {
+      "title": "儀表板",
+      "desc": "一覽活動並捷徑到近期文件與共享資料夾。"
+    },
+    {
+      "title": "通知",
+      "desc": "當對象向您分享資料夾或文件時提示。"
+    },
+    {
+      "title": "生命期維護",
+      "desc": "定義草稿、覆核、發佈、關閉等狀態及轉移動作。"
+    }
+  ],
+  "intelBandLine1": "運營可視",
+  "intelBandAccent": "與治理訊號",
+  "intelligenceHighlights": [
+    "涵蓋由建立協作以至歸檔與報廢紀律的全生命期。",
+    "雲友好的發佈與分享模型，適用關鍵資訊資產。",
+    "Thin-client／Web 適合分部團隊與混合終端環境。",
+    "具治理轉換的狀態流轉（如草稿→審閱→發佈→關閉）。",
+    "防篡改稽核日誌，支援安全強制與合規核查。",
+    "受控分享可設到期並主動提示共享入站。",
+    "儀表板呈現近期活動、檔案與共享資料夾。",
+    "可与 FOCAL 套件協同作統一協作主幹。"
+  ],
+  "complianceTitle": "安全、稽核與合規態勢",
+  "complianceBody": "面向嚴謹環境：加密與特權存取縮少曝險；稽核線索與生命週期工具支援可查證的證據鏈而非口頭自述。",
+  "badgeAes": "AES-256 加密",
+  "badgeAudit": "防篡改稽核日誌",
+  "badgeLifecycle": "生命週期狀態管控",
+  "specEyebrow": "規格",
+  "specTitle": "具代表性的技術基線",
+  "specIntro": "以下摘自公版資料—部署或遷移前請與 FDS 項目人員確認現行支援版本與容量規劃。",
+  "specLines": [
+    "平台：Red Hat Enterprise Linux 6 或以上；Windows Server 2008 或以上。",
+    "運行環境：Java JDK/JRE 1.6 或以上。",
+    "應用伺服器：JBoss 7 或以上。",
+    "資料庫：MySQL 5.5+；Microsoft SQL Server 2008+；Oracle Database 11g 或以上。",
+    "瀏覽器（公版）：Apple Safari 7+；Google Chrome 38+；Microsoft IE 8+；Mozilla Firefox 31+。"
+  ],
+  "ctaTitle": "整合數碼資產",
+  "ctaBody": "在香港廣為採用的 FOCAL 基礎上，同時對齊政策、可搜索性與協同。",
+  "ctaButton": "聯絡專家"
+}

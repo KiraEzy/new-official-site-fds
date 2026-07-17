@@ -1,0 +1,19 @@
+{
+  "backLink": "Back to Latest News",
+  "notFoundTitle": "Article not found",
+  "notFoundBody": "This news article could not be found. Return to the homepage to browse our latest updates.",
+  "articles": {
+    "my-erbweb-revamp": {
+      "title": "Successfully Launches MyERBWeb Revamp with ERB",
+      "category": "Projects",
+      "date": "2024-11-18",
+      "lead": "FDS Solutions partnered with the Employees Retraining Board to deliver a modernized MyERBWeb portal, giving learners and training providers a faster, clearer, and more accessible digital experience.",
+      "body": [
+        "The revamped MyERBWeb platform introduces a streamlined information architecture, responsive layouts across desktop and mobile, and improved self-service flows for course discovery, enrolment, and account management.",
+        "Built on FDS web content management capabilities, the new site supports structured publishing workflows, multilingual content readiness, and integration with ERB's existing backend services — helping teams keep information accurate while reducing manual update effort.",
+        "Accessibility and usability were central to the project. Clear navigation, consistent page templates, and performance optimizations make it easier for users of all backgrounds to find retraining resources and complete tasks online.",
+        "FDS is proud to support ERB's mission to empower Hong Kong's workforce through quality retraining programmes, and looks forward to continuing this partnership as digital services evolve."
+      ]
+    }
+  }
+}

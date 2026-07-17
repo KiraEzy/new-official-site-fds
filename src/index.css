@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --color-text: #01141a;
+  --color-background: #f9fdff;
+  --color-primary: #11b8f5;
+  /* Filled CTAs + nav link swipe/hover accent — stays cyan when primary switches to navy */
+  --color-interactive: #11b8f5;
+  --color-secondary: #7f9bfa;
+  --color-accent: #514ef7;
+}
+
+/* Demo "Navy" profile: deep blue brand accent; cyan moves to interactive surfaces only */
+:root[data-color-profile="navy"] {
+  --color-primary: #0c2461;
+  --color-interactive: #11b8f5;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-text antialiased;
+  }
+}
+
+@layer utilities {
+  .nav-link {
+    @apply text-text/80 hover:text-interactive transition-colors duration-200 font-medium;
+  }
+
+  .mini-case-flow .react-flow__pane {
+    @apply cursor-default;
+  }
+
+  .mini-case-flow .react-flow__node {
+    @apply cursor-grab transition-shadow duration-200;
+  }
+
+  .mini-case-flow .react-flow__node.dragging {
+    @apply cursor-grabbing shadow-[0_22px_50px_rgba(17,184,245,0.2)];
+  }
+
+  .mini-case-flow .react-flow__node-default {
+    @apply border-0 text-left;
+  }
+
+  .mini-case-flow .react-flow__handle {
+    @apply h-2.5 w-2.5 border-2 border-white bg-interactive;
+  }
+
+  .mini-case-flow .react-flow__edge-path {
+    @apply drop-shadow-[0_4px_8px_rgba(17,184,245,0.18)];
+  }
+
+  @keyframes slow-pan {
+    from { transform: scale(1.05) translateX(0); }
+    to { transform: scale(1.1) translateX(-2%); }
+  }
+
+  @keyframes home-sky-drift {
+    0% {
+      background-position: 0% 40%, 100% 60%, 50% 0%;
+    }
+    50% {
+      background-position: 80% 55%, 10% 35%, 40% 20%;
+    }
+    100% {
+      background-position: 0% 40%, 100% 60%, 50% 0%;
+    }
+  }
+
+  .home-sky-drift {
+    background-color: #f7fbff;
+    background-image:
+      radial-gradient(ellipse 70% 55% at 20% 30%, rgba(125, 211, 252, 0.55), transparent 60%),
+      radial-gradient(ellipse 65% 50% at 85% 25%, rgba(186, 230, 253, 0.65), transparent 55%),
+      radial-gradient(ellipse 80% 60% at 50% 90%, rgba(224, 242, 254, 0.9), transparent 55%);
+    background-size: 140% 140%, 150% 150%, 120% 120%;
+    animation: home-sky-drift 18s ease-in-out infinite;
+  }
+
+  .home-sky-drift--deep {
+    background-image:
+      radial-gradient(ellipse 75% 60% at 18% 28%, rgba(56, 189, 248, 0.55), transparent 58%),
+      radial-gradient(ellipse 70% 55% at 88% 22%, rgba(14, 165, 233, 0.35), transparent 52%),
+      radial-gradient(ellipse 85% 65% at 50% 95%, rgba(186, 230, 253, 0.85), transparent 55%);
+  }
+
+  .home-sky-drift--calm {
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(186, 230, 253, 0.35), transparent 55%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(224, 242, 254, 0.5), transparent 50%),
+      radial-gradient(ellipse 50% 40% at 10% 70%, rgba(241, 245, 249, 0.8), transparent 50%);
+    animation-duration: 28s;
+  }
+
+  .home-sky-grid {
+    background-image:
+      linear-gradient(rgba(1, 20, 26, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(1, 20, 26, 0.045) 1px, transparent 1px);
+    background-size: 42px 42px;
+  }
+
+  .home-sky-dots {
+    background-image: radial-gradient(rgba(1, 20, 26, 0.09) 1px, transparent 1px);
+    background-size: 18px 18px;
+    opacity: 0.55;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-sky-drift,
+    .home-sky-drift--calm {
+      animation: none;
+    }
+  }
+
+  /* Demo style controls floater — scroll area + thumb aligned with panel chrome */
+  .demo-style-controls-panel {
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--color-interactive) 45%, transparent) rgba(255, 255, 255, 0.08);
+  }
+
+  .demo-style-controls-panel::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .demo-style-controls-panel::-webkit-scrollbar-track {
+    margin: 0.35rem 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .demo-style-controls-panel::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-interactive) 55%, transparent);
+  }
+
+}

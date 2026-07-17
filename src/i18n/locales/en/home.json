@@ -1,0 +1,89 @@
+{
+  "heroSlides": [
+    {
+      "image": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=2600",
+      "title": "Design to Simplify \nYour Enterprise.",
+      "cta": "See more"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2600",
+      "title": "Design to Simplify \nYour Enterprise.",
+      "cta": "See more"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1554469384-e58fac16e23a?auto=format&fit=crop&q=80&w=2600",
+      "title": "Twenty Years of \nTechnical Excellence.",
+      "cta": "Get Started"
+    }
+  ],
+  "heroSlideDesc0": "Twenty years of technical excellence—trusted by HKSAR Government and leading financial institutions for mission-critical systems.",
+  "heroSlideDesc1": "We empower organizations with lean technologies to optimize operations and reduce total cost of ownership.",
+  "heroSlideDesc2": "Trusted by HKSAR Government and leading financial institutions for mission-critical systems.",
+  "heroImageAlt": "Hero Background",
+  "scrollHint": "Scroll Down",
+  "bentoEyebrow": "FDS Solutions",
+  "bentoHeading": "What We Can Build For You",
+  "bentoCardCtaLabel": "Learn more",
+  "bentoCard0Title": "Capture",
+  "bentoCard0Desc": "Digitize paper, forms, and records with validation that keeps downstream workflows accurate.",
+  "bentoCard0CtaAria": "View capture",
+  "bentoCard1Title": "Focal AI",
+  "bentoCard1Desc": "Unify models, prompts, and review discipline under one FDS-owned layer—sharper delivery without losing governance.",
+  "bentoCard1CtaAria": "View Focal AI",
+  "bentoCard2Title": "Workflow Management",
+  "bentoCard2Desc": "Orchestrate approvals, queues, and service journeys with clear ownership and traceable process steps.",
+  "bentoCard2CtaAria": "View workflow management",
+  "bentoCard3Title": "Document Management",
+  "bentoCard3Desc": "Manage enterprise documents with secure storage, audit trails, and fast retrieval.",
+  "bentoCard3CtaAria": "View documents",
+  "bentoCard4Title": "Web Content",
+  "bentoCard4Desc": "Run high-traffic portals with controlled publishing, multilingual updates, and approval workflows.",
+  "bentoCard4CtaAria": "View web content management",
+  "fdsEyebrow": "All About FDS",
+  "fdsTitle": "Over 20 Years of Excellence",
+  "fdsLead": "We are a Hong Kong systems integrator focused on automating business process and customer service operations. With local research and development, mature repeatable code, and open integration standards, we help organizations build practical systems that reduce complexity and lower total cost of ownership.",
+  "statYearsValue": "20+",
+  "statYearsLabel": "Years Experience",
+  "statSoaTitle": "SOA-QPS5",
+  "statSoaLabel": "Awarded Provider",
+  "statBodiesValue": "14",
+  "statBodiesLabel": "Public-sector bodies featured",
+  "statMatureTitle": "Mature Components",
+  "statMatureDesc": "Reusable core components speed up delivery and reduce implementation risk.",
+  "newsEyebrow": "Latest News",
+  "newsTitle": "Latest News",
+  "festivalBarMessage": "🐲 Happy Dragon Boat Festival — 端午安康! Wishing you health, peace, and good fortune.",
+  "newsItems": [
+    {
+      "title": "FDS Awarded SOA-QPS5 Qualification by OGCIO",
+      "category": "Company News",
+      "date": "2025-05-15"
+    },
+    {
+      "title": "New Document Management System Deployed for HKSAR Agency",
+      "category": "Case Study",
+      "date": "2025-04-08"
+    },
+    {
+      "title": "FDS Expands Focal AI Platform with Next-Generation Language Models",
+      "category": "Product Update",
+      "date": "2025-03-22"
+    },
+    {
+      "title": "Workflow Automation Reduces Processing Time by 60% for Financial Client",
+      "category": "Case Study",
+      "date": "2025-02-10"
+    },
+    {
+      "title": "Successfully Launches MyERBWeb Revamp with ERB",
+      "category": "Projects",
+      "date": "2024-11-18",
+      "slug": "my-erbweb-revamp"
+    },
+    {
+      "title": "Web Content Management Upgrade Enables Real-Time Multilingual Publishing",
+      "category": "Product Update",
+      "date": "2024-10-03"
+    }
+  ]
+}

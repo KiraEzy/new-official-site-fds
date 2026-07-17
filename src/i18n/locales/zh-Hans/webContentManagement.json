@@ -1,0 +1,128 @@
+{
+  "heroBadge": "FOCAL 网站内容管理",
+  "heroLine1": "掌握您的",
+  "heroLine2Accent": "数码門面。",
+  "heroCtaPrimary": "預約示範",
+  "exploreEyebrow": "探索",
+  "exploreTitle": "團隊如何運用 FOCAL WCM",
+  "tabOverview": "概覽",
+  "tabPublishingFlow": "发布流程",
+  "overviewChannelTitle": "適合多渠道的网页運營",
+  "overviewChannelLead": "FOCAL WCM 將建立、管理及发布网页内容流程化—在正確时间把正確訊息交到正確对象——並提升编采生產力。",
+  "overviewChannelUnified": "跨通道呈現一致体驗；日常更新可由業务團隊主導而非長期卡在 IT backlog。",
+  "officialBenefits": [
+    "以最少磨擦发布或更新頁面。",
+    "在同一技術堆疊控管視覺与文字内容。",
+    "全站搜索加速查找内容。",
+    "按日期、时间或可重复排程发布。",
+    "以扩展模块能力提升功能而毋須推倒核心。"
+  ],
+  "capabilitiesEyebrow": "能力",
+  "modulesSidebarTitle": "模块与組件",
+  "modulesSidebarSummary": "编采工具備妥現成組件——導航、媒体、搜索、聚合——協助发布一致网页並減少对 IT 的串連依賴。",
+  "modulesSidebarBenefitsTitle": "主要益處",
+  "modulesSidebarBenefits": [
+    "发布与排程低摩擦完成。",
+    "版型与内容一併規劃。",
+    "全站搜索並保留扩展空间。"
+  ],
+  "modulesFooterNote": "模块对照公开清單—實際套裝請与 FDS 確認。",
+  "workflowSteps": [
+    {
+      "step": "創作組裝",
+      "desc": "依权限制作文章並插入模块化元件（焦點新聞、Banner、HTML 区塊）。"
+    },
+    {
+      "step": "審閱与就位",
+      "desc": "编辑校对語調、鏈結与顯示位置再嵌入導航插槽——維护对外公訊一致性。"
+    },
+    {
+      "step": "排程发布",
+      "desc": "以排程对齊推行或維护窗口——替代手動重佈線。"
+    },
+    {
+      "step": "歸檔保存",
+      "desc": "自動化歸檔按时间保留歷史頁，網際表面保持新鮮与公信。"
+    }
+  ],
+  "productFeatures": [
+    {
+      "title": "集中儲存",
+      "desc": "頁面、模块与媒体在受控環境中流轉並維护呈現一致性。"
+    },
+    {
+      "title": "网页内容歸檔",
+      "desc": "按月份／年度等排程自動歸檔—線上保持更新同时備存歷史。"
+    },
+    {
+      "title": "橫幅与信息流管理",
+      "desc": "可依業务調整視窗曝光、總展示或總點擊上限与多樣投放位。"
+    },
+    {
+      "title": "自訂 HTML",
+      "desc": "在結構化元件之上另建自訂 HTML 模块承載版面彈性。"
+    },
+    {
+      "title": "多帳號",
+      "desc": "多組编辑帳號僅改所屬区塊以降低誤编風险。"
+    },
+    {
+      "title": "選單管理",
+      "desc": "現成選單範本定義网站導航而毋須反覆手刻標記。"
+    },
+    {
+      "title": "最多瀏覽与最新消息",
+      "desc": "同列熱門与最新内容維持高关注度。"
+    },
+    {
+      "title": "即时焦點",
+      "desc": "依配置分類／欄目拉取項目作快訊呈現。"
+    },
+    {
+      "title": "投票",
+      "desc": "在前端模板位置呈現投票元件輸入。"
+    },
+    {
+      "title": "隨機圖片",
+      "desc": "輪替指定資料夾影像让版面保持新鮮。"
+    },
+    {
+      "title": "相关條目",
+      "desc": "以关鍵字推薦姊妹文—減少逐篇手動互連。"
+    },
+    {
+      "title": "搜尋",
+      "desc": "訪客可從現有位置快速搜尋並跳到結果。"
+    },
+    {
+      "title": "欄目",
+      "desc": "依站點結構列出文章欄目—瀏覽貼合分類。"
+    },
+    {
+      "title": "聚合",
+      "desc": "呈現可供向外聚合的 feed 類型。"
+    },
+    {
+      "title": "嵌入式頁框",
+      "desc": "於模块位置以 URL 嵌入另一頁—銜接舊系或外部微站。"
+    }
+  ],
+  "channelHighlightTitleLine1": "為编采速度而建",
+  "channelHighlightTitleAccent": "並兼顧交付治理",
+  "channelHighlights": [
+    "以單一整合主幹承載沉浸式体驗—而非零碎微站碎片化。",
+    "業务主導的发布週期將日常調整移出中央 IT backlog 風险。",
+    "可組合模块（投票、信息流、姊妹文、嵌入式頁框）延展功能且維持範本治理。",
+    "排程加歸檔兼顧外顯新意与內部備存紀律。",
+    "集中儲存支撐可重复版面、更可預測部署並較少「雪花」環境。"
+  ],
+  "guardrailsTitle": "運維护欄",
+  "guardrailsBody": "多用戶、模块化位置、排程与歸檔流程協同——貢獻者可快速進展同时对「線上」「暫存」「必須保留」保持可視。",
+  "guardrailAccount": "範圍化编辑帳號",
+  "guardrailSchedule": "定时发布窗口",
+  "guardrailRetention": "排程歸檔保存",
+  "ctaBandTitle": "发布有把握的网页体驗",
+  "ctaBandLead": "让编采自治与 FOCAL 模块深度兼備——香港企業在整体產品線所期待的兼得。",
+  "ctaBandButton": "联絡顧問",
+  "heroVisualCaption": "沉浸式数码内容"
+}
