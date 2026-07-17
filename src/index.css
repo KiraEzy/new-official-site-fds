@@ -108,6 +108,20 @@
     opacity: 0.55;
   }
 
+  /* Soft-sky / CSS backgrounds: real backdrop-filter works. */
+  .home-hero-frost {
+    background-color: rgb(255 255 255 / 0.2);
+    -webkit-backdrop-filter: blur(28px) saturate(1.5);
+    backdrop-filter: blur(28px) saturate(1.5);
+  }
+
+  /* Lattice / p5: Chromium won't blur canvas via backdrop-filter — frost is drawn in p5. */
+  .home-hero-frost--over-canvas {
+    background-color: rgb(255 255 255 / 0.06);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .home-sky-drift,
     .home-sky-drift--calm {

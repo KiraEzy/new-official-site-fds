@@ -16,17 +16,22 @@ type HexCell = {
 export function HomeHeroP5Hexagons({
   className,
   mode,
-  tuning
+  tuning,
+  frostedGlass = false
 }: {
   className?: string;
   mode: LatticeHeroMode;
   tuning: LatticeTuning;
+  /** CSS backdrop-filter cannot blur canvas in Chromium — draw frost in-canvas instead. */
+  frostedGlass?: boolean;
 }) {
   const hostRef = useRef<HTMLDivElement>(null);
   const tuningRef = useRef(tuning);
   tuningRef.current = tuning;
   const modeRef = useRef(mode);
   modeRef.current = mode;
+  const frostRef = useRef(frostedGlass);
+  frostRef.current = frostedGlass;
 
   useEffect(() => {
     const host = hostRef.current;
@@ -137,6 +142,8 @@ export function HomeHeroP5Hexagons({
         };
 
         p.setup = () => {
+          // Keep canvas CSS pixels 1:1 so frost geometry matches the HTML panel.
+          p.pixelDensity(1);
           const w = Math.max(1, host.clientWidth);
           const h = Math.max(1, host.clientHeight);
           const canvas = p.createCanvas(w, h);
@@ -275,6 +282,63 @@ export function HomeHeroP5Hexagons({
 
             p.fill(grey, grey, grey);
             p.circle(cell.cx, cell.cy, baseDotR * 2 * scale);
+          }
+
+          // Chromium will not backdrop-blur HTML canvas pixels. Simulate frost in-canvas
+          // under the HTML copy panel so lattice heroes match soft-sky glass.
+          if (frostRef.current) {
+            const canvasEl =
+              (hostRef.current?.querySelector('canvas') as HTMLCanvasElement | null) ?? undefined;
+            const frostEl = hostRef.current
+              ?.closest('section')
+              ?.querySelector('.home-hero-frost') as HTMLElement | null;
+            if (canvasEl && frostEl) {
+              const canvasRect = canvasEl.getBoundingClientRect();
+              const frostRect = frostEl.getBoundingClientRect();
+              const sx = p.width / Math.max(1, canvasRect.width);
+              const sy = p.height / Math.max(1, canvasRect.height);
+              const fx = (frostRect.left - canvasRect.left) * sx;
+              const fy = (frostRect.top - canvasRect.top) * sy;
+              const fw = frostRect.width * sx;
+              const fh = frostRect.height * sy;
+              const radius = 32 * Math.min(sx, sy);
+              const ctx = p.drawingContext as CanvasRenderingContext2D;
+
+              ctx.save();
+              p.noStroke();
+
+              const r = radius;
+              ctx.beginPath();
+              ctx.moveTo(fx + r, fy);
+              ctx.arcTo(fx + fw, fy, fx + fw, fy + fh, r);
+              ctx.arcTo(fx + fw, fy + fh, fx, fy + fh, r);
+              ctx.arcTo(fx, fy + fh, fx, fy, r);
+              ctx.arcTo(fx, fy, fx + fw, fy, r);
+              ctx.closePath();
+              ctx.clip();
+
+              // Soft veil (not opaque) + bloomed dots = frosted lattice look.
+              p.fill(255, 255, 255, 55);
+              p.rect(fx, fy, fw, fh, radius);
+
+              for (const cell of cells) {
+                const dx = cell.x;
+                const dy = cell.y;
+                if (dx < fx - 12 || dx > fx + fw + 12 || dy < fy - 12 || dy > fy + fh + 12) continue;
+                const g = Math.round(tuningRef.current.grey);
+                p.noStroke();
+                p.fill(g, g, g, 40);
+                p.circle(dx, dy, baseDotR * 10);
+                p.fill(g, g, g, 80);
+                p.circle(dx, dy, baseDotR * 5);
+                p.fill(g, g, g, 150);
+                p.circle(dx, dy, baseDotR * 2.2);
+              }
+
+              p.fill(255, 255, 255, 28);
+              p.rect(fx, fy, fw, fh, radius);
+              ctx.restore();
+            }
           }
         };
 

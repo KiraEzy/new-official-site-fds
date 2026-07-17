@@ -21,6 +21,7 @@ export function HomeHero({
   colorProfile,
   showMintBlend,
   mintBlendAppearance,
+  showFrostedGlass,
   onCtaClick,
   CtaButton,
   latticeMode,
@@ -35,6 +36,7 @@ export function HomeHero({
   colorProfile: 'default' | 'navy';
   showMintBlend: boolean;
   mintBlendAppearance: 'pastel' | 'mint' | 'dark';
+  showFrostedGlass: boolean;
   onCtaClick?: () => void;
   CtaButton: ComponentType<{ label: string; colorProfile?: 'default' | 'navy'; onClick?: () => void }>;
   latticeMode: LatticeHeroMode;
@@ -46,24 +48,40 @@ export function HomeHero({
         className="absolute inset-0 z-0 h-full w-full"
         mode={latticeMode}
         tuning={latticeTuning}
+        frostedGlass={showFrostedGlass}
       />
     </Fragment>
   ) : null;
+
+  const frostClass = showFrostedGlass
+    ? isLatticeHeroStyle(style)
+      ? 'home-hero-frost home-hero-frost--over-canvas max-w-4xl rounded-[2rem] border border-white/40 px-6 py-10 shadow-[0_24px_80px_rgba(1,20,26,0.08),inset_0_1px_0_0_rgba(255,255,255,0.5)] sm:px-12 sm:py-12'
+      : 'home-hero-frost max-w-4xl rounded-[2rem] border border-white/40 bg-white/20 px-6 py-10 shadow-[0_24px_80px_rgba(1,20,26,0.08),inset_0_1px_0_0_rgba(255,255,255,0.5)] sm:px-12 sm:py-12'
+    : 'max-w-4xl';
 
   return (
     <section
       ref={heroRef}
       data-hero-style={style}
-      className="relative h-screen min-h-[700px] w-full overflow-hidden"
+      data-hero-glass={showFrostedGlass ? 'on' : 'off'}
+      className="relative h-screen min-h-[700px] w-full"
     >
       <div ref={heroNavPortalRef} className="pointer-events-none absolute left-0 right-0 top-0 z-[60]" />
 
-      {p5Background ?? <div className={`absolute inset-0 ${skyBaseClass(style)}`} aria-hidden />}
-      {style === 'skyGrid' ? <div className="home-sky-grid absolute inset-0" aria-hidden /> : null}
-      {style === 'skyDots' ? <div className="home-sky-dots absolute inset-0" aria-hidden /> : null}
+      {/*
+        Keep the p5 canvas a direct section child (no overflow/isolation wrapper).
+        Wrapping it in overflow-hidden makes Chromium stop sampling it for backdrop-filter,
+        so the glass paints as a solid cover again.
+      */}
+      {p5Background}
+      {!p5Background ? (
+        <div className={`absolute inset-0 z-0 overflow-hidden ${skyBaseClass(style)}`} aria-hidden />
+      ) : null}
+      {style === 'skyGrid' ? <div className="home-sky-grid absolute inset-0 z-0 overflow-hidden" aria-hidden /> : null}
+      {style === 'skyDots' ? <div className="home-sky-dots absolute inset-0 z-0 overflow-hidden" aria-hidden /> : null}
 
       <div className="relative z-20 mx-auto flex h-full max-w-7xl flex-col items-center justify-center px-4 text-center sm:px-6 lg:px-8">
-        <div className="max-w-4xl">
+        <div className={frostClass}>
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}

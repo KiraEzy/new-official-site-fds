@@ -805,6 +805,7 @@ export default function App() {
   const [bentoSectionAppearance, setBentoSectionAppearance] = useState<'pastel' | 'mint' | 'dark'>('mint');
   const [pastelBentoGlassStrength, setPastelBentoGlassStrength] = useState<'airy' | 'balanced' | 'readable'>('readable');
   const [heroMintBlendEnabled, setHeroMintBlendEnabled] = useState(false);
+  const [heroFrostedGlassEnabled, setHeroFrostedGlassEnabled] = useState(true);
   const [heroStyle, setHeroStyle] = useState<HeroStyle>('softSky');
   const [heroCopyIndex, setHeroCopyIndex] = useState(0);
   const [latticeTuningByStyle, setLatticeTuningByStyle] = useState<Record<LatticeHeroStyle, LatticeTuning>>(
@@ -1145,6 +1146,7 @@ export default function App() {
           colorProfile={colorProfile}
           showMintBlend={showHeroMintBlend}
           mintBlendAppearance={bentoSectionAppearance}
+          showFrostedGlass={heroFrostedGlassEnabled}
           latticeMode={activeLatticeStyle ? getLatticeMode(activeLatticeStyle) : 'magnetic'}
           latticeTuning={activeLatticeTuning}
           onCtaClick={() => {
@@ -1876,6 +1878,20 @@ export default function App() {
               <option value="balanced">{demo.bentoPastelGlassBalanced}</option>
               <option value="readable">{demo.bentoPastelGlassReadable}</option>
             </select>
+          </label>
+
+          <label className="mt-3 flex cursor-pointer items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/8 p-4">
+            <span>
+              <span className="block text-sm font-semibold">{demo.heroFrostedGlassTitle}</span>
+              <span className="mt-1 block text-xs leading-5 text-white/55">{demo.heroFrostedGlassHelp}</span>
+            </span>
+            <input
+              type="checkbox"
+              checked={heroFrostedGlassEnabled}
+              onChange={(event) => setHeroFrostedGlassEnabled(event.target.checked)}
+              aria-label={demo.heroFrostedGlassAria}
+              className="h-5 w-5 accent-interactive"
+            />
           </label>
 
           <label
