@@ -10,22 +10,23 @@ type HexCell = {
 };
 
 /**
- * p5 hero: hex lattice of light grey dots with magnetic cursor nudge.
+ * p5 hero: hex lattice with several cursor-driven interaction modes.
  * Tuning is read live via ref so demo sliders update without remounting.
  */
 export function HomeHeroP5Hexagons({
   className,
-  mode: _mode,
+  mode,
   tuning
 }: {
   className?: string;
-  key?: string;
   mode: LatticeHeroMode;
   tuning: LatticeTuning;
 }) {
   const hostRef = useRef<HTMLDivElement>(null);
   const tuningRef = useRef(tuning);
   tuningRef.current = tuning;
+  const modeRef = useRef(mode);
+  modeRef.current = mode;
 
   useEffect(() => {
     const host = hostRef.current;
@@ -49,6 +50,12 @@ export function HomeHeroP5Hexagons({
         let pointerY = -9999;
         let pointerInside = false;
         const seed = Math.floor(Math.random() * 1_000_000);
+        type Wave = { x: number; y: number; born: number };
+        type TrailSample = { x: number; y: number; born: number };
+        let waves: Wave[] = [];
+        let trail: TrailSample[] = [];
+        let lastPointerX = pointerX;
+        let lastPointerY = pointerY;
 
         const onPointerMove = (event: PointerEvent) => {
           const el = hostRef.current;
@@ -66,12 +73,26 @@ export function HomeHeroP5Hexagons({
           }
           pointerX = event.clientX - rect.left;
           pointerY = event.clientY - rect.top;
+
+          const moved = Math.hypot(pointerX - lastPointerX, pointerY - lastPointerY) > 6;
+          if (
+            moved &&
+            modeRef.current === 'ripple' &&
+            !prefersReducedMotion()
+          ) {
+            waves.push({ x: pointerX, y: pointerY, born: p.millis() });
+            waves = waves.slice(-4);
+          }
+          lastPointerX = pointerX;
+          lastPointerY = pointerY;
         };
 
         const onPointerLeaveWindow = () => {
           pointerInside = false;
           pointerX = -9999;
           pointerY = -9999;
+          lastPointerX = pointerX;
+          lastPointerY = pointerY;
         };
 
         window.addEventListener('pointermove', onPointerMove, { passive: true });
@@ -131,41 +152,129 @@ export function HomeHeroP5Hexagons({
         };
 
         p.draw = () => {
-          const { grey, influenceRadius, attraction, hexWidth } = tuningRef.current;
-          if (cells.length === 0 || builtHexWidth !== hexWidth) syncSize();
+          const t = tuningRef.current;
+          const currentMode = modeRef.current;
+          const reduceMotion = prefersReducedMotion();
+          if (cells.length === 0 || builtHexWidth !== t.hexWidth) syncSize();
 
           p.background(255);
-          const dotR = Math.max(1.05, hexWidth * 0.032);
-          const g = Math.round(grey);
-          p.fill(g, g, g);
+          const baseDotR = Math.max(1.05, t.hexWidth * 0.032);
+          const baseGrey = Math.round(t.grey);
           p.noStroke();
 
-          const reduceMotion = prefersReducedMotion();
-          const influence = influenceRadius;
-          const maxPull = hexWidth * attraction;
-          const ease = 0.16;
+          if (currentMode === 'ripple') {
+            waves = reduceMotion
+              ? []
+              : waves.filter((wave) => (p.millis() - wave.born) / 1000 <= 0.85);
+          } else {
+            waves = [];
+          }
+
+          if (currentMode === 'paint') {
+            if (!reduceMotion && pointerInside) {
+              trail.push({ x: pointerX, y: pointerY, born: p.millis() });
+              trail = trail.slice(-Math.max(1, Math.round(t.trailLength)));
+            }
+            trail = reduceMotion
+              ? []
+              : trail.filter((sample) => (p.millis() - sample.born) / 1000 <= 0.7);
+          } else {
+            trail = [];
+          }
+
+          const linkedCells = new Set<HexCell>();
+          if (currentMode === 'connect' && !reduceMotion && pointerInside) {
+            const linkCount = Math.min(6, Math.max(3, Math.round(t.linkCount)));
+            const nearest = [...cells]
+              .sort(
+                (a, b) =>
+                  Math.hypot(a.cx - pointerX, a.cy - pointerY) -
+                  Math.hypot(b.cx - pointerX, b.cy - pointerY)
+              )
+              .slice(0, linkCount);
+            p.stroke(baseGrey, baseGrey, baseGrey, 120);
+            p.strokeWeight(1);
+            for (const cell of nearest) {
+              linkedCells.add(cell);
+              p.line(pointerX, pointerY, cell.cx, cell.cy);
+            }
+            p.noStroke();
+          }
 
           for (const cell of cells) {
-            let targetX = cell.cx;
-            let targetY = cell.cy;
+            let scale = 1;
+            let grey = baseGrey;
 
-            if (!reduceMotion && pointerInside) {
-              const dx = pointerX - cell.cx;
-              const dy = pointerY - cell.cy;
-              const dist = Math.hypot(dx, dy);
-              if (dist > 0.001 && dist < influence) {
-                const t = 1 - dist / influence;
-                const falloff = t * t * (3 - 2 * t);
-                const pull = maxPull * falloff;
-                targetX = cell.cx + (dx / dist) * pull;
-                targetY = cell.cy + (dy / dist) * pull;
+            if (currentMode === 'magnetic') {
+              let targetX = cell.cx;
+              let targetY = cell.cy;
+              if (!reduceMotion && pointerInside) {
+                const dx = pointerX - cell.cx;
+                const dy = pointerY - cell.cy;
+                const distance = Math.hypot(dx, dy);
+                if (distance > 0.001 && distance < t.influenceRadius) {
+                  const progress = 1 - distance / t.influenceRadius;
+                  const falloff = progress * progress * (3 - 2 * progress);
+                  const pull = t.hexWidth * t.attraction * falloff;
+                  targetX = cell.cx + (dx / distance) * pull;
+                  targetY = cell.cy + (dy / distance) * pull;
+                }
               }
+              if (reduceMotion) {
+                cell.x = cell.cx;
+                cell.y = cell.cy;
+              } else {
+                cell.x += (targetX - cell.x) * 0.16;
+                cell.y += (targetY - cell.y) * 0.16;
+              }
+              p.fill(grey, grey, grey);
+              p.circle(cell.x, cell.y, baseDotR * 2);
+              continue;
             }
 
-            cell.x += (targetX - cell.x) * ease;
-            cell.y += (targetY - cell.y) * ease;
+            cell.x = cell.cx;
+            cell.y = cell.cy;
 
-            p.circle(cell.x, cell.y, dotR * 2);
+            if (currentMode === 'ripple' && !reduceMotion) {
+              for (const wave of waves) {
+                const age = (p.millis() - wave.born) / 1000;
+                const radius = age * (t.influenceRadius * 1.2);
+                const ringWidth = t.hexWidth * 0.9;
+                const distance = Math.hypot(cell.cx - wave.x, cell.cy - wave.y);
+                const band = 1 - Math.abs(distance - radius) / ringWidth;
+                if (band > 0) {
+                  scale = Math.max(scale, 1 + band * t.waveStrength * 0.85);
+                  grey = Math.min(grey, baseGrey - band * t.waveStrength * 55);
+                }
+              }
+            } else if (currentMode === 'spotlight' && !reduceMotion && pointerInside) {
+              const distance = Math.hypot(pointerX - cell.cx, pointerY - cell.cy);
+              if (distance < t.influenceRadius) {
+                const falloff = 1 - distance / t.influenceRadius;
+                const strength = falloff * falloff * (3 - 2 * falloff) * t.densifyStrength;
+                scale = 1 + strength * 1.35;
+                grey = Math.round(baseGrey - strength * 70);
+              }
+            } else if (currentMode === 'connect' && linkedCells.has(cell)) {
+              scale = 1.35;
+            } else if (currentMode === 'paint' && !reduceMotion) {
+              let brightness = 0;
+              for (const sample of trail) {
+                const distance = Math.hypot(cell.cx - sample.x, cell.cy - sample.y);
+                const influenceRadius = t.hexWidth * 1.1;
+                if (distance < influenceRadius) {
+                  const proximity = 1 - distance / influenceRadius;
+                  const age = (p.millis() - sample.born) / 1000;
+                  const ageFade = Math.max(0, 1 - age / 0.7);
+                  brightness = Math.max(brightness, t.trailBrightness * ageFade * proximity);
+                }
+              }
+              grey = baseGrey - brightness * 90;
+              scale = 1 + brightness * 0.6;
+            }
+
+            p.fill(grey, grey, grey);
+            p.circle(cell.cx, cell.cy, baseDotR * 2 * scale);
           }
         };
 
@@ -193,7 +302,7 @@ export function HomeHeroP5Hexagons({
       instance?.remove();
       instance = null;
     };
-  }, []);
+  }, [mode]);
 
   return (
     <div
@@ -201,6 +310,7 @@ export function HomeHeroP5Hexagons({
       className={className}
       aria-hidden
       data-hero-p5-hexagon
+      data-hero-lattice-mode={mode}
       style={{ backgroundColor: '#ffffff', pointerEvents: 'none' }}
     />
   );

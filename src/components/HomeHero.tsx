@@ -1,4 +1,4 @@
-import type { ComponentType, Ref } from 'react';
+import { Fragment, type ComponentType, type Ref } from 'react';
 import { motion } from 'motion/react';
 import type { HeroSlide, HeroStyle, LatticeHeroMode, LatticeTuning } from './homeHeroTypes';
 import { isLatticeHeroStyle } from './homeHeroTypes';
@@ -41,12 +41,13 @@ export function HomeHero({
   latticeTuning: LatticeTuning;
 }) {
   const p5Background = isLatticeHeroStyle(style) ? (
-    <HomeHeroP5Hexagons
-      key={style}
-      className="absolute inset-0 z-0 h-full w-full"
-      mode={latticeMode}
-      tuning={latticeTuning}
-    />
+    <Fragment key={style}>
+      <HomeHeroP5Hexagons
+        className="absolute inset-0 z-0 h-full w-full"
+        mode={latticeMode}
+        tuning={latticeTuning}
+      />
+    </Fragment>
   ) : null;
 
   return (
