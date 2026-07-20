@@ -717,6 +717,7 @@ export default function App() {
   const snapTimeoutRef = useRef<number | null>(null);
   const touchStartYRef = useRef<number | null>(null);
   const [activePage, setActivePage] = useState<ActivePage>(() => pageFromHash(window.location.hash));
+  const [heroNavPortalEl, setHeroNavPortalEl] = useState<HTMLDivElement | null>(null);
   const [forceNavbarTop, setForceNavbarTop] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [showStyleControls, setShowStyleControls] = useState(false);
@@ -729,7 +730,7 @@ export default function App() {
   const [bentoSectionAppearance, setBentoSectionAppearance] = useState<'pastel' | 'mint' | 'dark'>('mint');
   const [pastelBentoGlassStrength, setPastelBentoGlassStrength] = useState<'airy' | 'balanced' | 'readable'>('readable');
   const [colorProfile, setColorProfile] = useState<'default' | 'navy'>('default');
-  const [navLayoutDemo, setNavLayoutDemo] = useState<NavbarLayoutMode>('pillFixed');
+  const [navLayoutDemo, setNavLayoutDemo] = useState<NavbarLayoutMode>('heroTransparent');
   const [showFestivalBar, setShowFestivalBar] = useState(true);
 
   const pastelBentoGlassPresets = {
@@ -1028,6 +1029,7 @@ export default function App() {
         dropdownGlassOpacity={dropdownGlassOpacity}
         colorProfile={colorProfile}
         navLayout={navLayoutDemo}
+        heroNavPortalEl={activePage === 'home' ? heroNavPortalEl : null}
         topOffset={showFestivalBar ? FESTIVAL_BAR_HEIGHT : 0}
       />
 
@@ -1035,6 +1037,7 @@ export default function App() {
       <main>
         <HomeHero
           heroRef={heroRef}
+          heroNavPortalRef={setHeroNavPortalEl}
           title={String(home.heroTitle ?? '')}
           lead={String(home.heroLead ?? '')}
         />

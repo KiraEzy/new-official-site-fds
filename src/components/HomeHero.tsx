@@ -4,11 +4,13 @@ import { motion, useReducedMotion } from 'motion/react';
 export function HomeHero({
   title,
   lead,
-  heroRef
+  heroRef,
+  heroNavPortalRef
 }: {
   title: string;
   lead: string;
   heroRef?: React.Ref<HTMLElement>;
+  heroNavPortalRef?: (el: HTMLDivElement | null) => void;
 }) {
   const reduceMotion = useReducedMotion();
 
@@ -18,6 +20,10 @@ export function HomeHero({
       data-home-hero="editorial"
       className="relative flex min-h-screen w-full items-center justify-center bg-background px-4 py-28 sm:px-6 lg:px-8"
     >
+      <div
+        ref={heroNavPortalRef}
+        className="pointer-events-none absolute left-0 right-0 top-0 z-[60]"
+      />
       <div className="mx-auto max-w-4xl text-center">
         <motion.h1
           initial={reduceMotion ? false : { opacity: 0, y: 16 }}
