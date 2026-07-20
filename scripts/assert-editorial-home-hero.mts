@@ -20,4 +20,8 @@ for (const locale of ['en', 'zh-Hans', 'zh-Hant'] as const) {
   }
 }
 
-console.log('assert-editorial-home-hero: i18n ok');
+const heroMod = await import('../src/components/HomeHero.tsx');
+if (typeof heroMod.HomeHero !== 'function') {
+  throw new Error('HomeHero export missing');
+}
+console.log('assert-editorial-home-hero: ok');
