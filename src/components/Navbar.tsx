@@ -632,10 +632,10 @@ export default function Navbar({
   const transparentHeroChrome =
     heroTransparentLayout && isTopState && heroNavPortalEl
       ? createPortal(
-          <div className="pointer-events-auto w-full" style={{ paddingTop: topOffset }}>
+          <div className="pointer-events-none w-full" style={{ paddingTop: topOffset }}>
             {/* Reference build: collapsed accent utility strip (hero reads through) */}
             <div className="hidden lg:block bg-accent/90 backdrop-blur-md text-white/90 transition-all duration-700 h-0 opacity-0 overflow-hidden pointer-events-none py-0" />
-            <nav className="w-full transition-all duration-700 bg-transparent py-0">
+            <nav className="pointer-events-auto w-full transition-all duration-700 bg-transparent py-0">
               <div className="mx-auto w-full max-w-full px-4 sm:px-6 lg:px-8 transition-[max-width] duration-700 ease-out">
                 <div className="flex justify-between items-start">
                   <div className="shrink-0 flex items-center">

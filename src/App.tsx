@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useI18n } from './i18n/I18nContext';
 import Navbar, { type NavbarLayoutMode } from './components/Navbar';
 import CapturePage from './components/CapturePage';
@@ -14,7 +14,7 @@ import DocumentManagementPage from './components/DocumentManagementPage';
 import WebContentManagementPage from './components/WebContentManagementPage';
 import GetInTouchSection from './components/GetInTouchSection';
 import MiniCaseFlow from './components/MiniCaseFlow';
-import { HomeHero } from './components/HomeHero';
+import { HomeHero, type HeroTitleFont } from './components/HomeHero';
 import ContactUsPage from './pages/ContactUsPage';
 import NewsArticlePage from './pages/NewsArticlePage';
 import UnknownHashPage from './pages/UnknownHashPage';
@@ -38,6 +38,10 @@ import { ArrowRight, ArrowUp, X, Globe, Users, CheckCircle2, Database, Cpu, Phon
 import '@xyflow/react/dist/style.css';
 
 const FESTIVAL_BAR_HEIGHT = 56;
+/** Matches Tailwind `mb-12` — animated with news-title scroll progress. */
+const NEWS_TITLE_MARGIN_PX = 48;
+/** Extra top inset the news section gains as scroll progress goes 0 → 1. */
+const NEWS_SECTION_SHIFT_PX = 110;
 
 /*
 const clientLogos = [
@@ -722,6 +726,14 @@ export default function App() {
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [showStyleControls, setShowStyleControls] = useState(false);
   const [showBentoIcons, setShowBentoIcons] = useState(true);
+  const [forceNewsTitle, setForceNewsTitle] = useState(false);
+  const [heroTitleFont, setHeroTitleFont] = useState<HeroTitleFont>('page');
+  const [heroTitleFontWeight, setHeroTitleFontWeight] = useState(600);
+  const [newsTitleProgress, setNewsTitleProgress] = useState(0);
+  const [newsTitleHeight, setNewsTitleHeight] = useState(72);
+  const newsTitleInnerRef = useRef<HTMLDivElement>(null);
+  const newsTitleHeightRef = useRef(72);
+  const newsTitleProgressRef = useRef(0);
   const [alignContactInfoBottom, setAlignContactInfoBottom] = useState(true);
   const [hideEnquiryButton, setHideEnquiryButton] = useState(false);
   const [hideUtilityBarWhenHomeAtTop, setHideUtilityBarWhenHomeAtTop] = useState(false);
@@ -817,6 +829,24 @@ export default function App() {
       return section ? section.offsetTop : fallback;
     };
 
+    /** Center news as if the title block were fully expanded (scroll-linked reveal). */
+    const getNewsCenteredScrollTop = () => {
+      const news = newsSectionRef.current;
+      const fallbackTop = getSectionTop(news, getHeroBottom());
+      if (!news) return fallbackTop;
+      const titleSlot = newsTitleHeightRef.current + NEWS_TITLE_MARGIN_PX;
+      const shiftSlot = NEWS_SECTION_SHIFT_PX;
+      const p = newsTitleProgressRef.current;
+      const heightIfFull =
+        news.offsetHeight + (1 - p) * (titleSlot + shiftSlot);
+      const top = news.offsetTop;
+      const viewport = window.innerHeight;
+      if (heightIfFull >= viewport) return top;
+      const centered = top - (viewport - heightIfFull) / 2;
+      const maxScroll = Math.max(0, document.documentElement.scrollHeight - viewport);
+      return Math.min(maxScroll, Math.max(0, Math.round(centered)));
+    };
+
     const snapTo = (top: number, label: string) => {
       if (snapTimeoutRef.current !== null) {
         snapLog('snapTo skipped (cooldown)', { label, top });
@@ -839,6 +869,7 @@ export default function App() {
       const scrollY = window.scrollY;
       const heroBottom = getHeroBottom();
       const sectionOneTop = getSectionTop(newsSectionRef.current, heroBottom);
+      const sectionOneSnap = getNewsCenteredScrollTop();
       const sectionTwoTop = getSectionTop(bentoSectionRef.current, sectionOneTop + window.innerHeight);
       const sectionThreeTop = getSectionTop(
         solutionsSectionRef.current,
@@ -851,6 +882,7 @@ export default function App() {
         scrollY,
         heroBottom,
         sectionOneTop,
+        sectionOneSnap,
         sectionTwoTop,
         sectionThreeTop,
         topThreshold,
@@ -858,14 +890,14 @@ export default function App() {
       };
 
       if (direction === 'down' && scrollY <= topThreshold) {
-        snapTo(sectionOneTop, 'hero → latest news');
+        snapTo(sectionOneSnap, 'hero → latest news (centered)');
         snapLog('intent handled', { ...ctx, branch: 'down: hero → section1' });
         return true;
       }
 
       if (
         direction === 'down' &&
-        scrollY >= sectionOneTop - topThreshold &&
+        scrollY >= sectionOneSnap - topThreshold &&
         scrollY < sectionTwoTop - sectionSnapPadding
       ) {
         snapTo(sectionTwoTop, 'latest news → bento');
@@ -888,7 +920,7 @@ export default function App() {
         scrollY >= sectionTwoTop - topThreshold &&
         scrollY <= sectionTwoTop + sectionSnapPadding
       ) {
-        snapTo(sectionOneTop, 'bento zone → latest news');
+        snapTo(sectionOneSnap, 'bento zone → latest news (centered)');
         snapLog('intent handled', { ...ctx, branch: 'up: section2 → section1' });
         return true;
       }
@@ -972,24 +1004,87 @@ export default function App() {
     };
   }, [activePage]);
 
+  useLayoutEffect(() => {
+    if (activePage !== 'home') return;
+    const el = newsTitleInnerRef.current;
+    if (!el) return;
+    const measure = () => {
+      const h = el.scrollHeight;
+      if (h > 0 && Math.abs(h - newsTitleHeightRef.current) > 0.5) {
+        newsTitleHeightRef.current = h;
+        setNewsTitleHeight(h);
+      }
+    };
+    measure();
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(measure) : null;
+    ro?.observe(el);
+    window.addEventListener('resize', measure);
+    return () => {
+      ro?.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, [activePage, home.newsTitle]);
+
   useEffect(() => {
+    const updateNewsTitleProgress = () => {
+      if (activePage !== 'home') {
+        if (newsTitleProgressRef.current !== 0) {
+          newsTitleProgressRef.current = 0;
+          setNewsTitleProgress(0);
+        }
+        return;
+      }
+
+      const news = newsSectionRef.current;
+      if (!news) return;
+
+      const scrollY = window.scrollY;
+      const startY = Math.max(48, news.offsetTop * 0.18);
+      const titleSlot = newsTitleHeightRef.current + NEWS_TITLE_MARGIN_PX;
+      const shiftSlot = NEWS_SECTION_SHIFT_PX;
+      const p = newsTitleProgressRef.current;
+      const heightIfFull =
+        news.offsetHeight + (1 - p) * (titleSlot + shiftSlot);
+      const top = news.offsetTop;
+      const viewport = window.innerHeight;
+      const endY =
+        heightIfFull >= viewport
+          ? top
+          : Math.max(0, top - (viewport - heightIfFull) / 2 - 100);
+      const range = Math.max(1, endY - startY);
+      const next = Math.min(1, Math.max(0, (scrollY - startY) / range));
+
+      if (Math.abs(next - newsTitleProgressRef.current) > 0.008) {
+        newsTitleProgressRef.current = next;
+        setNewsTitleProgress(next);
+      } else if (next === 0 || next === 1) {
+        newsTitleProgressRef.current = next;
+        setNewsTitleProgress(next);
+      }
+    };
+
     const handleScroll = () => {
       setShowBackToTop(window.scrollY > 160);
+      updateNewsTitleProgress();
     };
 
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', updateNewsTitleProgress);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', updateNewsTitleProgress);
     };
-  }, []);
+  }, [activePage]);
 
   const scrollToTop = () => {
     setForceNavbarTop(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
     window.setTimeout(() => setForceNavbarTop(false), 900);
   };
+
+  const newsReveal = forceNewsTitle ? 1 : newsTitleProgress;
 
   const newsArticleSlug = newsSlugFromHash(window.location.hash);
 
@@ -1003,7 +1098,7 @@ export default function App() {
             animate={{ height: FESTIVAL_BAR_HEIGHT }}
             exit={{ height: 0 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed top-0 left-0 right-0 z-52 overflow-hidden"
+            className="fixed top-0 left-0 right-0 z-[70] overflow-hidden"
           >
             <div className="relative flex h-14 items-center justify-center gap-3 border-b border-[#c9a227]/35 bg-[linear-gradient(90deg,#0a3324_0%,#145c38_42%,#0f5248_100%)] px-6 text-[#f0dfa0] shadow-[inset_0_1px_0_rgba(201,162,39,0.22)]">
               <Ship size={16} className="shrink-0 text-[#e8c547]" aria-hidden />
@@ -1040,24 +1135,37 @@ export default function App() {
           heroNavPortalRef={setHeroNavPortalEl}
           title={String(home.heroTitle ?? '')}
           lead={String(home.heroLead ?? '')}
+          titleFont={heroTitleFont}
+          titleFontWeight={heroTitleFontWeight}
         />
 
         {/* Latest News */}
         <section
           ref={newsSectionRef}
-          className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-white py-16"
+          className="relative overflow-hidden bg-white will-change-[padding-top]"
+          style={{
+            paddingTop: `${24 + newsReveal * NEWS_SECTION_SHIFT_PX}px`,
+            paddingBottom: '15vh'
+          }}
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_15%,rgba(17,184,245,0.07),transparent_40%),radial-gradient(circle_at_10%_80%,rgba(81,78,247,0.05),transparent_35%)]" />
           <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.55 }}
-              className="mb-12"
+            <div
+              className="overflow-hidden will-change-[height,opacity,transform,margin-bottom]"
+              style={{
+                height: newsReveal * newsTitleHeight,
+                marginBottom: newsReveal * NEWS_TITLE_MARGIN_PX,
+                opacity: newsReveal,
+                transform: `translateY(${(1 - newsReveal) * 16}px)`
+              }}
+              aria-hidden={newsReveal < 0.05}
             >
-              <h2 className="text-4xl font-bold tracking-tight text-text md:text-5xl">{String(home.newsTitle ?? '')}</h2>
-            </motion.div>
+              <div ref={newsTitleInnerRef}>
+                <h2 className="text-4xl font-bold tracking-tight text-text md:text-5xl">
+                  {String(home.newsTitle ?? '')}
+                </h2>
+              </div>
+            </div>
 
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {newsItems.map((item, idx) => {
@@ -1065,7 +1173,7 @@ export default function App() {
                   'group flex flex-col rounded-3xl border border-text/6 bg-white p-9 shadow-[0_4px_24px_rgba(1,20,26,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(17,184,245,0.12)]';
                 const cardContent = (
                   <>
-                    <div className="mb-4 flex items-center gap-2 text-text/45">
+                    <div className="mb-5 flex items-center gap-2 text-text/45">
                       <Clock3 size={14} aria-hidden />
                       <span className="text-base font-medium">{item.date}</span>
                     </div>
@@ -1482,6 +1590,39 @@ export default function App() {
             </select>
           </label>
 
+          <label className="mb-3 block rounded-2xl border border-white/10 bg-white/8 p-4">
+            <span className="block text-sm font-semibold text-interactive">{demo.heroTitleFontLabel}</span>
+            <span className="mt-1 mb-2 block text-xs leading-5 text-white/55">{demo.heroTitleFontHelp}</span>
+            <select
+              value={heroTitleFont}
+              onChange={(event) => setHeroTitleFont(event.target.value as HeroTitleFont)}
+              aria-label={demo.heroTitleFontAria}
+              className="mt-2 w-full rounded-xl border border-white/20 bg-[#07111f]/80 px-3 py-2.5 text-sm font-medium text-white outline-none"
+            >
+              <option value="page">{demo.heroTitleFontPage}</option>
+              <option value="jost">{demo.heroTitleFontJost}</option>
+              <option value="quicksand">{demo.heroTitleFontQuicksand}</option>
+              <option value="outfit">{demo.heroTitleFontOutfit}</option>
+              <option value="lexend">{demo.heroTitleFontLexend}</option>
+              <option value="urbanist">{demo.heroTitleFontUrbanist}</option>
+            </select>
+            <span className="mt-4 flex items-center justify-between gap-3">
+              <span className="text-sm font-semibold text-white">{demo.heroTitleWeightLabel}</span>
+              <span className="text-xs font-bold text-interactive">{heroTitleFontWeight}</span>
+            </span>
+            <span className="mt-1 block text-xs leading-5 text-white/55">{demo.heroTitleWeightHelp}</span>
+            <input
+              type="range"
+              min={300}
+              max={800}
+              step={50}
+              value={heroTitleFontWeight}
+              aria-label={demo.heroTitleWeightAria}
+              onChange={(event) => setHeroTitleFontWeight(Number(event.target.value))}
+              className="mt-3 w-full accent-interactive"
+            />
+          </label>
+
           <label className="mt-5 block rounded-2xl border border-white/10 bg-white/8 p-4">
             <span className="block text-sm font-semibold text-interactive">{demo.colorProfileLabel}</span>
             <span className="mt-1 mb-2 block text-xs leading-5 text-white/55">{demo.colorProfileHelp}</span>
@@ -1505,6 +1646,19 @@ export default function App() {
               type="checkbox"
               checked={showBentoIcons}
               onChange={(event) => setShowBentoIcons(event.target.checked)}
+              className="h-5 w-5 accent-interactive"
+            />
+          </label>
+
+          <label className="mt-3 flex cursor-pointer items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/8 p-4">
+            <span>
+              <span className="block text-sm font-semibold">{demo.newsTitleToggleTitle}</span>
+              <span className="mt-1 block text-xs leading-5 text-white/55">{demo.newsTitleToggleHelp}</span>
+            </span>
+            <input
+              type="checkbox"
+              checked={forceNewsTitle}
+              onChange={(event) => setForceNewsTitle(event.target.checked)}
               className="h-5 w-5 accent-interactive"
             />
           </label>
