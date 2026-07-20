@@ -1,10 +1,20 @@
+import type * as React from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 
-export function HomeHero({ title, lead }: { title: string; lead: string }) {
+export function HomeHero({
+  title,
+  lead,
+  heroRef
+}: {
+  title: string;
+  lead: string;
+  heroRef?: React.Ref<HTMLElement>;
+}) {
   const reduceMotion = useReducedMotion();
 
   return (
     <section
+      ref={heroRef}
       data-home-hero="editorial"
       className="relative flex min-h-screen w-full items-center justify-center bg-background px-4 py-28 sm:px-6 lg:px-8"
     >

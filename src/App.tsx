@@ -14,6 +14,7 @@ import DocumentManagementPage from './components/DocumentManagementPage';
 import WebContentManagementPage from './components/WebContentManagementPage';
 import GetInTouchSection from './components/GetInTouchSection';
 import MiniCaseFlow from './components/MiniCaseFlow';
+import { HomeHero } from './components/HomeHero';
 import ContactUsPage from './pages/ContactUsPage';
 import NewsArticlePage from './pages/NewsArticlePage';
 import UnknownHashPage from './pages/UnknownHashPage';
@@ -30,12 +31,10 @@ import {
   newsArticleHash
 } from './content/pageHashes';
 import { type ActivePage, newsSlugFromHash, pageFromHash } from './routing/activePage';
-import { motion, AnimatePresence, useAnimationControls } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 // Government / organizational logos require consent before use — marquee disabled.
 // import Marquee from 'react-fast-marquee';
 import { ArrowRight, ArrowUp, X, Globe, Users, CheckCircle2, Database, Cpu, Phone, Mail, MapPin, Clock3, Send, SlidersHorizontal, Cloud, PencilRuler, ShieldCheck, Route, RefreshCw, ListChecks, Search, BarChart3, PlugZap, BadgeCheck, Printer, Sparkles, Zap, Rocket, GitBranch, LayoutDashboard, Smartphone, Puzzle, Building2, ClipboardList, Bell, AlarmClock, AlertCircle, UsersRound, Share2, Ship, type LucideIcon } from 'lucide-react';
-import { HomeHero } from './components/HomeHero';
-import { getHeroLead, type HeroStyle, DEFAULT_HEXAGON_HERO_TUNING, type HexagonHeroTuning } from './components/homeHeroTypes';
 import '@xyflow/react/dist/style.css';
 
 const FESTIVAL_BAR_HEIGHT = 56;
@@ -225,69 +224,6 @@ function CaseFeatureGraphic({ Icon, variant }: { Icon: LucideIcon; variant: numb
     </div>
   );
 }
-
-function SwipeBackgroundButton({
-  label,
-  colorProfile = 'default',
-  onClick
-}: {
-  label: string;
-  colorProfile?: 'default' | 'navy';
-  onClick?: () => void;
-}) {
-  const backgroundSwipeControls = useAnimationControls();
-  const hiddenFromRight = 'inset(0 100% 0 0)';
-  const hiddenFromLeft = 'inset(0 0 0 100%)';
-  const fullyVisible = 'inset(0 0 0 0)';
-
-  const overlayBgClass =
-    colorProfile === 'default' ? 'bg-[#0a1f44]' : 'bg-accent';
-
-  const shellHoverClass =
-    colorProfile === 'default'
-      ? 'hover:shadow-[0_28px_70px_rgba(10,31,68,0.42)]'
-      : '';
-
-  const revealBackground = () => {
-    backgroundSwipeControls.start({
-      clipPath: fullyVisible,
-      transition: { duration: 0.36, ease: [0.22, 1, 0.36, 1] }
-    });
-  };
-
-  const exitBackground = async () => {
-    await backgroundSwipeControls.start({
-      clipPath: hiddenFromLeft,
-      transition: { duration: 0.32, ease: [0.64, 0, 0.78, 0] }
-    });
-    backgroundSwipeControls.set({ clipPath: hiddenFromRight });
-  };
-
-  return (
-    <motion.button
-      type="button"
-      onClick={onClick}
-      onHoverStart={revealBackground}
-      onHoverEnd={exitBackground}
-      onFocus={revealBackground}
-      onBlur={exitBackground}
-      whileTap={{ scale: 0.98 }}
-      className={`relative overflow-hidden rounded-full bg-interactive px-14 py-5 font-bold text-white shadow-2xl shadow-interactive/40 outline-none transition-all duration-300 focus-visible:ring-2 focus-visible:ring-white/70 ${shellHoverClass}`}
-    >
-      <motion.span
-        aria-hidden="true"
-        initial={{ clipPath: hiddenFromRight }}
-        animate={backgroundSwipeControls}
-        className={`absolute inset-0 ${overlayBgClass}`}
-      />
-      <span className="relative z-10 flex items-center gap-3">
-        {label}
-        <ArrowRight size={18} />
-      </span>
-    </motion.button>
-  );
-}
-
 
 function FocalAiHeroGraphic() {
   return (
@@ -768,10 +704,6 @@ export default function App() {
   const demo = ns('demo') as Record<string, string>;
   const footer = ns('footer') as Record<string, string>;
 
-  const heroSlides = (
-    Array.isArray(home.heroSlides) ? (home.heroSlides as { image: string; title: string; cta: string }[]) : []
-  );
-
   const newsItems = (
     Array.isArray(home.newsItems)
       ? (home.newsItems as { title: string; category: string; date: string; slug?: string }[])
@@ -796,20 +728,9 @@ export default function App() {
   const [dropdownGlassOpacity, setDropdownGlassOpacity] = useState(0.9);
   const [bentoSectionAppearance, setBentoSectionAppearance] = useState<'pastel' | 'mint' | 'dark'>('mint');
   const [pastelBentoGlassStrength, setPastelBentoGlassStrength] = useState<'airy' | 'balanced' | 'readable'>('readable');
-  const [heroMintBlendEnabled, setHeroMintBlendEnabled] = useState(false);
-  const [heroStyle, setHeroStyle] = useState<HeroStyle>('softSky');
-  const [heroCopyIndex, setHeroCopyIndex] = useState(0);
-  const [hexagonTuning, setHexagonTuning] = useState<HexagonHeroTuning>(DEFAULT_HEXAGON_HERO_TUNING);
   const [colorProfile, setColorProfile] = useState<'default' | 'navy'>('default');
-  const [navLayoutDemo, setNavLayoutDemo] = useState<NavbarLayoutMode>('heroTransparent');
+  const [navLayoutDemo, setNavLayoutDemo] = useState<NavbarLayoutMode>('pillFixed');
   const [showFestivalBar, setShowFestivalBar] = useState(true);
-  const [heroNavPortalEl, setHeroNavPortalEl] = useState<HTMLDivElement | null>(null);
-
-  const safeCopyIndex = heroCopyIndex >= 0 && heroCopyIndex < heroSlides.length ? heroCopyIndex : 0;
-  const activeHeroSlide = heroSlides[safeCopyIndex] ?? { title: '', cta: '', image: '' };
-  const activeHeroLead = getHeroLead(home, safeCopyIndex);
-
-  const showHeroMintBlend = bentoSectionAppearance !== 'dark' && heroMintBlendEnabled;
 
   const pastelBentoGlassPresets = {
     airy: {
@@ -937,7 +858,7 @@ export default function App() {
 
       if (direction === 'down' && scrollY <= topThreshold) {
         snapTo(sectionOneTop, 'hero → latest news');
-        snapLog('intent handled', { ...ctx, branch: 'down: top → section1' });
+        snapLog('intent handled', { ...ctx, branch: 'down: hero → section1' });
         return true;
       }
 
@@ -963,16 +884,6 @@ export default function App() {
 
       if (
         direction === 'up' &&
-        scrollY > topThreshold &&
-        scrollY <= heroBottom + heroBoundaryPadding - 100
-      ) {
-        snapTo(0, 'hero boundary → top');
-        snapLog('intent handled', { ...ctx, branch: 'up: into hero → 0' });
-        return true;
-      }
-
-      if (
-        direction === 'up' &&
         scrollY >= sectionTwoTop - topThreshold &&
         scrollY <= sectionTwoTop + sectionSnapPadding
       ) {
@@ -988,6 +899,16 @@ export default function App() {
       ) {
         snapTo(sectionTwoTop, 'solutions zone → bento');
         snapLog('intent handled', { ...ctx, branch: 'up: section3 → section2' });
+        return true;
+      }
+
+      if (
+        direction === 'up' &&
+        scrollY > topThreshold &&
+        scrollY <= heroBottom + heroBoundaryPadding - 100
+      ) {
+        snapTo(0, 'hero boundary → top');
+        snapLog('intent handled', { ...ctx, branch: 'up: hero boundary → top' });
         return true;
       }
 
@@ -1107,7 +1028,6 @@ export default function App() {
         dropdownGlassOpacity={dropdownGlassOpacity}
         colorProfile={colorProfile}
         navLayout={navLayoutDemo}
-        heroNavPortalEl={activePage === 'home' ? heroNavPortalEl : null}
         topOffset={showFestivalBar ? FESTIVAL_BAR_HEIGHT : 0}
       />
 
@@ -1115,19 +1035,8 @@ export default function App() {
       <main>
         <HomeHero
           heroRef={heroRef}
-          heroNavPortalRef={setHeroNavPortalEl}
-          style={heroStyle}
-          slide={activeHeroSlide}
-          lead={activeHeroLead}
-          scrollHint={String(home.scrollHint ?? '')}
-          colorProfile={colorProfile}
-          showMintBlend={showHeroMintBlend}
-          mintBlendAppearance={bentoSectionAppearance}
-          hexagonTuning={hexagonTuning}
-          onCtaClick={() => {
-            bentoSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }}
-          CtaButton={SwipeBackgroundButton}
+          title={String(home.heroTitle ?? '')}
+          lead={String(home.heroLead ?? '')}
         />
 
         {/* Latest News */}
@@ -1557,137 +1466,6 @@ export default function App() {
           </div>
 
           <label className="mb-3 block rounded-2xl border border-white/10 bg-white/8 p-4">
-            <span className="block text-sm font-semibold text-interactive">{demo.heroStyleLabel}</span>
-            <span className="mt-1 mb-2 block text-xs leading-5 text-white/55">{demo.heroStyleHelp}</span>
-            <select
-              value={heroStyle}
-              onChange={(event) => setHeroStyle(event.target.value as HeroStyle)}
-              aria-label={demo.heroStyleAria}
-              className="mt-2 w-full rounded-xl border border-white/20 bg-[#07111f]/80 px-3 py-2.5 text-sm font-medium text-white outline-none"
-            >
-              <option value="softSky">{demo.heroStyleSoftSky}</option>
-              <option value="skyHard">{demo.heroStyleSkyHard}</option>
-              <option value="skyHexagon">{demo.heroStyleSkyHexagon}</option>
-              <option value="skyDeep">{demo.heroStyleSkyDeep}</option>
-              <option value="skyGrid">{demo.heroStyleSkyGrid}</option>
-              <option value="skyDots">{demo.heroStyleSkyDots}</option>
-              <option value="skyCalm">{demo.heroStyleSkyCalm}</option>
-            </select>
-          </label>
-
-          {heroStyle === 'skyHexagon' ? (
-            <div className="mb-3 space-y-3 rounded-2xl border border-white/10 bg-white/8 p-4">
-              <div>
-                <p className="text-sm font-semibold text-interactive">{demo.hexagonTuningTitle}</p>
-                <p className="mt-1 text-xs leading-5 text-white/55">{demo.hexagonTuningHelp}</p>
-              </div>
-
-              <label className="block">
-                <span className="flex items-center justify-between gap-3">
-                  <span className="text-sm font-semibold">{demo.hexagonGreyLabel}</span>
-                  <span className="text-xs font-bold text-interactive">{Math.round(hexagonTuning.grey)}</span>
-                </span>
-                <span className="mt-1 block text-xs leading-5 text-white/55">{demo.hexagonGreyHelp}</span>
-                <input
-                  type="range"
-                  min="140"
-                  max="240"
-                  step="1"
-                  value={hexagonTuning.grey}
-                  aria-label={demo.hexagonGreyAria}
-                  onChange={(event) =>
-                    setHexagonTuning((prev) => ({ ...prev, grey: Number(event.target.value) }))
-                  }
-                  className="mt-3 w-full accent-interactive"
-                />
-              </label>
-
-              <label className="block">
-                <span className="flex items-center justify-between gap-3">
-                  <span className="text-sm font-semibold">{demo.hexagonInfluenceLabel}</span>
-                  <span className="text-xs font-bold text-interactive">{Math.round(hexagonTuning.influenceRadius)}px</span>
-                </span>
-                <span className="mt-1 block text-xs leading-5 text-white/55">{demo.hexagonInfluenceHelp}</span>
-                <input
-                  type="range"
-                  min="40"
-                  max="360"
-                  step="4"
-                  value={hexagonTuning.influenceRadius}
-                  aria-label={demo.hexagonInfluenceAria}
-                  onChange={(event) =>
-                    setHexagonTuning((prev) => ({
-                      ...prev,
-                      influenceRadius: Number(event.target.value)
-                    }))
-                  }
-                  className="mt-3 w-full accent-interactive"
-                />
-              </label>
-
-              <label className="block">
-                <span className="flex items-center justify-between gap-3">
-                  <span className="text-sm font-semibold">{demo.hexagonAttractionLabel}</span>
-                  <span className="text-xs font-bold text-interactive">
-                    {hexagonTuning.attraction.toFixed(2)}×
-                  </span>
-                </span>
-                <span className="mt-1 block text-xs leading-5 text-white/55">{demo.hexagonAttractionHelp}</span>
-                <input
-                  type="range"
-                  min="0.15"
-                  max="2"
-                  step="0.05"
-                  value={hexagonTuning.attraction}
-                  aria-label={demo.hexagonAttractionAria}
-                  onChange={(event) =>
-                    setHexagonTuning((prev) => ({
-                      ...prev,
-                      attraction: Number(event.target.value)
-                    }))
-                  }
-                  className="mt-3 w-full accent-interactive"
-                />
-              </label>
-
-              <label className="block">
-                <span className="flex items-center justify-between gap-3">
-                  <span className="text-sm font-semibold">{demo.hexagonWidthLabel}</span>
-                  <span className="text-xs font-bold text-interactive">{Math.round(hexagonTuning.hexWidth)}px</span>
-                </span>
-                <span className="mt-1 block text-xs leading-5 text-white/55">{demo.hexagonWidthHelp}</span>
-                <input
-                  type="range"
-                  min="10"
-                  max="40"
-                  step="1"
-                  value={hexagonTuning.hexWidth}
-                  aria-label={demo.hexagonWidthAria}
-                  onChange={(event) =>
-                    setHexagonTuning((prev) => ({ ...prev, hexWidth: Number(event.target.value) }))
-                  }
-                  className="mt-3 w-full accent-interactive"
-                />
-              </label>
-            </div>
-          ) : null}
-
-          <label className="mb-3 block rounded-2xl border border-white/10 bg-white/8 p-4">
-            <span className="block text-sm font-semibold text-interactive">{demo.heroCopyLabel}</span>
-            <span className="mt-1 mb-2 block text-xs leading-5 text-white/55">{demo.heroCopyHelp}</span>
-            <select
-              value={String(heroCopyIndex)}
-              onChange={(event) => setHeroCopyIndex(Number(event.target.value))}
-              aria-label={demo.heroCopyAria}
-              className="mt-2 w-full rounded-xl border border-white/20 bg-[#07111f]/80 px-3 py-2.5 text-sm font-medium text-white outline-none"
-            >
-              <option value="0">{demo.heroCopy0}</option>
-              <option value="1">{demo.heroCopy1}</option>
-              <option value="2">{demo.heroCopy2}</option>
-            </select>
-          </label>
-
-          <label className="mb-3 block rounded-2xl border border-white/10 bg-white/8 p-4">
             <span className="block text-sm font-semibold text-interactive">{demo.navLayoutLabel}</span>
             <span className="mt-1 mb-2 block text-xs leading-5 text-white/55">{demo.navLayoutHelp}</span>
             <select
@@ -1763,24 +1541,6 @@ export default function App() {
               <option value="balanced">{demo.bentoPastelGlassBalanced}</option>
               <option value="readable">{demo.bentoPastelGlassReadable}</option>
             </select>
-          </label>
-
-          <label
-            className={`mt-3 flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/8 p-4 ${
-              bentoSectionAppearance === 'dark' ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
-            }`}
-          >
-            <span>
-              <span className="block text-sm font-semibold">{demo.heroMintTitle}</span>
-              <span className="mt-1 block text-xs leading-5 text-white/55">{demo.heroMintHelp}</span>
-            </span>
-            <input
-              type="checkbox"
-              checked={heroMintBlendEnabled}
-              disabled={bentoSectionAppearance === 'dark'}
-              onChange={(event) => setHeroMintBlendEnabled(event.target.checked)}
-              className="h-5 w-5 accent-interactive disabled:opacity-40"
-            />
           </label>
 
           <label className="mt-3 flex cursor-pointer items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/8 p-4">
