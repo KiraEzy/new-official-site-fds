@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('home editorial hero', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://127.0.0.1:3000/');
+    await page.goto('/');
   });
 
   test('renders editorial hero without swiper pagination or in-hero CTA', async ({ page }) => {
