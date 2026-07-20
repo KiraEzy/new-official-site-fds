@@ -1,26 +1,6 @@
 {
-  "heroSlides": [
-    {
-      "image": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=2600",
-      "title": "Design to Simplify \nYour Enterprise.",
-      "cta": "See more"
-    },
-    {
-      "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2600",
-      "title": "Design to Simplify \nYour Enterprise.",
-      "cta": "See more"
-    },
-    {
-      "image": "https://images.unsplash.com/photo-1554469384-e58fac16e23a?auto=format&fit=crop&q=80&w=2600",
-      "title": "Twenty Years of \nTechnical Excellence.",
-      "cta": "Get Started"
-    }
-  ],
-  "heroSlideDesc0": "Twenty years of technical excellence—trusted by HKSAR Government and leading financial institutions for mission-critical systems.",
-  "heroSlideDesc1": "We empower organizations with lean technologies to optimize operations and reduce total cost of ownership.",
-  "heroSlideDesc2": "Trusted by HKSAR Government and leading financial institutions for mission-critical systems.",
-  "heroImageAlt": "Hero Background",
-  "scrollHint": "Scroll Down",
+  "heroTitle": "Design to Simplify \nYour Enterprise.",
+  "heroLead": "Twenty years of technical excellence—trusted by HKSAR Government and leading financial institutions for mission-critical systems.",
   "bentoEyebrow": "FDS Solutions",
   "bentoHeading": "What We Can Build For You",
   "bentoCardCtaLabel": "Learn more",
