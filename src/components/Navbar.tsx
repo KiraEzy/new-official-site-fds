@@ -350,13 +350,11 @@ export default function Navbar({
 
   const enquiryDesktopHover =
     colorProfile === 'default'
-      ? 'hover:bg-[#0a1f44] hover:text-white hover:shadow-[0_12px_36px_rgba(10,31,68,0.45)]'
-      : 'hover:bg-[#38d6ff] hover:text-white hover:shadow-lg hover:shadow-interactive/30';
+      ? 'hover:bg-[#294877] hover:text-white hover:shadow-[0_12px_36px_rgba(41,72,119,0.45)]'
+      : 'hover:bg-[#294877] hover:text-white hover:shadow-lg hover:shadow-[#294877]/30';
 
   const enquiryMobileHover =
-    colorProfile === 'default'
-      ? 'hover:bg-[#0a1f44] hover:text-white'
-      : 'hover:bg-[#38d6ff] hover:text-white';
+    'hover:bg-[#294877] hover:text-white';
 
   const showSolutionsDropdownInFixed = !heroTransparentLayout || !isTopState;
 
@@ -566,7 +564,7 @@ export default function Navbar({
             ) : (
               <button
                 type="button"
-                className="px-10 py-3.5 rounded-full font-bold text-[12px] uppercase tracking-widest transition-all duration-300 bg-interactive text-white shadow-md shadow-interactive/25 border border-transparent hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive/70"
+                className="px-10 py-3.5 rounded-full font-bold text-[12px] uppercase tracking-widest transition-all duration-300 bg-interactive text-white shadow-md shadow-interactive/25 border border-transparent hover:bg-[#294877] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive/70"
               >
                 {t('nav.enquiry')}
               </button>

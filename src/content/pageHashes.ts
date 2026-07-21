@@ -5,6 +5,9 @@ export const SERVICES_HASH = '#services';
 export const CAREER_HASH = '#career';
 export const CONTACT_US_HASH = '#contact-us';
 
+/** In-page section on the home route (does not leave home). */
+export const LATEST_NEWS_HASH = '#latest-news';
+
 export const CAPTURE_HASH = '#capture';
 export const DOCUMENT_MANAGEMENT_HASH = '#document-management';
 export const WEB_CONTENT_MANAGEMENT_HASH = '#web-content-management';

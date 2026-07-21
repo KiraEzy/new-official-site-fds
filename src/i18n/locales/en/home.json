@@ -1,26 +1,22 @@
 {
-  "heroSlides": [
-    {
-      "image": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=2600",
-      "title": "Design to Simplify \nYour Enterprise.",
-      "cta": "See more"
-    },
-    {
-      "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2600",
-      "title": "Design to Simplify \nYour Enterprise.",
-      "cta": "See more"
-    },
-    {
-      "image": "https://images.unsplash.com/photo-1554469384-e58fac16e23a?auto=format&fit=crop&q=80&w=2600",
-      "title": "Twenty Years of \nTechnical Excellence.",
-      "cta": "Get Started"
-    }
-  ],
-  "heroSlideDesc0": "Twenty years of technical excellence—trusted by HKSAR Government and leading financial institutions for mission-critical systems.",
-  "heroSlideDesc1": "We empower organizations with lean technologies to optimize operations and reduce total cost of ownership.",
-  "heroSlideDesc2": "Trusted by HKSAR Government and leading financial institutions for mission-critical systems.",
+  "heroTitle": "Design to Simplify \nYour Enterprise.",
+  "heroLead": "Twenty years of technical excellence—trusted by HKSAR Government and leading financial institutions for mission-critical systems.",
+  "heroCtaPrimary": "Get Started",
+  "heroCtaSecondary": "Explore Our Solutions",
   "heroImageAlt": "Hero Background",
-  "scrollHint": "Scroll Down",
+  "heroImageSrc": "/assets/fds-hero-wall-signage.png",
+  "heroCard0Title": "News",
+  "heroCard0ImageAlt": "Latest company news and updates",
+  "heroCard0ImageSrc": "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&q=80&w=1200",
+  "heroCard1Title": "Service",
+  "heroCard1ImageAlt": "IT services and infrastructure work",
+  "heroCard1ImageSrc": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=1200",
+  "heroCard2Title": "About Us",
+  "heroCard2ImageAlt": "Close-up of an Asian business handshake",
+  "heroCard2ImageSrc": "/assets/hero-about-asian-handshake.png",
+  "heroCard3Title": "Contact Us",
+  "heroCard3ImageAlt": "Close-up of an office desk phone",
+  "heroCard3ImageSrc": "/assets/hero-contact-desk-phone.png",
   "bentoEyebrow": "FDS Solutions",
   "bentoHeading": "What We Can Build For You",
   "bentoCardCtaLabel": "Learn more",

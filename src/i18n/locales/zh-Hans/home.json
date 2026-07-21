@@ -1,26 +1,22 @@
 {
-  "heroSlides": [
-    {
-      "image": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=2600",
-      "title": "以简驭繁，\n成就企业数字化转型。",
-      "cta": "了解更多"
-    },
-    {
-      "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2600",
-      "title": "以简驭繁，\n成就企业数字化转型。",
-      "cta": "了解更多"
-    },
-    {
-      "image": "https://images.unsplash.com/photo-1554469384-e58fac16e23a?auto=format&fit=crop&q=80&w=2600",
-      "title": "二十年技术精进，\n值得信赖。",
-      "cta": "立即开始"
-    }
-  ],
-  "heroSlideDesc0": "二十年技术精进，备受香港特区政府与领先金融机构信赖，承载关键业务系统。",
-  "heroSlideDesc1": "以精简可靠的技术，协助机构优化营运并降低总体拥有成本。",
-  "heroSlideDesc2": "备受香港特区政府与领先金融机构信赖，承载关键业务系统。",
+  "heroTitle": "以简驭繁，\n成就企业数字化转型。",
+  "heroLead": "二十年技术精进，备受香港特区政府与领先金融机构信赖，承载关键业务系统。",
+  "heroCtaPrimary": "立即开始",
+  "heroCtaSecondary": "探索方案",
   "heroImageAlt": "主视觉背景",
-  "scrollHint": "向下浏览",
+  "heroImageSrc": "/assets/fds-hero-wall-signage.png",
+  "heroCard0Title": "新闻",
+  "heroCard0ImageAlt": "公司最新消息与动态",
+  "heroCard0ImageSrc": "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&q=80&w=1200",
+  "heroCard1Title": "服务",
+  "heroCard1ImageAlt": "信息技术服务与基础设施",
+  "heroCard1ImageSrc": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=1200",
+  "heroCard2Title": "关于我们",
+  "heroCard2ImageAlt": "亚洲商务握手特写",
+  "heroCard2ImageSrc": "/assets/hero-about-asian-handshake.png",
+  "heroCard3Title": "联络我们",
+  "heroCard3ImageAlt": "办公台式电话特写",
+  "heroCard3ImageSrc": "/assets/hero-contact-desk-phone.png",
   "bentoEyebrow": "FDS Solutions",
   "bentoHeading": "我们能为您构建什么",
   "bentoCardCtaLabel": "了解更多",
