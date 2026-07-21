@@ -35,7 +35,6 @@ import { motion, AnimatePresence, useAnimationControls } from 'motion/react';
 // import Marquee from 'react-fast-marquee';
 import { ArrowRight, ArrowUp, X, Globe, Users, CheckCircle2, Database, Cpu, Phone, Mail, MapPin, Clock3, Send, SlidersHorizontal, Cloud, PencilRuler, ShieldCheck, Route, RefreshCw, ListChecks, Search, BarChart3, PlugZap, BadgeCheck, Printer, Sparkles, Zap, Rocket, GitBranch, LayoutDashboard, Smartphone, Puzzle, Building2, ClipboardList, Bell, AlarmClock, AlertCircle, UsersRound, Share2, Ship, type LucideIcon } from 'lucide-react';
 import { HomeHero } from './components/HomeHero';
-import { getHeroLead, type HeroStyle, DEFAULT_HEXAGON_HERO_TUNING, type HexagonHeroTuning } from './components/homeHeroTypes';
 import '@xyflow/react/dist/style.css';
 
 const FESTIVAL_BAR_HEIGHT = 56;
@@ -768,10 +767,6 @@ export default function App() {
   const demo = ns('demo') as Record<string, string>;
   const footer = ns('footer') as Record<string, string>;
 
-  const heroSlides = (
-    Array.isArray(home.heroSlides) ? (home.heroSlides as { image: string; title: string; cta: string }[]) : []
-  );
-
   const newsItems = (
     Array.isArray(home.newsItems)
       ? (home.newsItems as { title: string; category: string; date: string; slug?: string }[])
@@ -797,17 +792,10 @@ export default function App() {
   const [bentoSectionAppearance, setBentoSectionAppearance] = useState<'pastel' | 'mint' | 'dark'>('mint');
   const [pastelBentoGlassStrength, setPastelBentoGlassStrength] = useState<'airy' | 'balanced' | 'readable'>('readable');
   const [heroMintBlendEnabled, setHeroMintBlendEnabled] = useState(false);
-  const [heroStyle, setHeroStyle] = useState<HeroStyle>('softSky');
-  const [heroCopyIndex, setHeroCopyIndex] = useState(0);
-  const [hexagonTuning, setHexagonTuning] = useState<HexagonHeroTuning>(DEFAULT_HEXAGON_HERO_TUNING);
   const [colorProfile, setColorProfile] = useState<'default' | 'navy'>('default');
   const [navLayoutDemo, setNavLayoutDemo] = useState<NavbarLayoutMode>('heroTransparent');
   const [showFestivalBar, setShowFestivalBar] = useState(true);
   const [heroNavPortalEl, setHeroNavPortalEl] = useState<HTMLDivElement | null>(null);
-
-  const safeCopyIndex = heroCopyIndex >= 0 && heroCopyIndex < heroSlides.length ? heroCopyIndex : 0;
-  const activeHeroSlide = heroSlides[safeCopyIndex] ?? { title: '', cta: '', image: '' };
-  const activeHeroLead = getHeroLead(home, safeCopyIndex);
 
   const showHeroMintBlend = bentoSectionAppearance !== 'dark' && heroMintBlendEnabled;
 
@@ -1116,14 +1104,16 @@ export default function App() {
         <HomeHero
           heroRef={heroRef}
           heroNavPortalRef={setHeroNavPortalEl}
-          style={heroStyle}
-          slide={activeHeroSlide}
-          lead={activeHeroLead}
+          badge={String(home.heroBadge ?? '')}
+          designTo={String(home.heroDesignTo ?? '')}
+          simplifyWord={String(home.simplifySpot ?? '')}
+          excellenceWord={String(home.excellenceSpot ?? '')}
+          subtitle={String(home.heroSubtitle ?? '')}
+          ctaLabel={String(home.heroCta ?? '')}
           scrollHint={String(home.scrollHint ?? '')}
           colorProfile={colorProfile}
           showMintBlend={showHeroMintBlend}
           mintBlendAppearance={bentoSectionAppearance}
-          hexagonTuning={hexagonTuning}
           onCtaClick={() => {
             bentoSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }}
@@ -1555,137 +1545,6 @@ export default function App() {
             <p className="text-xs font-bold uppercase tracking-[0.26em] text-interactive">{demo.controlsEyebrow}</p>
             <h3 className="mt-1 text-lg font-bold">{demo.controlsTitle}</h3>
           </div>
-
-          <label className="mb-3 block rounded-2xl border border-white/10 bg-white/8 p-4">
-            <span className="block text-sm font-semibold text-interactive">{demo.heroStyleLabel}</span>
-            <span className="mt-1 mb-2 block text-xs leading-5 text-white/55">{demo.heroStyleHelp}</span>
-            <select
-              value={heroStyle}
-              onChange={(event) => setHeroStyle(event.target.value as HeroStyle)}
-              aria-label={demo.heroStyleAria}
-              className="mt-2 w-full rounded-xl border border-white/20 bg-[#07111f]/80 px-3 py-2.5 text-sm font-medium text-white outline-none"
-            >
-              <option value="softSky">{demo.heroStyleSoftSky}</option>
-              <option value="skyHard">{demo.heroStyleSkyHard}</option>
-              <option value="skyHexagon">{demo.heroStyleSkyHexagon}</option>
-              <option value="skyDeep">{demo.heroStyleSkyDeep}</option>
-              <option value="skyGrid">{demo.heroStyleSkyGrid}</option>
-              <option value="skyDots">{demo.heroStyleSkyDots}</option>
-              <option value="skyCalm">{demo.heroStyleSkyCalm}</option>
-            </select>
-          </label>
-
-          {heroStyle === 'skyHexagon' ? (
-            <div className="mb-3 space-y-3 rounded-2xl border border-white/10 bg-white/8 p-4">
-              <div>
-                <p className="text-sm font-semibold text-interactive">{demo.hexagonTuningTitle}</p>
-                <p className="mt-1 text-xs leading-5 text-white/55">{demo.hexagonTuningHelp}</p>
-              </div>
-
-              <label className="block">
-                <span className="flex items-center justify-between gap-3">
-                  <span className="text-sm font-semibold">{demo.hexagonGreyLabel}</span>
-                  <span className="text-xs font-bold text-interactive">{Math.round(hexagonTuning.grey)}</span>
-                </span>
-                <span className="mt-1 block text-xs leading-5 text-white/55">{demo.hexagonGreyHelp}</span>
-                <input
-                  type="range"
-                  min="140"
-                  max="240"
-                  step="1"
-                  value={hexagonTuning.grey}
-                  aria-label={demo.hexagonGreyAria}
-                  onChange={(event) =>
-                    setHexagonTuning((prev) => ({ ...prev, grey: Number(event.target.value) }))
-                  }
-                  className="mt-3 w-full accent-interactive"
-                />
-              </label>
-
-              <label className="block">
-                <span className="flex items-center justify-between gap-3">
-                  <span className="text-sm font-semibold">{demo.hexagonInfluenceLabel}</span>
-                  <span className="text-xs font-bold text-interactive">{Math.round(hexagonTuning.influenceRadius)}px</span>
-                </span>
-                <span className="mt-1 block text-xs leading-5 text-white/55">{demo.hexagonInfluenceHelp}</span>
-                <input
-                  type="range"
-                  min="40"
-                  max="360"
-                  step="4"
-                  value={hexagonTuning.influenceRadius}
-                  aria-label={demo.hexagonInfluenceAria}
-                  onChange={(event) =>
-                    setHexagonTuning((prev) => ({
-                      ...prev,
-                      influenceRadius: Number(event.target.value)
-                    }))
-                  }
-                  className="mt-3 w-full accent-interactive"
-                />
-              </label>
-
-              <label className="block">
-                <span className="flex items-center justify-between gap-3">
-                  <span className="text-sm font-semibold">{demo.hexagonAttractionLabel}</span>
-                  <span className="text-xs font-bold text-interactive">
-                    {hexagonTuning.attraction.toFixed(2)}×
-                  </span>
-                </span>
-                <span className="mt-1 block text-xs leading-5 text-white/55">{demo.hexagonAttractionHelp}</span>
-                <input
-                  type="range"
-                  min="0.15"
-                  max="2"
-                  step="0.05"
-                  value={hexagonTuning.attraction}
-                  aria-label={demo.hexagonAttractionAria}
-                  onChange={(event) =>
-                    setHexagonTuning((prev) => ({
-                      ...prev,
-                      attraction: Number(event.target.value)
-                    }))
-                  }
-                  className="mt-3 w-full accent-interactive"
-                />
-              </label>
-
-              <label className="block">
-                <span className="flex items-center justify-between gap-3">
-                  <span className="text-sm font-semibold">{demo.hexagonWidthLabel}</span>
-                  <span className="text-xs font-bold text-interactive">{Math.round(hexagonTuning.hexWidth)}px</span>
-                </span>
-                <span className="mt-1 block text-xs leading-5 text-white/55">{demo.hexagonWidthHelp}</span>
-                <input
-                  type="range"
-                  min="10"
-                  max="40"
-                  step="1"
-                  value={hexagonTuning.hexWidth}
-                  aria-label={demo.hexagonWidthAria}
-                  onChange={(event) =>
-                    setHexagonTuning((prev) => ({ ...prev, hexWidth: Number(event.target.value) }))
-                  }
-                  className="mt-3 w-full accent-interactive"
-                />
-              </label>
-            </div>
-          ) : null}
-
-          <label className="mb-3 block rounded-2xl border border-white/10 bg-white/8 p-4">
-            <span className="block text-sm font-semibold text-interactive">{demo.heroCopyLabel}</span>
-            <span className="mt-1 mb-2 block text-xs leading-5 text-white/55">{demo.heroCopyHelp}</span>
-            <select
-              value={String(heroCopyIndex)}
-              onChange={(event) => setHeroCopyIndex(Number(event.target.value))}
-              aria-label={demo.heroCopyAria}
-              className="mt-2 w-full rounded-xl border border-white/20 bg-[#07111f]/80 px-3 py-2.5 text-sm font-medium text-white outline-none"
-            >
-              <option value="0">{demo.heroCopy0}</option>
-              <option value="1">{demo.heroCopy1}</option>
-              <option value="2">{demo.heroCopy2}</option>
-            </select>
-          </label>
 
           <label className="mb-3 block rounded-2xl border border-white/10 bg-white/8 p-4">
             <span className="block text-sm font-semibold text-interactive">{demo.navLayoutLabel}</span>
