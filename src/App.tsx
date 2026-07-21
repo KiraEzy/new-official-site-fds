@@ -27,6 +27,7 @@ import {
   PROFILE_HASH,
   SERVICES_HASH,
   WEB_CONTENT_MANAGEMENT_HASH,
+  WHAT_WE_BUILD_HASH,
   WORKFLOW_MANAGEMENT_HASH,
   newsArticleHash
 } from './content/pageHashes';
@@ -730,7 +731,7 @@ export default function App() {
   const [bentoSectionAppearance, setBentoSectionAppearance] = useState<'pastel' | 'mint' | 'dark'>('mint');
   const [pastelBentoGlassStrength, setPastelBentoGlassStrength] = useState<'airy' | 'balanced' | 'readable'>('readable');
   const [colorProfile, setColorProfile] = useState<'default' | 'navy'>('default');
-  const [navLayoutDemo, setNavLayoutDemo] = useState<NavbarLayoutMode>('pillFixed');
+  const [navLayoutDemo, setNavLayoutDemo] = useState<NavbarLayoutMode>('heroTransparent');
   const [showFestivalBar, setShowFestivalBar] = useState(true);
   const [heroNavPortalEl, setHeroNavPortalEl] = useState<HTMLDivElement | null>(null);
 
@@ -768,9 +769,10 @@ export default function App() {
   }, [colorProfile]);
 
   useEffect(() => {
-    const scrollToLatestNews = () => {
+    const scrollToHomeSection = (section: HTMLElement | null) => {
       window.requestAnimationFrame(() => {
-        newsSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (!section) return;
+        window.scrollTo({ top: section.offsetTop, behavior: 'smooth' });
       });
     };
 
@@ -778,7 +780,11 @@ export default function App() {
       const hash = window.location.hash === '#' ? '' : window.location.hash;
       setActivePage(pageFromHash(hash));
       if (hash === LATEST_NEWS_HASH) {
-        scrollToLatestNews();
+        scrollToHomeSection(newsSectionRef.current);
+        return;
+      }
+      if (hash === WHAT_WE_BUILD_HASH) {
+        scrollToHomeSection(bentoSectionRef.current);
         return;
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -787,7 +793,9 @@ export default function App() {
     window.addEventListener('hashchange', handleHashChange);
 
     if (window.location.hash === LATEST_NEWS_HASH) {
-      scrollToLatestNews();
+      scrollToHomeSection(newsSectionRef.current);
+    } else if (window.location.hash === WHAT_WE_BUILD_HASH) {
+      scrollToHomeSection(bentoSectionRef.current);
     }
 
     return () => {
@@ -1008,6 +1016,9 @@ export default function App() {
   };
 
   const newsArticleSlug = newsSlugFromHash(window.location.hash);
+  const scrolledSectionTopPad = showFestivalBar
+    ? `calc(11rem + ${FESTIVAL_BAR_HEIGHT}px)`
+    : '11rem';
 
   return (
     <div className="min-h-screen bg-background font-sans">
@@ -1160,7 +1171,8 @@ export default function App() {
         <section
           ref={bentoSectionRef}
           id="what-we-build"
-          className={`relative min-h-screen overflow-hidden pt-44 pb-12 transition-[background-color] duration-500 ${
+          style={{ paddingTop: scrolledSectionTopPad }}
+          className={`relative min-h-screen overflow-hidden pb-12 transition-[background-color,padding-top] duration-500 ${
             bentoSectionAppearance === 'dark' ? 'bg-[#05070b]' : 'bg-[#f6fbff]'
           }`}
         >
@@ -1372,7 +1384,11 @@ export default function App() {
         </section>
 
         {/* All About FDS */}
-        <section ref={solutionsSectionRef} className="relative min-h-screen overflow-hidden bg-[#f6fbff] pt-44 pb-24">
+        <section
+          ref={solutionsSectionRef}
+          style={{ paddingTop: scrolledSectionTopPad }}
+          className="relative min-h-screen overflow-hidden bg-[#f6fbff] pb-24 transition-[padding-top] duration-500"
+        >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(17,184,245,0.12),transparent_28%),radial-gradient(circle_at_82%_12%,rgba(81,78,247,0.10),transparent_30%)]" />
           <div className="absolute inset-0 opacity-60 bg-[linear-gradient(rgba(1,20,26,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(1,20,26,0.035)_1px,transparent_1px)] bg-size-[42px_42px]" />
 

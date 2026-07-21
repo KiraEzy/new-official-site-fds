@@ -9,6 +9,7 @@ import {
   PROFILE_HASH,
   SERVICES_HASH,
   WEB_CONTENT_MANAGEMENT_HASH,
+  WHAT_WE_BUILD_HASH,
   WORKFLOW_MANAGEMENT_HASH
 } from '../content/pageHashes';
 
@@ -44,7 +45,7 @@ const NEWS_ARTICLE_HASH_PREFIX = '#news/';
 /** Empty fragment, lone `#`, or in-page home sections resolve to home; any other unknown hash → `unknown`. */
 export function pageFromHash(rawHash: string): ActivePage {
   const h = rawHash === '#' ? '' : rawHash;
-  if (h === '' || h === LATEST_NEWS_HASH) return 'home';
+  if (h === '' || h === LATEST_NEWS_HASH || h === WHAT_WE_BUILD_HASH) return 'home';
   if (h.startsWith(NEWS_ARTICLE_HASH_PREFIX) && h.length > NEWS_ARTICLE_HASH_PREFIX.length) {
     return 'news-article';
   }

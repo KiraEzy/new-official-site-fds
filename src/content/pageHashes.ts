@@ -7,6 +7,7 @@ export const CONTACT_US_HASH = '#contact-us';
 
 /** In-page section on the home route (does not leave home). */
 export const LATEST_NEWS_HASH = '#latest-news';
+export const WHAT_WE_BUILD_HASH = '#what-we-build';
 
 export const CAPTURE_HASH = '#capture';
 export const DOCUMENT_MANAGEMENT_HASH = '#document-management';
