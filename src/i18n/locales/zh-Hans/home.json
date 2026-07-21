@@ -1,25 +1,10 @@
 {
-  "heroSlides": [
-    {
-      "image": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=2600",
-      "title": "以简驭繁，\n成就企业数字化转型。",
-      "cta": "了解更多"
-    },
-    {
-      "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2600",
-      "title": "以简驭繁，\n成就企业数字化转型。",
-      "cta": "了解更多"
-    },
-    {
-      "image": "https://images.unsplash.com/photo-1554469384-e58fac16e23a?auto=format&fit=crop&q=80&w=2600",
-      "title": "二十年技术精进，\n值得信赖。",
-      "cta": "立即开始"
-    }
-  ],
-  "heroSlideDesc0": "二十年技术精进，备受香港特区政府与领先金融机构信赖，承载关键业务系统。",
-  "heroSlideDesc1": "以精简可靠的技术，协助机构优化营运并降低总体拥有成本。",
-  "heroSlideDesc2": "备受香港特区政府与领先金融机构信赖，承载关键业务系统。",
-  "heroImageAlt": "主视觉背景",
+  "heroBadge": "创立于香港 · 1993",
+  "heroDesignTo": "设计以",
+  "simplifySpot": "简化",
+  "excellenceSpot": "卓越。",
+  "heroSubtitle": "为区内市场打造兼具速度、可靠性与可管理性的企业方案。",
+  "heroCta": "了解更多",
   "scrollHint": "向下浏览",
   "bentoEyebrow": "FDS Solutions",
   "bentoHeading": "我们能为您构建什么",
