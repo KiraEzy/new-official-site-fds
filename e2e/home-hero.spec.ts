@@ -11,9 +11,10 @@ test.describe('home interactive hero', () => {
     await expect(page.locator('[data-hero-style]')).toHaveCount(0);
     await expect(page.locator('#hero-swiper-pagination')).toHaveCount(0);
     await expect(page.getByText(/Est\. in Hong Kong 1993|創立於香港|创立于香港/i)).toBeVisible();
-    await expect(page.getByRole('heading', { level: 1 })).toContainText(/Design to|設計以|设计以/);
-    await expect(page.getByText(/^Simplify$|^簡化$|^简化$/)).toBeVisible();
-    await expect(page.getByText(/Excellence\.|卓越。/)).toBeVisible();
+    const heading = page.getByRole('heading', { level: 1 });
+    await expect(heading).toContainText(/Design to|設計以|设计以/);
+    await expect(heading).toContainText(/Simplify|簡化|简化/);
+    await expect(heading).toContainText(/Excellence\.|卓越。/);
     await expect(
       page.getByText(/Engineering speed, reliability|為區內市場打造|为区内市场打造/)
     ).toBeVisible();

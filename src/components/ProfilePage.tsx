@@ -1,215 +1,7 @@
-import { motion, AnimatePresence, useSpring, useMotionValue } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { Target, Eye, Rocket, Award, ShieldCheck, Users, ChevronRight, CheckCircle2 } from 'lucide-react';
-import { useState, useRef, useEffect, useLayoutEffect, useCallback, useMemo, type ReactNode } from 'react';
+import { useState, useMemo, type ReactNode } from 'react';
 import { useI18n } from '../i18n/I18nContext';
-
-const SPOTLIGHT_RADIUS_PX = 118;
-
-/** Matches profile hero chrome (`bg-text/3`): paint over cyan fill inside the spotlight without masking glyphs (avoids WebKit cropping italic tails). */
-const HERO_SURFACE_KNOCKOUT =
-  'color-mix(in srgb, var(--color-text, #01141a) 4%, var(--color-background, #f9fdff))';
-
-function HeroSimplifyAndExcellenceSpot() {
-  const { locale, ns } = useI18n();
-  const p = ns('profile');
-  const simplifyWord = String(p.simplifySpot);
-  const excellenceWord = String(p.excellenceSpot);
-
-  const wrapRef = useRef<HTMLSpanElement>(null);
-  const simplifyRootRef = useRef<HTMLSpanElement>(null);
-  const excellenceRef = useRef<HTMLSpanElement>(null);
-  const measureRef = useRef<HTMLSpanElement>(null);
-  const geomRef = useRef({ sx: 0, sy: 0, ex: 0, ey: 0 });
-
-  const mouseX = useMotionValue(-500);
-  const mouseY = useMotionValue(-500);
-  const springX = useSpring(mouseX, { stiffness: 300, damping: 30 });
-  const springY = useSpring(mouseY, { stiffness: 300, damping: 30 });
-
-  const [simpStrokeClip, setSimpStrokeClip] = useState('circle(0px at 0px 0px)');
-  const [excGoldClip, setExcGoldClip] = useState('circle(0px at 0px 0px)');
-  const [knockPos, setKnockPos] = useState({ x: -500, y: -500 });
-  const [borderBoxPx, setBorderBoxPx] = useState<number | undefined>(undefined);
-  const [inlinePadPx, setInlinePadPx] = useState<number | undefined>(undefined);
-
-  const measureGeom = useCallback(() => {
-    const w = wrapRef.current;
-    const s = simplifyRootRef.current;
-    const e = excellenceRef.current;
-    if (!w || !s || !e) return;
-    const wr = w.getBoundingClientRect();
-    const sr = s.getBoundingClientRect();
-    const er = e.getBoundingClientRect();
-    geomRef.current = {
-      sx: sr.left - wr.left,
-      sy: sr.top - wr.top,
-      ex: er.left - wr.left,
-      ey: er.top - wr.top
-    };
-  }, []);
-
-  const remeasureSimplifyWidths = useCallback(() => {
-    const el = measureRef.current;
-    if (!el) return;
-    let w = el.scrollWidth;
-    try {
-      const range = document.createRange();
-      range.selectNodeContents(el);
-      const rw = range.getBoundingClientRect().width;
-      if (Number.isFinite(rw) && rw > 0) w = Math.max(w, rw);
-    } catch {
-      /* ignore Range API quirks */
-    }
-    if (!Number.isFinite(w) || w < 4) return;
-    const box = el.getBoundingClientRect();
-    const h = box.height || 1;
-    const slackTotal = Math.max(56, Math.round(h * 0.36));
-    const pad = slackTotal / 2;
-    setBorderBoxPx(Math.ceil(w + slackTotal));
-    setInlinePadPx(pad);
-  }, []);
-
-  const layoutMeasure = useCallback(() => {
-    measureGeom();
-    remeasureSimplifyWidths();
-  }, [measureGeom, remeasureSimplifyWidths]);
-
-  useLayoutEffect(() => {
-    void document.fonts.ready.then(() => {
-      requestAnimationFrame(() => requestAnimationFrame(layoutMeasure));
-    });
-  }, [layoutMeasure, locale, simplifyWord, excellenceWord]);
-
-  useEffect(() => {
-    window.addEventListener('resize', layoutMeasure);
-    const wrap = wrapRef.current;
-    if (!wrap || typeof ResizeObserver === 'undefined') {
-      return () => window.removeEventListener('resize', layoutMeasure);
-    }
-    const ro = new ResizeObserver(() => layoutMeasure());
-    ro.observe(wrap);
-    return () => {
-      window.removeEventListener('resize', layoutMeasure);
-      ro.disconnect();
-    };
-  }, [layoutMeasure]);
-
-  useEffect(() => {
-    const handleGlobalMouseMove = (e: MouseEvent) => {
-      if (!wrapRef.current) return;
-      const rect = wrapRef.current.getBoundingClientRect();
-      mouseX.set(e.clientX - rect.left);
-      mouseY.set(e.clientY - rect.top);
-    };
-
-    window.addEventListener('mousemove', handleGlobalMouseMove);
-
-    const syncSpotlight = () => {
-      const g = geomRef.current;
-      const x = springX.get();
-      const y = springY.get();
-      setKnockPos({ x: x - g.sx, y: y - g.sy });
-      setSimpStrokeClip(`circle(${SPOTLIGHT_RADIUS_PX}px at ${x - g.sx}px ${y - g.sy}px)`);
-      setExcGoldClip(`circle(${SPOTLIGHT_RADIUS_PX}px at ${x - g.ex}px ${y - g.ey}px)`);
-    };
-
-    const unsubscribeX = springX.on('change', syncSpotlight);
-    const unsubscribeY = springY.on('change', syncSpotlight);
-
-    return () => {
-      window.removeEventListener('mousemove', handleGlobalMouseMove);
-      unsubscribeX();
-      unsubscribeY();
-    };
-  }, [springX, springY]);
-
-  return (
-    <span ref={wrapRef} className="relative flex cursor-default flex-col items-center">
-      <span
-        ref={simplifyRootRef}
-        className="group/simplify relative isolate box-border inline-grid w-max max-w-none shrink-0 justify-items-center justify-self-center overflow-visible [grid-template-columns:auto] [grid-template-rows:auto]"
-        style={
-          borderBoxPx != null && inlinePadPx != null
-            ? {
-                boxSizing: 'border-box',
-                minWidth: borderBoxPx,
-                paddingLeft: inlinePadPx,
-                paddingRight: inlinePadPx
-              }
-            : undefined
-        }
-      >
-        <span
-          ref={measureRef}
-          className="invisible col-start-1 row-start-1 box-content mx-auto inline-block max-w-none select-none whitespace-nowrap font-bold italic tracking-tight"
-          aria-hidden
-        >
-          {simplifyWord}
-        </span>
-
-        <span className="relative z-0 col-start-1 row-start-1 box-content mx-auto inline-block max-w-none overflow-visible text-center text-primary italic font-bold tracking-tight">
-          {simplifyWord}
-        </span>
-
-        <motion.div
-          aria-hidden
-          className="pointer-events-none absolute z-[1] rounded-full"
-          style={{
-            width: SPOTLIGHT_RADIUS_PX * 2,
-            height: SPOTLIGHT_RADIUS_PX * 2,
-            left: knockPos.x,
-            top: knockPos.y,
-            translateX: '-50%',
-            translateY: '-50%',
-            background: HERO_SURFACE_KNOCKOUT
-          }}
-        />
-
-        <motion.span
-          className="pointer-events-none col-start-1 row-start-1 z-[2] mx-auto box-content inline-block max-w-none overflow-visible text-center italic font-bold tracking-tight text-transparent"
-          style={{
-            clipPath: simpStrokeClip,
-            WebkitClipPath: simpStrokeClip,
-            WebkitTextStroke: '1.5px #BEE3F8',
-            pointerEvents: 'none'
-          }}
-          aria-hidden
-        >
-          {simplifyWord}
-        </motion.span>
-
-        <motion.div
-          className="pointer-events-none absolute -z-10 rounded-full bg-primary/10 blur-[100px]"
-          style={{
-            width: 240,
-            height: 240,
-            left: knockPos.x,
-            top: knockPos.y,
-            translateX: '-50%',
-            translateY: '-50%'
-          }}
-        />
-      </span>
-
-      <span ref={excellenceRef} className="relative z-20 isolate block w-full text-center not-italic">
-        <span
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 z-0 block w-full text-center font-bold text-transparent"
-          style={{
-            clipPath: excGoldClip,
-            WebkitClipPath: excGoldClip,
-            WebkitTextFillColor: 'transparent',
-            textShadow:
-              '0 0 1px rgba(255,240,200,0.95), 0 0 12px rgba(255,215,80,0.95), 0 0 28px rgba(255,190,50,0.85), 0 0 48px rgba(220,150,30,0.45)'
-          }}
-        >
-          {excellenceWord}
-        </span>
-        <span className="relative z-10 font-bold text-primary">{excellenceWord}</span>
-      </span>
-    </span>
-  );
-}
 
 type TabId = 'profile' | 'focal' | 'mission';
 
@@ -319,31 +111,7 @@ export default function ProfilePage() {
 
   return (
     <main className="bg-background pb-24 mt-25 text-text antialiased">
-      <section className="relative overflow-hidden border-b border-text/5 bg-text/3 py-24 lg:py-32">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(40%_40%_at_50%_40%,rgba(17,184,245,0.03)_0%,rgba(255,255,255,0)_100%)]" />
-        <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="mx-auto w-full max-w-5xl overflow-visible px-1 sm:px-2"
-          >
-            <div className="relative z-40 mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[10px] font-bold tracking-widest text-primary uppercase">
-              {p.heroBadge as string}
-            </div>
-            <h1 className="relative mx-auto mb-8 max-w-4xl overflow-visible text-center text-5xl font-bold leading-[1.18] tracking-tight text-text sm:leading-[1.15] lg:max-w-5xl lg:text-8xl lg:leading-[1.14]">
-              <span className="relative z-30 inline-block w-full">Design to</span>
-              <br />
-              <span className="relative z-[1] flex flex-col items-center">
-                <HeroSimplifyAndExcellenceSpot />
-              </span>
-            </h1>
-            <p className="relative z-[25] mx-auto mb-12 max-w-2xl text-xl font-medium leading-relaxed text-text/60">
-              {p.heroSubtitle as string}
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <section className="relative overflow-hidden border-b border-text/5 bg-text/3 py-24 lg:py-32" aria-label="Profile hero" />
 
       <section className="py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -427,10 +195,10 @@ export default function ProfilePage() {
             <p className="text-sm font-medium text-text/40 italic">{p.partnershipsSubtitle as string}</p>
           </div>
           <div className="flex flex-wrap justify-center gap-12">
-            {partners.map((p) => (
-              <div key={`${p.name}-${p.country}`} className="group flex flex-col items-center">
-                <div className="text-3xl font-black text-text/10 transition-colors duration-500 group-hover:text-primary">{p.name}</div>
-                <div className="text-[10px] font-bold tracking-widest text-text/20 uppercase">{p.country}</div>
+            {partners.map((partner) => (
+              <div key={`${partner.name}-${partner.country}`} className="group flex flex-col items-center">
+                <div className="text-3xl font-black text-text/10 transition-colors duration-500 group-hover:text-primary">{partner.name}</div>
+                <div className="text-[10px] font-bold tracking-widest text-text/20 uppercase">{partner.country}</div>
               </div>
             ))}
           </div>
