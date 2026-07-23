@@ -493,7 +493,7 @@ function FocalAiPage() {
       </section>
 
       {/* Capability band — bold headline columns like Workleap stats strip */}
-      <section className="bg-[#071427] px-4 py-16 text-white sm:px-6 lg:px-10 lg:py-20">
+      <section className="bg-gray-100 px-4 py-16 text-text sm:px-6 lg:px-10 lg:py-20">
         <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-3 md:gap-10 lg:gap-14">
           {focalAiCapabilityBand.map(({ headline, caption }, idx) => (
             <motion.div
@@ -502,10 +502,10 @@ function FocalAiPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.06 }}
-              className={`relative ${idx > 0 ? 'border-t border-white/10 pt-10 md:border-l md:border-t-0 md:pt-0 md:pl-10 lg:pl-14' : ''}`}
+              className={`relative ${idx > 0 ? 'border-t border-text/10 pt-10 md:border-l md:border-t-0 md:pt-0 md:pl-10 lg:pl-14' : ''}`}
             >
-              <p className="text-[clamp(2rem,4vw,2.75rem)] font-bold leading-none tracking-tight text-white">{headline}</p>
-              <p className="mt-4 text-sm leading-7 text-white/65 md:text-[0.9375rem]">{caption}</p>
+              <p className="text-[clamp(2rem,4vw,2.75rem)] font-bold leading-none tracking-tight text-text">{headline}</p>
+              <p className="mt-4 text-sm leading-7 text-text/65 md:text-[0.9375rem]">{caption}</p>
             </motion.div>
           ))}
         </div>
@@ -582,8 +582,8 @@ function FocalAiPage() {
       </section>
 
       {/* Closing emphasis strip */}
-      <section className="bg-[#071427] px-4 py-14 text-center text-white sm:px-6 lg:py-16">
-        <p className="mx-auto max-w-2xl text-lg leading-relaxed text-white/78 md:text-xl md:leading-snug">{fa.emphasisStrip}</p>
+      <section className="bg-gray-100 px-4 py-14 text-center text-text sm:px-6 lg:py-16">
+        <p className="mx-auto max-w-2xl text-lg leading-relaxed text-text/70 md:text-xl md:leading-snug">{fa.emphasisStrip}</p>
       </section>
 
       {/* Differentiators */}
@@ -1120,12 +1120,22 @@ export default function App() {
           CtaButton={SwipeBackgroundButton}
         />
 
-        {/* Latest News */}
+        {/* Latest News — top fade starts below hero (white floor → section base) */}
         <section
           ref={newsSectionRef}
-          className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-white py-16"
+          className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-[#f9fdff] py-16"
         >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_15%,rgba(17,184,245,0.07),transparent_40%),radial-gradient(circle_at_10%_80%,rgba(81,78,247,0.05),transparent_35%)]" />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-[clamp(160px,24vh,300px)]"
+            style={{
+              background: 'linear-gradient(to bottom, #ffffff 0%, #f5fafd 38%, #f9fdff 100%)'
+            }}
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[45%] bg-[radial-gradient(ellipse_at_70%_100%,rgba(17,184,245,0.07),transparent_60%),radial-gradient(ellipse_at_20%_100%,rgba(81,78,247,0.04),transparent_55%)]"
+          />
           <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 24 }}
@@ -1186,9 +1196,9 @@ export default function App() {
         <section
           ref={bentoSectionRef}
           id="what-we-build"
-          className={`relative min-h-screen overflow-hidden pt-44 pb-12 transition-[background-color] duration-500 ${
+          className={`relative min-h-screen overflow-hidden pb-12 transition-[background-color,padding-top] duration-500 ${
             bentoSectionAppearance === 'dark' ? 'bg-[#05070b]' : 'bg-[#f6fbff]'
-          }`}
+          } ${showFestivalBar ? 'pt-[14.5rem]' : 'pt-44'}`}
         >
           {bentoSectionAppearance === 'pastel' ? (
             <img
@@ -1398,7 +1408,12 @@ export default function App() {
         </section>
 
         {/* All About FDS */}
-        <section ref={solutionsSectionRef} className="relative min-h-screen overflow-hidden bg-[#f6fbff] pt-44 pb-24">
+        <section
+          ref={solutionsSectionRef}
+          className={`relative min-h-screen overflow-hidden bg-[#f6fbff] pb-24 transition-[padding-top] duration-500 ${
+            showFestivalBar ? 'pt-[14.5rem]' : 'pt-44'
+          }`}
+        >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(17,184,245,0.12),transparent_28%),radial-gradient(circle_at_82%_12%,rgba(81,78,247,0.10),transparent_30%)]" />
           <div className="absolute inset-0 opacity-60 bg-[linear-gradient(rgba(1,20,26,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(1,20,26,0.035)_1px,transparent_1px)] bg-size-[42px_42px]" />
 

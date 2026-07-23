@@ -197,7 +197,7 @@ export default function DocumentManagementPage() {
         </div>
       </section>
 
-      <section className="bg-text py-24 text-white lg:py-32">
+      <section className="bg-gray-100 py-24 text-text lg:py-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-start gap-16 lg:grid-cols-2 lg:gap-24">
             <div>
@@ -216,28 +216,28 @@ export default function DocumentManagementPage() {
                     className="group flex items-start gap-3"
                   >
                     <CheckCircle2 className="mt-0.5 shrink-0 text-primary" size={18} aria-hidden />
-                    <span className="text-sm font-medium leading-snug text-white/72 transition-colors group-hover:text-white">
+                    <span className="text-sm font-medium leading-snug text-text/70 transition-colors group-hover:text-text">
                       {item}
                     </span>
                   </motion.div>
                 ))}
               </div>
             </div>
-            <div className="rounded-[2.5rem] border border-white/10 bg-white/5 p-10 backdrop-blur-sm">
-              <h3 className="mb-6 text-2xl font-bold text-white">{s('complianceTitle')}</h3>
-              <p className="mb-8 text-sm leading-relaxed text-white/55">{s('complianceBody')}</p>
+            <div className="rounded-[2.5rem] border border-text/10 bg-white p-10">
+              <h3 className="mb-6 text-2xl font-bold text-text">{s('complianceTitle')}</h3>
+              <p className="mb-8 text-sm leading-relaxed text-text/55">{s('complianceBody')}</p>
               <div className="space-y-3">
-                <div className="flex items-center gap-4 rounded-2xl border border-white/5 bg-white/5 p-4">
+                <div className="flex items-center gap-4 rounded-2xl border border-text/5 bg-gray-100 p-4">
                   <Lock className="text-primary" size={22} />
-                  <span className="text-sm font-bold uppercase tracking-wider text-white/90">{s('badgeAes')}</span>
+                  <span className="text-sm font-bold uppercase tracking-wider text-text/90">{s('badgeAes')}</span>
                 </div>
-                <div className="flex items-center gap-4 rounded-2xl border border-white/5 bg-white/5 p-4">
+                <div className="flex items-center gap-4 rounded-2xl border border-text/5 bg-gray-100 p-4">
                   <ClipboardList className="text-primary" size={22} />
-                  <span className="text-sm font-bold uppercase tracking-wider text-white/90">{s('badgeAudit')}</span>
+                  <span className="text-sm font-bold uppercase tracking-wider text-text/90">{s('badgeAudit')}</span>
                 </div>
-                <div className="flex items-center gap-4 rounded-2xl border border-white/5 bg-white/5 p-4">
+                <div className="flex items-center gap-4 rounded-2xl border border-text/5 bg-gray-100 p-4">
                   <RefreshCw className="text-primary" size={22} />
-                  <span className="text-sm font-bold uppercase tracking-wider text-white/90">{s('badgeLifecycle')}</span>
+                  <span className="text-sm font-bold uppercase tracking-wider text-text/90">{s('badgeLifecycle')}</span>
                 </div>
               </div>
             </div>

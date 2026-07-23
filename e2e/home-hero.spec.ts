@@ -16,7 +16,7 @@ test.describe('home interactive hero', () => {
     await expect(heading).toContainText(/Simplify|簡化|简化/);
     await expect(heading).toContainText(/Excellence\.|卓越。/);
     await expect(
-      page.getByText(/Engineering speed, reliability|為區內市場打造|为区内市场打造/)
+      page.getByText(/Twenty years of technical excellence|二十年技術精進|二十年技术精进/)
     ).toBeVisible();
   });
 

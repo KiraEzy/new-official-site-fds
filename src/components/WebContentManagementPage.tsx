@@ -311,7 +311,7 @@ export default function WebContentManagementPage() {
         </div>
       </section>
 
-      <section className="bg-text py-24 text-white lg:py-32">
+      <section className="bg-gray-100 py-24 text-text lg:py-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-start gap-16 lg:grid-cols-2 lg:gap-24">
             <div>
@@ -330,29 +330,29 @@ export default function WebContentManagementPage() {
                     className="group flex items-start gap-3"
                   >
                     <CheckCircle2 className="mt-0.5 shrink-0 text-primary" size={18} aria-hidden />
-                    <span className="text-sm font-medium leading-snug text-white/72 transition-colors group-hover:text-white">{item}</span>
+                    <span className="text-sm font-medium leading-snug text-text/70 transition-colors group-hover:text-text">{item}</span>
                   </motion.div>
                 ))}
               </div>
             </div>
-            <div className="rounded-[2.5rem] border border-white/10 bg-white/5 p-10 backdrop-blur-sm">
+            <div className="rounded-[2.5rem] border border-text/10 bg-white p-10">
               <div className="mb-6 flex items-center gap-4">
                 <Shield className="text-primary" size={32} aria-hidden />
-                <h3 className="text-2xl font-bold text-white">{w.guardrailsTitle as string}</h3>
+                <h3 className="text-2xl font-bold text-text">{w.guardrailsTitle as string}</h3>
               </div>
-              <p className="mb-8 text-sm leading-relaxed text-white/55">{w.guardrailsBody as string}</p>
+              <p className="mb-8 text-sm leading-relaxed text-text/55">{w.guardrailsBody as string}</p>
               <div className="space-y-3">
-                <div className="flex items-center gap-4 rounded-2xl border border-white/5 bg-white/5 p-4">
+                <div className="flex items-center gap-4 rounded-2xl border border-text/5 bg-gray-100 p-4">
                   <Users className="text-primary" size={22} aria-hidden />
-                  <span className="text-sm font-bold uppercase tracking-wider text-white/90">{w.guardrailAccount as string}</span>
+                  <span className="text-sm font-bold uppercase tracking-wider text-text/90">{w.guardrailAccount as string}</span>
                 </div>
-                <div className="flex items-center gap-4 rounded-2xl border border-white/5 bg-white/5 p-4">
+                <div className="flex items-center gap-4 rounded-2xl border border-text/5 bg-gray-100 p-4">
                   <Clock className="text-primary" size={22} aria-hidden />
-                  <span className="text-sm font-bold uppercase tracking-wider text-white/90">{w.guardrailSchedule as string}</span>
+                  <span className="text-sm font-bold uppercase tracking-wider text-text/90">{w.guardrailSchedule as string}</span>
                 </div>
-                <div className="flex items-center gap-4 rounded-2xl border border-white/5 bg-white/5 p-4">
+                <div className="flex items-center gap-4 rounded-2xl border border-text/5 bg-gray-100 p-4">
                   <Archive className="text-primary" size={22} aria-hidden />
-                  <span className="text-sm font-bold uppercase tracking-wider text-white/90">{w.guardrailRetention as string}</span>
+                  <span className="text-sm font-bold uppercase tracking-wider text-text/90">{w.guardrailRetention as string}</span>
                 </div>
               </div>
             </div>

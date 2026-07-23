@@ -1,22 +1,59 @@
 import { motion, useSpring, useMotionValue } from 'motion/react';
-import { useState, useRef, useEffect, useLayoutEffect, useCallback } from 'react';
+import {
+  useState,
+  useRef,
+  useEffect,
+  useLayoutEffect,
+  useCallback,
+  type Ref
+} from 'react';
 
 const SPOTLIGHT_RADIUS_PX = 118;
+/** Soft rim — core stays opaque; rim fades so the disc isn’t a hard white ring. */
+const SPOTLIGHT_FEATHER_PX = 36;
+/**
+ * Extra paint box around the Excellence gold layer. `mask-image` clips overflow
+ * (including text-shadow) to the element box — without this pad the glow becomes
+ * a hard rectangle inside the soft circular mask.
+ */
+const EXCELLENCE_SHADOW_PAD_PX = 64;
 
-/** Matches profile hero chrome (`bg-text/3`): paint over cyan fill inside the spotlight without masking glyphs (avoids WebKit cropping italic tails). */
-const HERO_SURFACE_KNOCKOUT =
-  'color-mix(in srgb, var(--color-text, #01141a) 4%, var(--color-background, #f9fdff))';
+/** Matches the white glow under Simplify: paint over cyan fill inside the spotlight without masking glyphs. */
+const HERO_SURFACE_KNOCKOUT = '#ffffff';
+
+function featheredSpotlightMask(x: number, y: number) {
+  const r = SPOTLIGHT_RADIUS_PX;
+  const hardCore = Math.max(0, r - SPOTLIGHT_FEATHER_PX);
+  const mid = hardCore + SPOTLIGHT_FEATHER_PX * 0.45;
+  return `radial-gradient(circle ${r}px at ${x}px ${y}px, #000 0px, #000 ${hardCore}px, rgba(0,0,0,0.45) ${mid}px, transparent ${r}px)`;
+}
+
+function featheredWhiteKnockout() {
+  const r = SPOTLIGHT_RADIUS_PX;
+  const hardCore = Math.max(0, r - SPOTLIGHT_FEATHER_PX);
+  const mid = hardCore + SPOTLIGHT_FEATHER_PX * 0.45;
+  return `radial-gradient(circle ${r}px at 50% 50%, ${HERO_SURFACE_KNOCKOUT} 0px, ${HERO_SURFACE_KNOCKOUT} ${hardCore}px, rgba(255,255,255,0.45) ${mid}px, transparent ${r}px)`;
+}
+
+function assignRef<T>(ref: Ref<T> | undefined, value: T | null) {
+  if (!ref) return;
+  if (typeof ref === 'function') ref(value);
+  else ref.current = value;
+}
 
 export function HeroSimplifyAndExcellenceSpot({
   simplifyWord,
-  excellenceWord
+  excellenceWord,
+  simplifyAnchorRef
 }: {
   simplifyWord: string;
   excellenceWord: string;
+  simplifyAnchorRef?: Ref<HTMLElement | null>;
 }) {
   const wrapRef = useRef<HTMLSpanElement>(null);
   const simplifyRootRef = useRef<HTMLSpanElement>(null);
   const excellenceRef = useRef<HTMLSpanElement>(null);
+  const goldLayerRef = useRef<HTMLSpanElement>(null);
   const measureRef = useRef<HTMLSpanElement>(null);
   const geomRef = useRef({ sx: 0, sy: 0, ex: 0, ey: 0 });
 
@@ -25,11 +62,13 @@ export function HeroSimplifyAndExcellenceSpot({
   const springX = useSpring(mouseX, { stiffness: 300, damping: 30 });
   const springY = useSpring(mouseY, { stiffness: 300, damping: 30 });
 
-  const [simpStrokeClip, setSimpStrokeClip] = useState('circle(0px at 0px 0px)');
-  const [excGoldClip, setExcGoldClip] = useState('circle(0px at 0px 0px)');
+  const [simpStrokeMask, setSimpStrokeMask] = useState(() => featheredSpotlightMask(-500, -500));
+  const [excGoldMask, setExcGoldMask] = useState(() => featheredSpotlightMask(-500, -500));
   const [knockPos, setKnockPos] = useState({ x: -500, y: -500 });
   const [borderBoxPx, setBorderBoxPx] = useState<number | undefined>(undefined);
-  const [inlinePadPx, setInlinePadPx] = useState<number | undefined>(undefined);
+  const [padLeftPx, setPadLeftPx] = useState<number | undefined>(undefined);
+  const [padRightPx, setPadRightPx] = useState<number | undefined>(undefined);
+  const strokeLayerRef = useRef<HTMLSpanElement>(null);
 
   const measureGeom = useCallback(() => {
     const w = wrapRef.current;
@@ -62,10 +101,12 @@ export function HeroSimplifyAndExcellenceSpot({
     if (!Number.isFinite(w) || w < 4) return;
     const box = el.getBoundingClientRect();
     const h = box.height || 1;
-    const slackTotal = Math.max(56, Math.round(h * 0.36));
-    const pad = slackTotal / 2;
-    setBorderBoxPx(Math.ceil(w + slackTotal));
-    setInlinePadPx(pad);
+    // Italic “y” overhangs the right; keep extra end slack so mask/stroke don’t clip it.
+    const padLeft = Math.max(28, Math.round(h * 0.16));
+    const padRight = Math.max(88, Math.round(h * 0.48));
+    setBorderBoxPx(Math.ceil(w + padLeft + padRight));
+    setPadLeftPx(padLeft);
+    setPadRightPx(padRight);
   }, []);
 
   const layoutMeasure = useCallback(() => {
@@ -104,12 +145,32 @@ export function HeroSimplifyAndExcellenceSpot({
     window.addEventListener('mousemove', handleGlobalMouseMove);
 
     const syncSpotlight = () => {
+      const wrap = wrapRef.current;
+      if (!wrap) return;
+      const wr = wrap.getBoundingClientRect();
       const g = geomRef.current;
       const x = springX.get();
       const y = springY.get();
+      const clientX = wr.left + x;
+      const clientY = wr.top + y;
+
       setKnockPos({ x: x - g.sx, y: y - g.sy });
-      setSimpStrokeClip(`circle(${SPOTLIGHT_RADIUS_PX}px at ${x - g.sx}px ${y - g.sy}px)`);
-      setExcGoldClip(`circle(${SPOTLIGHT_RADIUS_PX}px at ${x - g.ex}px ${y - g.ey}px)`);
+
+      // Measure the stroke layer itself (includes end padding) so the mask tracks the cursor.
+      const stroke = strokeLayerRef.current;
+      if (stroke) {
+        const sr = stroke.getBoundingClientRect();
+        setSimpStrokeMask(featheredSpotlightMask(clientX - sr.left, clientY - sr.top));
+      } else {
+        setSimpStrokeMask(featheredSpotlightMask(x - g.sx, y - g.sy));
+      }
+
+      // Measure the gold layer itself so padding expansion can’t left-shift the mask.
+      const gold = goldLayerRef.current;
+      if (gold) {
+        const gr = gold.getBoundingClientRect();
+        setExcGoldMask(featheredSpotlightMask(clientX - gr.left, clientY - gr.top));
+      }
     };
 
     const unsubscribeX = springX.on('change', syncSpotlight);
@@ -125,28 +186,49 @@ export function HeroSimplifyAndExcellenceSpot({
   return (
     <span ref={wrapRef} className="relative flex cursor-default flex-col items-center">
       <span
-        ref={simplifyRootRef}
+        ref={(el) => {
+          simplifyRootRef.current = el;
+          assignRef(simplifyAnchorRef, el);
+        }}
         className="group/simplify relative isolate box-border inline-grid w-max max-w-none shrink-0 justify-items-center justify-self-center overflow-visible [grid-template-columns:auto] [grid-template-rows:auto]"
         style={
-          borderBoxPx != null && inlinePadPx != null
+          borderBoxPx != null && padLeftPx != null && padRightPx != null
             ? {
                 boxSizing: 'border-box',
                 minWidth: borderBoxPx,
-                paddingLeft: inlinePadPx,
-                paddingRight: inlinePadPx
+                // Extra end-pad for italic “y” would optically left-shift the glyphs when the
+                // box is centered — nudge right by half the pad imbalance.
+                transform: `translateX(${((padRightPx - padLeftPx) / 2) * 0.6}px)`
               }
-            : undefined
+            : borderBoxPx != null
+              ? {
+                  boxSizing: 'border-box',
+                  minWidth: borderBoxPx
+                }
+              : undefined
         }
       >
         <span
           ref={measureRef}
           className="invisible col-start-1 row-start-1 box-content mx-auto inline-block max-w-none select-none whitespace-nowrap font-bold italic tracking-tight"
+          style={
+            padLeftPx != null && padRightPx != null
+              ? { paddingLeft: padLeftPx, paddingRight: padRightPx }
+              : undefined
+          }
           aria-hidden
         >
           {simplifyWord}
         </span>
 
-        <span className="relative z-0 col-start-1 row-start-1 box-content mx-auto inline-block max-w-none overflow-visible text-center text-primary italic font-bold tracking-tight">
+        <span
+          className="relative z-0 col-start-1 row-start-1 box-content mx-auto inline-block max-w-none overflow-visible text-center text-primary italic font-bold tracking-tight"
+          style={
+            padLeftPx != null && padRightPx != null
+              ? { paddingLeft: padLeftPx, paddingRight: padRightPx }
+              : undefined
+          }
+        >
           {simplifyWord}
         </span>
 
@@ -160,15 +242,23 @@ export function HeroSimplifyAndExcellenceSpot({
             top: knockPos.y,
             translateX: '-50%',
             translateY: '-50%',
-            background: HERO_SURFACE_KNOCKOUT
+            background: featheredWhiteKnockout()
           }}
         />
 
         <motion.span
+          ref={strokeLayerRef}
           className="pointer-events-none col-start-1 row-start-1 z-[2] mx-auto box-content inline-block max-w-none overflow-visible text-center italic font-bold tracking-tight text-transparent"
           style={{
-            clipPath: simpStrokeClip,
-            WebkitClipPath: simpStrokeClip,
+            ...(padLeftPx != null && padRightPx != null
+              ? { paddingLeft: padLeftPx, paddingRight: padRightPx }
+              : null),
+            WebkitMaskImage: simpStrokeMask,
+            maskImage: simpStrokeMask,
+            WebkitMaskRepeat: 'no-repeat',
+            maskRepeat: 'no-repeat',
+            WebkitMaskSize: '100% 100%',
+            maskSize: '100% 100%',
             WebkitTextStroke: '1.5px #BEE3F8',
             pointerEvents: 'none'
           }}
@@ -192,11 +282,21 @@ export function HeroSimplifyAndExcellenceSpot({
 
       <span ref={excellenceRef} className="relative z-20 isolate block w-full text-center not-italic">
         <span
+          ref={goldLayerRef}
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 z-0 block w-full text-center font-bold text-transparent"
+          className="pointer-events-none absolute z-0 block text-center font-bold text-transparent"
           style={{
-            clipPath: excGoldClip,
-            WebkitClipPath: excGoldClip,
+            // Expand the box so text-shadow isn’t clipped to a hard rectangle by mask-image.
+            left: -EXCELLENCE_SHADOW_PAD_PX,
+            right: -EXCELLENCE_SHADOW_PAD_PX,
+            top: -EXCELLENCE_SHADOW_PAD_PX,
+            padding: EXCELLENCE_SHADOW_PAD_PX,
+            WebkitMaskImage: excGoldMask,
+            maskImage: excGoldMask,
+            WebkitMaskRepeat: 'no-repeat',
+            maskRepeat: 'no-repeat',
+            WebkitMaskSize: '100% 100%',
+            maskSize: '100% 100%',
             WebkitTextFillColor: 'transparent',
             textShadow:
               '0 0 1px rgba(255,240,200,0.95), 0 0 12px rgba(255,215,80,0.95), 0 0 28px rgba(255,190,50,0.85), 0 0 48px rgba(220,150,30,0.45)'

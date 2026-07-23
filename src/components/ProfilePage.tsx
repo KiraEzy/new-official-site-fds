@@ -30,11 +30,10 @@ export default function ProfilePage() {
     p.certifiedBullet3 as string
   ];
 
-  const stats = [
-    { label: p.statHongKongHeritageLabel as string, value: p.statYearsValue as string },
-    { label: p.statSOAPartnerLabel as string, value: p.statYearsNum as string },
-    { label: p.statProjectsLabel as string, value: p.statBodiesValue as string },
-    { label: p.statQPS5Label as string, value: p.statAwardValue as string }
+  const heroMarkers = [
+    { value: p.statYearsValue as string, label: p.statHongKongHeritageLabel as string },
+    { value: p.statYearsNum as string, label: p.statSOAPartnerLabel as string },
+    { value: p.statBodiesValue as string, label: p.statProjectsLabel as string }
   ];
 
   const tabContent: Record<TabId, ReactNode> = useMemo(
@@ -96,12 +95,12 @@ export default function ProfilePage() {
             <h4 className="relative z-10 mb-4 font-mono text-xl font-bold tracking-tighter">{p.missionHeading as string}</h4>
             <p className="relative z-10 text-sm leading-relaxed text-white/80">{p.missionBody as string}</p>
           </div>
-          <div className="group relative overflow-hidden rounded-3xl bg-text p-8 text-white">
+          <div className="group relative overflow-hidden rounded-3xl bg-gray-100 p-8 text-black">
             <div className="pointer-events-none absolute top-0 right-0 p-4 opacity-10 transition-transform duration-700 group-hover:scale-110">
               <Eye size={120} aria-hidden />
             </div>
             <h4 className="relative z-10 mb-4 font-mono text-xl font-bold tracking-tighter">{p.visionHeading as string}</h4>
-            <p className="relative z-10 text-sm leading-relaxed text-white/80 italic">{p.visionBody as string}</p>
+            <p className="relative z-10 text-sm leading-relaxed text-black/70 italic">{p.visionBody as string}</p>
           </div>
         </div>
       )
@@ -111,7 +110,79 @@ export default function ProfilePage() {
 
   return (
     <main className="bg-background pb-24 mt-25 text-text antialiased">
-      <section className="relative overflow-hidden border-b border-text/5 bg-text/3 py-24 lg:py-32" aria-label="Profile hero" />
+      <section
+        aria-label="Profile hero"
+        className="relative overflow-hidden border-b border-text/5 bg-background py-24 lg:py-32"
+      >
+        {/* Atmosphere: soft cyan glow + secondary bloom, echoing the sky palette */}
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          <div className="absolute left-1/2 top-[-25%] h-[520px] w-[820px] -translate-x-1/2 rounded-full bg-primary/10 blur-[130px]" />
+          <div className="absolute right-[-8%] bottom-[-35%] h-[380px] w-[380px] rounded-full bg-secondary/10 blur-[120px]" />
+        </div>
+        {/* Faint dot grid, masked to a soft ellipse so edges never read hard */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-70 [background-image:radial-gradient(circle_at_center,rgba(1,20,26,0.06)_1px,transparent_1px)] [background-size:26px_26px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_45%,black,transparent_78%)]"
+        />
+
+        <div className="relative z-10 mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mb-7 flex flex-wrap items-center justify-center gap-3"
+          >
+            <span className="rounded-full bg-primary px-4 py-1 text-[10px] font-bold tracking-widest text-white uppercase">
+              {p.heroEyebrow as string}
+            </span>
+            <span className="rounded-full border border-primary/20 bg-primary/10 px-4 py-1 text-[10px] font-bold tracking-widest text-primary uppercase">
+              {p.heroEstablished as string}
+            </span>
+          </motion.div>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.06 }}
+            className="mx-auto max-w-4xl text-4xl font-bold leading-[1.1] tracking-tight text-text sm:text-5xl lg:text-7xl lg:leading-[1.05]"
+          >
+            {p.heroTitle as string}{' '}
+            <span className="-ml-[0.08em] italic text-primary">{p.heroTitleAccent as string}</span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.14 }}
+            className="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-text/60"
+          >
+            {p.heroLead as string}
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.22 }}
+            className="mx-auto mt-12 flex max-w-2xl flex-wrap items-center justify-center gap-x-10 gap-y-6 sm:gap-x-14"
+          >
+            {heroMarkers.map((marker, idx) => (
+              <div key={marker.label} className="flex items-center gap-6 sm:gap-10">
+                {idx > 0 && <span aria-hidden className="hidden h-10 w-px bg-text/10 sm:block" />}
+                <div className="text-center">
+                  <div className="text-3xl font-bold tracking-tighter text-primary lg:text-4xl">{marker.value}</div>
+                  <div className="mt-1 text-[10px] font-bold tracking-widest text-text/40 uppercase">{marker.label}</div>
+                </div>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Soft floor so the hero melts into the next white section */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-24 bg-gradient-to-b from-transparent to-background"
+        />
+      </section>
 
       <section className="py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -144,11 +215,11 @@ export default function ProfilePage() {
                 ))}
               </div>
 
-              <div className="rounded-[2rem] bg-text p-8 text-white">
+              <div className="rounded-[2rem] bg-gray-100 p-8 text-text">
                 <h4 className="mb-4 flex items-center gap-2 font-bold italic">
                   <span className="block h-2 w-2 rounded-full bg-primary" aria-hidden /> {p.rdHeading as string}
                 </h4>
-                <p className="text-xs leading-relaxed text-white/50 italic">{p.rdQuote as string}</p>
+                <p className="text-xs leading-relaxed text-text/50 italic">{p.rdQuote as string}</p>
               </div>
             </div>
 
@@ -165,25 +236,6 @@ export default function ProfilePage() {
                 </motion.div>
               </AnimatePresence>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="relative overflow-hidden bg-text py-24 text-white">
-        <div className="pointer-events-none absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
-        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 gap-12 lg:grid-cols-4 lg:gap-8">
-            {stats.map((stat) => (
-              <motion.div
-                key={stat.label}
-                whileInView={{ scale: [0.9, 1], opacity: [0, 1] }}
-                viewport={{ once: true }}
-                className="space-y-2 border-l-2 border-primary/20 pl-6 text-center lg:text-left"
-              >
-                <div className="text-4xl font-bold tracking-tighter text-primary lg:text-6xl">{stat.value}</div>
-                <div className="text-[10px] font-bold tracking-widest text-white/40 uppercase">{stat.label}</div>
-              </motion.div>
-            ))}
           </div>
         </div>
       </section>

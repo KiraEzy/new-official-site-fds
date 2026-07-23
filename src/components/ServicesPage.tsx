@@ -70,12 +70,12 @@ function MethodologyCard({ item, methodologyCardBadge, index }: MethodologyCardP
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1 }}
-      className="relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-white/5 bg-text p-8 group"
+      className="relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-text/5 bg-gray-100 p-8 group"
     >
       <div className={`absolute top-0 right-0 size-32 ${item.color} translate-x-10 -translate-y-10 rounded-full opacity-10 blur-3xl transition-transform duration-700 group-hover:scale-150`} />
 
       <div className="relative z-10 mb-6 flex items-start justify-between">
-        <div className="rounded-lg bg-white/10 px-3 py-1 font-mono text-[10px] font-bold tracking-widest text-white/40 uppercase">
+        <div className="rounded-lg bg-text/5 px-3 py-1 font-mono text-[10px] font-bold tracking-widest text-text/40 uppercase">
           {methodologyCardBadge}
         </div>
         <div className={`flex h-10 w-10 items-center justify-center rounded-xl text-white ${item.color}`}>
@@ -84,15 +84,15 @@ function MethodologyCard({ item, methodologyCardBadge, index }: MethodologyCardP
       </div>
 
       <div className="relative z-10 mb-auto">
-        <h3 className="mb-1 text-3xl font-bold tracking-tighter text-white">{item.code}</h3>
+        <h3 className="mb-1 text-3xl font-bold tracking-tighter text-text">{item.code}</h3>
         <p className="mb-4 text-[10px] font-bold tracking-widest text-primary uppercase">{item.subtitle}</p>
-        <p className="mb-8 text-sm leading-relaxed text-white/50">{item.body}</p>
+        <p className="mb-8 text-sm leading-relaxed text-text/50">{item.body}</p>
       </div>
 
-      <div className="relative z-10 border-t border-white/10 pt-6">
+      <div className="relative z-10 border-t border-text/10 pt-6">
         <div className="flex flex-wrap gap-2">
           {item.stages.map((stage) => (
-            <span key={stage} className="rounded-md bg-white/5 px-2 py-1 text-[9px] font-bold tracking-wider text-white/30 uppercase">
+            <span key={stage} className="rounded-md bg-text/5 px-2 py-1 text-[9px] font-bold tracking-wider text-text/30 uppercase">
               {stage}
             </span>
           ))}
@@ -123,8 +123,7 @@ export default function ServicesPage() {
 
   return (
     <main className="min-h-screen bg-background pb-16 text-text antialiased  lg:pb-20 ">
-      <section className="relative overflow-hidden bg-text pb-24 pt-42 text-white lg:pt-46">
-        <div className="pointer-events-none absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
+      <section className="relative overflow-hidden bg-gray-100 pb-24 pt-42 text-text lg:pt-46">
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="max-w-4xl">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[10px] font-bold tracking-widest text-primary uppercase">
@@ -134,7 +133,7 @@ export default function ServicesPage() {
               {s.heroTitleLine1 as string} <br />
               <span className="text-primary italic">{s.heroTitleAccent as string}</span>
             </h1>
-            <p className="mb-12 max-w-2xl text-xl font-medium leading-relaxed text-white/50">{s.heroSubtitle as string}</p>
+            <p className="mb-12 max-w-2xl text-xl font-medium leading-relaxed text-text/50">{s.heroSubtitle as string}</p>
           </motion.div>
         </div>
       </section>
@@ -148,7 +147,7 @@ export default function ServicesPage() {
               </h2>
               <p className="text-lg leading-relaxed text-text/60">{s.careBody as string}</p>
 
-              <div className="relative overflow-hidden rounded-[2rem] bg-text p-8 text-white group">
+              <div className="relative overflow-hidden rounded-[2rem] bg-gray-100 p-8 text-text group">
                 <div className="mb-6 flex items-center gap-4">
                   <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-white shadow-lg shadow-primary/30">
                     <TableIcon size={24} />
@@ -157,14 +156,14 @@ export default function ServicesPage() {
                 </div>
                 <div className="space-y-4">
                   {maintenanceRows.map((row) => (
-                    <div key={row.id} className="flex items-center justify-between border-b border-white/10 py-3 last:border-0">
+                    <div key={row.id} className="flex items-center justify-between border-b border-text/10 py-3 last:border-0">
                       <div className="flex items-center gap-3">
-                        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 text-[10px] font-bold text-primary">
+                        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-[10px] font-bold text-primary">
                           {row.id}
                         </span>
                         <span className="text-sm font-medium">{row.title}</span>
                       </div>
-                      <span className="text-xs text-white/40">{row.desc}</span>
+                      <span className="text-xs text-text/40">{row.desc}</span>
                     </div>
                   ))}
                 </div>
@@ -217,14 +216,14 @@ export default function ServicesPage() {
             ))}
           </div>
 
-          <div className="relative grid items-center gap-12 overflow-hidden rounded-[3rem] bg-text p-12 text-white lg:grid-cols-3">
+          <div className="relative grid items-center gap-12 overflow-hidden rounded-[3rem] bg-gray-100 p-12 text-text lg:grid-cols-3">
             <div className="pointer-events-none absolute top-0 right-0 p-12 opacity-5">
               <Cpu size={300} />
             </div>
 
-            <div className="flex h-full flex-col justify-center border-white/10 py-4 lg:col-span-1 lg:border-r lg:pr-12">
+            <div className="flex h-full flex-col justify-center border-text/10 py-4 lg:col-span-1 lg:border-r lg:pr-12">
               <h4 className="mb-4 text-3xl font-bold tracking-tighter uppercase">{s.estimationRigidnessHeading as string}</h4>
-              <p className="text-sm italic leading-relaxed text-white/40">&quot;{s.estimationQuote as string}&quot;</p>
+              <p className="text-sm italic leading-relaxed text-text/40">&quot;{s.estimationQuote as string}&quot;</p>
             </div>
 
             <div className="space-y-6 lg:col-span-2">
@@ -234,18 +233,18 @@ export default function ServicesPage() {
                     <div className="text-2xl font-bold tracking-tighter text-primary transition-transform duration-300 group-hover:translate-x-2">
                       {m.name}
                     </div>
-                    <p className="text-[10px] leading-tight font-bold tracking-widest text-white/30 uppercase">{m.full}</p>
+                    <p className="text-[10px] leading-tight font-bold tracking-widest text-text/30 uppercase">{m.full}</p>
                   </div>
                 ))}
               </div>
-              <div className="flex flex-wrap gap-x-12 gap-y-4 border-t border-white/5 pt-6">
+              <div className="flex flex-wrap gap-x-12 gap-y-4 border-t border-text/5 pt-6">
                 <div className="flex items-center gap-3">
                   <CheckCircle2 className="text-primary" size={16} />
-                  <span className="text-xs font-bold text-white/60">{s.footerCheckFpa as string}</span>
+                  <span className="text-xs font-bold text-text/60">{s.footerCheckFpa as string}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle2 className="text-primary" size={16} />
-                  <span className="text-xs font-bold text-white/60">{s.footerCheckFrem as string}</span>
+                  <span className="text-xs font-bold text-text/60">{s.footerCheckFrem as string}</span>
                 </div>
               </div>
             </div>
