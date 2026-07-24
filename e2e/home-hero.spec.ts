@@ -24,4 +24,18 @@ test.describe('home interactive hero', () => {
     await page.getByRole('button', { name: /demo style controls|切換演示樣式控制台|切换演示样式控制台/i }).click();
     await expect(page.getByLabel(/hero visual style|主視覺外觀樣式|主视觉外观样式/i)).toHaveCount(0);
   });
+
+  test('shows festival pattern reveal underlay when festival bar is present', async ({ page }) => {
+    const hero = page.locator('[data-home-hero="interactive"]');
+    await expect(hero).toBeVisible();
+    const reveal = page.locator('[data-festival-reveal="pattern"]');
+    await expect(reveal).toBeVisible();
+    await expect(reveal).toHaveCSS('background-image', /dragon-pattern/);
+  });
+
+  test('removes festival pattern reveal when festival bar is closed', async ({ page }) => {
+    await expect(page.locator('[data-festival-reveal="pattern"]')).toBeVisible();
+    await page.getByRole('button', { name: /Close announcement bar/i }).click();
+    await expect(page.locator('[data-festival-reveal="pattern"]')).toHaveCount(0);
+  });
 });
