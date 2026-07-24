@@ -1,7 +1,17 @@
 import type { ComponentType, Ref } from 'react';
-import { useCallback, useLayoutEffect, useRef, useState } from 'react';
-import { motion } from 'motion/react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { motion, useMotionValue, useSpring } from 'motion/react';
 import { HeroSimplifyAndExcellenceSpot } from './HeroSimplifyAndExcellenceSpot';
+
+const FESTIVAL_REVEAL_RADIUS_PX = 118;
+const FESTIVAL_REVEAL_FEATHER_PX = 36;
+
+function featheredFestivalRevealMask(x: number, y: number) {
+  const r = FESTIVAL_REVEAL_RADIUS_PX;
+  const hardCore = Math.max(0, r - FESTIVAL_REVEAL_FEATHER_PX);
+  const mid = hardCore + FESTIVAL_REVEAL_FEATHER_PX * 0.45;
+  return `radial-gradient(circle ${r}px at ${x}px ${y}px, #000 0px, #000 ${hardCore}px, rgba(0,0,0,0.45) ${mid}px, transparent ${r}px)`;
+}
 
 function assignRef<T>(ref: Ref<T> | undefined, value: T | null) {
   if (!ref) return;
@@ -23,7 +33,8 @@ export function HomeHero({
   showMintBlend,
   mintBlendAppearance,
   onCtaClick,
-  CtaButton
+  CtaButton,
+  showFestivalReveal = false,
 }: {
   heroRef: Ref<HTMLElement>;
   heroNavPortalRef: (el: HTMLDivElement | null) => void;
@@ -39,11 +50,44 @@ export function HomeHero({
   mintBlendAppearance: 'pastel' | 'mint' | 'dark';
   onCtaClick?: () => void;
   CtaButton: ComponentType<{ label: string; colorProfile?: 'default' | 'navy'; onClick?: () => void }>;
+  showFestivalReveal?: boolean;
 }) {
   const rootRef = useRef<HTMLElement | null>(null);
   const simplifyAnchorRef = useRef<HTMLElement | null>(null);
   const ctaWrapRef = useRef<HTMLDivElement | null>(null);
   const [whiteGlow, setWhiteGlow] = useState<{ x: number; y: number; r: number } | null>(null);
+
+  const mouseX = useMotionValue(-500);
+  const mouseY = useMotionValue(-500);
+  const springX = useSpring(mouseX, { stiffness: 300, damping: 30 });
+  const springY = useSpring(mouseY, { stiffness: 300, damping: 30 });
+  const [festivalMask, setFestivalMask] = useState(() => featheredFestivalRevealMask(-500, -500));
+
+  useEffect(() => {
+    if (!showFestivalReveal) return;
+
+    const handleMove = (e: MouseEvent) => {
+      const root = rootRef.current;
+      if (!root) return;
+      const rect = root.getBoundingClientRect();
+      mouseX.set(e.clientX - rect.left);
+      mouseY.set(e.clientY - rect.top);
+    };
+
+    window.addEventListener('mousemove', handleMove);
+
+    const syncMask = () => {
+      setFestivalMask(featheredFestivalRevealMask(springX.get(), springY.get()));
+    };
+    const unsubX = springX.on('change', syncMask);
+    const unsubY = springY.on('change', syncMask);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMove);
+      unsubX();
+      unsubY();
+    };
+  }, [showFestivalReveal, mouseX, mouseY, springX, springY]);
 
   const measureWhiteGlow = useCallback(() => {
     const root = rootRef.current;
@@ -101,10 +145,24 @@ export function HomeHero({
       className="relative h-screen min-h-[700px] w-full overflow-hidden bg-[#e8f6fc]"
     >
       <div ref={heroNavPortalRef} className="pointer-events-none absolute left-0 right-0 top-0 z-[60]" />
-      <div
-        className=""
-        aria-hidden
-      />
+      {showFestivalReveal ? (
+        <div
+          aria-hidden
+          data-festival-reveal="pattern"
+          className="pointer-events-none absolute inset-0 z-[3]"
+          style={{
+            backgroundImage: 'url(/festival/dragon-pattern.png)',
+            backgroundRepeat: 'repeat',
+            backgroundSize: '420px auto',
+            WebkitMaskImage: festivalMask,
+            maskImage: festivalMask,
+            WebkitMaskRepeat: 'no-repeat',
+            maskRepeat: 'no-repeat',
+            WebkitMaskSize: '100% 100%',
+            maskSize: '100% 100%'
+          }}
+        />
+      ) : null}
       {whiteGlow ? (
         <div
           aria-hidden
