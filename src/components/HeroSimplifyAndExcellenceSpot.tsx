@@ -21,6 +21,8 @@ const EXCELLENCE_SHADOW_PAD_PX = 64;
 /** Matches the white glow under Simplify: paint over cyan fill inside the spotlight without masking glyphs. */
 const HERO_SURFACE_KNOCKOUT = '#ffffff';
 
+const SPOTLIGHT_OFF_CANVAS = -500;
+
 function featheredSpotlightMask(x: number, y: number) {
   const r = SPOTLIGHT_RADIUS_PX;
   const hardCore = Math.max(0, r - SPOTLIGHT_FEATHER_PX);
@@ -44,14 +46,11 @@ function assignRef<T>(ref: Ref<T> | undefined, value: T | null) {
 export function HeroSimplifyAndExcellenceSpot({
   simplifyWord,
   excellenceWord,
-  simplifyAnchorRef,
-  /** Festival hero reveal: use glyph-shaped white fill instead of a disc knockout so the pattern stays visible. */
-  festivalRevealActive = false
+  simplifyAnchorRef
 }: {
   simplifyWord: string;
   excellenceWord: string;
   simplifyAnchorRef?: Ref<HTMLElement | null>;
-  festivalRevealActive?: boolean;
 }) {
   const wrapRef = useRef<HTMLSpanElement>(null);
   const simplifyRootRef = useRef<HTMLSpanElement>(null);
@@ -60,14 +59,18 @@ export function HeroSimplifyAndExcellenceSpot({
   const measureRef = useRef<HTMLSpanElement>(null);
   const geomRef = useRef({ sx: 0, sy: 0, ex: 0, ey: 0 });
 
-  const mouseX = useMotionValue(-500);
-  const mouseY = useMotionValue(-500);
+  const mouseX = useMotionValue(SPOTLIGHT_OFF_CANVAS);
+  const mouseY = useMotionValue(SPOTLIGHT_OFF_CANVAS);
   const springX = useSpring(mouseX, { stiffness: 300, damping: 30 });
   const springY = useSpring(mouseY, { stiffness: 300, damping: 30 });
 
-  const [simpStrokeMask, setSimpStrokeMask] = useState(() => featheredSpotlightMask(-500, -500));
-  const [excGoldMask, setExcGoldMask] = useState(() => featheredSpotlightMask(-500, -500));
-  const [knockPos, setKnockPos] = useState({ x: -500, y: -500 });
+  const [simpStrokeMask, setSimpStrokeMask] = useState(() =>
+    featheredSpotlightMask(SPOTLIGHT_OFF_CANVAS, SPOTLIGHT_OFF_CANVAS)
+  );
+  const [excGoldMask, setExcGoldMask] = useState(() =>
+    featheredSpotlightMask(SPOTLIGHT_OFF_CANVAS, SPOTLIGHT_OFF_CANVAS)
+  );
+  const [knockPos, setKnockPos] = useState({ x: SPOTLIGHT_OFF_CANVAS, y: SPOTLIGHT_OFF_CANVAS });
   const [borderBoxPx, setBorderBoxPx] = useState<number | undefined>(undefined);
   const [padLeftPx, setPadLeftPx] = useState<number | undefined>(undefined);
   const [padRightPx, setPadRightPx] = useState<number | undefined>(undefined);
@@ -184,7 +187,7 @@ export function HeroSimplifyAndExcellenceSpot({
       unsubscribeX();
       unsubscribeY();
     };
-  }, [springX, springY]);
+  }, [springX, springY, mouseX, mouseY]);
 
   return (
     <span ref={wrapRef} className="relative flex cursor-default flex-col items-center">
@@ -235,40 +238,19 @@ export function HeroSimplifyAndExcellenceSpot({
           {simplifyWord}
         </span>
 
-        {festivalRevealActive ? (
-          <motion.span
-            aria-hidden
-            className="pointer-events-none col-start-1 row-start-1 z-[1] mx-auto box-content inline-block max-w-none overflow-visible text-center italic font-bold tracking-tight text-white"
-            style={{
-              ...(padLeftPx != null && padRightPx != null
-                ? { paddingLeft: padLeftPx, paddingRight: padRightPx }
-                : null),
-              WebkitMaskImage: simpStrokeMask,
-              maskImage: simpStrokeMask,
-              WebkitMaskRepeat: 'no-repeat',
-              maskRepeat: 'no-repeat',
-              WebkitMaskSize: '100% 100%',
-              maskSize: '100% 100%',
-              pointerEvents: 'none'
-            }}
-          >
-            {simplifyWord}
-          </motion.span>
-        ) : (
-          <motion.div
-            aria-hidden
-            className="pointer-events-none absolute z-[1] rounded-full"
-            style={{
-              width: SPOTLIGHT_RADIUS_PX * 2,
-              height: SPOTLIGHT_RADIUS_PX * 2,
-              left: knockPos.x,
-              top: knockPos.y,
-              translateX: '-50%',
-              translateY: '-50%',
-              background: featheredWhiteKnockout()
-            }}
-          />
-        )}
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute z-[1] rounded-full"
+          style={{
+            width: SPOTLIGHT_RADIUS_PX * 2,
+            height: SPOTLIGHT_RADIUS_PX * 2,
+            left: knockPos.x,
+            top: knockPos.y,
+            translateX: '-50%',
+            translateY: '-50%',
+            background: featheredWhiteKnockout()
+          }}
+        />
 
         <motion.span
           ref={strokeLayerRef}

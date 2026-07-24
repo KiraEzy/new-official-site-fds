@@ -1114,6 +1114,7 @@ export default function App() {
           colorProfile={colorProfile}
           showMintBlend={showHeroMintBlend}
           showFestivalReveal={showFestivalBar}
+          festivalBarOffset={showFestivalBar ? FESTIVAL_BAR_HEIGHT : 0}
           mintBlendAppearance={bentoSectionAppearance}
           onCtaClick={() => {
             bentoSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });

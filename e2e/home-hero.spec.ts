@@ -25,17 +25,19 @@ test.describe('home interactive hero', () => {
     await expect(page.getByLabel(/hero visual style|主視覺外觀樣式|主视觉外观样式/i)).toHaveCount(0);
   });
 
-  test('shows festival pattern reveal underlay when festival bar is present', async ({ page }) => {
+  test('shows festival hero background and frost panel when festival bar is present', async ({ page }) => {
     const hero = page.locator('[data-home-hero="interactive"]');
     await expect(hero).toBeVisible();
-    const reveal = page.locator('[data-festival-reveal="pattern"]');
-    await expect(reveal).toBeVisible();
-    await expect(reveal).toHaveCSS('background-image', /dragon-boat-bg/);
+    const bg = page.locator('[data-festival-bg="hero"]');
+    await expect(bg).toBeVisible();
+    await expect(bg).toHaveCSS('background-image', /dragon-boat-hero/);
+    await expect(page.locator('[data-festival-frost="text"]')).toBeVisible();
   });
 
-  test('removes festival pattern reveal when festival bar is closed', async ({ page }) => {
-    await expect(page.locator('[data-festival-reveal="pattern"]')).toBeVisible();
+  test('removes festival hero background when festival bar is closed', async ({ page }) => {
+    await expect(page.locator('[data-festival-bg="hero"]')).toBeVisible();
     await page.getByRole('button', { name: /Close announcement bar/i }).click();
-    await expect(page.locator('[data-festival-reveal="pattern"]')).toHaveCount(0);
+    await expect(page.locator('[data-festival-bg="hero"]')).toHaveCount(0);
+    await expect(page.locator('[data-festival-frost="text"]')).toHaveCount(0);
   });
 });

@@ -1,18 +1,7 @@
 import type { ComponentType, Ref } from 'react';
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { motion, useMotionValue, useSpring } from 'motion/react';
+import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import { motion } from 'motion/react';
 import { HeroSimplifyAndExcellenceSpot } from './HeroSimplifyAndExcellenceSpot';
-
-const FESTIVAL_REVEAL_RADIUS_PX = 118;
-const FESTIVAL_REVEAL_FEATHER_PX = 36;
-const FESTIVAL_REVEAL_OFF_CANVAS = -500;
-
-function featheredFestivalRevealMask(x: number, y: number) {
-  const r = FESTIVAL_REVEAL_RADIUS_PX;
-  const hardCore = Math.max(0, r - FESTIVAL_REVEAL_FEATHER_PX);
-  const mid = hardCore + FESTIVAL_REVEAL_FEATHER_PX * 0.45;
-  return `radial-gradient(circle ${r}px at ${x}px ${y}px, #000 0px, #000 ${hardCore}px, rgba(0,0,0,0.45) ${mid}px, transparent ${r}px)`;
-}
 
 function assignRef<T>(ref: Ref<T> | undefined, value: T | null) {
   if (!ref) return;
@@ -36,6 +25,7 @@ export function HomeHero({
   onCtaClick,
   CtaButton,
   showFestivalReveal = false,
+  festivalBarOffset = 0
 }: {
   heroRef: Ref<HTMLElement>;
   heroNavPortalRef: (el: HTMLDivElement | null) => void;
@@ -52,63 +42,19 @@ export function HomeHero({
   onCtaClick?: () => void;
   CtaButton: ComponentType<{ label: string; colorProfile?: 'default' | 'navy'; onClick?: () => void }>;
   showFestivalReveal?: boolean;
+  /** Matches fixed festival bar height so hero content clears the lowered navbar. */
+  festivalBarOffset?: number;
 }) {
   const rootRef = useRef<HTMLElement | null>(null);
   const simplifyAnchorRef = useRef<HTMLElement | null>(null);
   const ctaWrapRef = useRef<HTMLDivElement | null>(null);
   const [whiteGlow, setWhiteGlow] = useState<{ x: number; y: number; r: number } | null>(null);
 
-  const mouseX = useMotionValue(FESTIVAL_REVEAL_OFF_CANVAS);
-  const mouseY = useMotionValue(FESTIVAL_REVEAL_OFF_CANVAS);
-  const springX = useSpring(mouseX, { stiffness: 300, damping: 30 });
-  const springY = useSpring(mouseY, { stiffness: 300, damping: 30 });
-  const [festivalMask, setFestivalMask] = useState(() =>
-    featheredFestivalRevealMask(FESTIVAL_REVEAL_OFF_CANVAS, FESTIVAL_REVEAL_OFF_CANVAS),
-  );
-
-  useEffect(() => {
-    if (!showFestivalReveal) return;
-
-    mouseX.set(FESTIVAL_REVEAL_OFF_CANVAS);
-    mouseY.set(FESTIVAL_REVEAL_OFF_CANVAS);
-    setFestivalMask(
-      featheredFestivalRevealMask(FESTIVAL_REVEAL_OFF_CANVAS, FESTIVAL_REVEAL_OFF_CANVAS),
-    );
-
-    const handleMove = (e: MouseEvent) => {
-      const root = rootRef.current;
-      if (!root) return;
-      const rect = root.getBoundingClientRect();
-      const insideHero =
-        e.clientX >= rect.left &&
-        e.clientX <= rect.right &&
-        e.clientY >= rect.top &&
-        e.clientY <= rect.bottom;
-      if (!insideHero) {
-        mouseX.set(FESTIVAL_REVEAL_OFF_CANVAS);
-        mouseY.set(FESTIVAL_REVEAL_OFF_CANVAS);
-        return;
-      }
-      mouseX.set(e.clientX - rect.left);
-      mouseY.set(e.clientY - rect.top);
-    };
-
-    window.addEventListener('mousemove', handleMove);
-
-    const syncMask = () => {
-      setFestivalMask(featheredFestivalRevealMask(springX.get(), springY.get()));
-    };
-    const unsubX = springX.on('change', syncMask);
-    const unsubY = springY.on('change', syncMask);
-
-    return () => {
-      window.removeEventListener('mousemove', handleMove);
-      unsubX();
-      unsubY();
-    };
-  }, [showFestivalReveal, mouseX, mouseY, springX, springY]);
-
   const measureWhiteGlow = useCallback(() => {
+    if (showFestivalReveal) {
+      setWhiteGlow(null);
+      return;
+    }
     const root = rootRef.current;
     const simplify = simplifyAnchorRef.current;
     const cta = ctaWrapRef.current;
@@ -130,7 +76,7 @@ export function HomeHero({
     if (!Number.isFinite(r) || r < 8) return;
 
     setWhiteGlow({ x, y, r });
-  }, []);
+  }, [showFestivalReveal]);
 
   useLayoutEffect(() => {
     const run = () => {
@@ -161,29 +107,26 @@ export function HomeHero({
         assignRef(heroRef, el);
       }}
       data-home-hero="interactive"
-      className="relative h-screen min-h-[700px] w-full overflow-hidden bg-[#e8f6fc]"
+      style={festivalBarOffset > 0 ? { paddingTop: festivalBarOffset } : undefined}
+      className={`relative box-border h-screen min-h-[700px] w-full overflow-hidden ${
+        showFestivalReveal ? 'bg-[#d8efe6]' : 'bg-[#e8f6fc]'
+      }`}
     >
       <div ref={heroNavPortalRef} className="pointer-events-none absolute left-0 right-0 top-0 z-[60]" />
+
       {showFestivalReveal ? (
         <div
           aria-hidden
-          data-festival-reveal="pattern"
-          className="pointer-events-none absolute inset-0 z-[3]"
+          data-festival-bg="hero"
+          className="pointer-events-none absolute inset-0 z-0 bg-cover bg-no-repeat"
           style={{
-            backgroundImage: 'url(/festival/dragon-boat-bg.png)',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
-            WebkitMaskImage: festivalMask,
-            maskImage: festivalMask,
-            WebkitMaskRepeat: 'no-repeat',
-            maskRepeat: 'no-repeat',
-            WebkitMaskSize: '100% 100%',
-            maskSize: '100% 100%'
+            backgroundImage: 'url(/festival/dragon-boat-hero.png)',
+            backgroundPosition: 'center 0%'
           }}
         />
       ) : null}
-      {whiteGlow ? (
+
+      {!showFestivalReveal && whiteGlow ? (
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 z-[1]"
@@ -192,42 +135,83 @@ export function HomeHero({
           }}
         />
       ) : null}
+
       {/* Floor the hero bottom in white so it meets the bridge without a blue seam */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-[28%]"
         style={{
-          background: 'linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.85) 55%, #ffffff 100%)'
+          background: showFestivalReveal
+            ? 'linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.55) 50%, #ffffff 100%)'
+            : 'linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.85) 55%, #ffffff 100%)'
         }}
       />
 
-      <div className="relative z-20 mx-auto flex h-full max-w-7xl flex-col items-center justify-center px-4 text-center sm:px-6 lg:px-8">
+      <div
+        className={`relative z-20 mx-auto flex h-full max-w-7xl flex-col items-center px-4 text-center sm:px-6 lg:px-8 ${
+          showFestivalReveal
+            ? 'justify-center pt-28 pb-16 sm:pt-32 sm:pb-20 lg:pt-36'
+            : 'justify-center'
+        }`}
+      >
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="mx-auto w-full max-w-5xl overflow-visible px-1 sm:px-2"
+          className={`mx-auto w-full overflow-visible px-1 sm:px-2 ${
+            showFestivalReveal ? 'max-w-3xl' : 'max-w-5xl'
+          }`}
           onAnimationComplete={measureWhiteGlow}
         >
-          <div className="relative z-40 mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[10px] font-bold tracking-widest text-primary uppercase">
-            {badge}
+          <div
+            className={
+              showFestivalReveal
+                ? 'mx-auto max-w-2xl overflow-hidden rounded-[2rem] border border-white/55 bg-white/45 px-6 py-8 shadow-[0_16px_48px_rgba(15,60,50,0.1)] backdrop-blur-xl sm:max-w-3xl sm:px-8 sm:py-9'
+                : undefined
+            }
+            data-festival-frost={showFestivalReveal ? 'text' : undefined}
+          >
+            <div
+              className={`relative z-40 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[10px] font-bold tracking-widest text-primary uppercase ${
+                showFestivalReveal ? 'mb-3.5 sm:mb-4' : 'mb-6'
+              }`}
+            >
+              {badge}
+            </div>
+            <h1
+              className={
+                showFestivalReveal
+                  ? 'relative mx-auto mb-7 max-w-2xl overflow-visible text-center text-5xl font-bold leading-[1.16] tracking-tight text-text sm:max-w-3xl sm:text-6xl sm:leading-[1.14] lg:text-[5.25rem] lg:leading-[1.12]'
+                  : 'relative mx-auto mb-8 max-w-4xl overflow-visible text-center text-5xl font-bold leading-[1.18] tracking-tight text-text sm:leading-[1.15] lg:max-w-5xl lg:text-8xl lg:leading-[1.14]'
+              }
+            >
+              <span className="relative z-30 inline-block w-full">{designTo}</span>
+              <br />
+              <span className="relative z-[1] flex flex-col items-center">
+                <HeroSimplifyAndExcellenceSpot
+                  simplifyWord={simplifyWord}
+                  excellenceWord={excellenceWord}
+                  simplifyAnchorRef={simplifyAnchorRef}
+                />
+              </span>
+            </h1>
+            <p
+              className={
+                showFestivalReveal
+                  ? 'relative z-[25] mx-auto max-w-2xl text-xl font-medium leading-relaxed text-text/60'
+                  : 'relative z-[25] mx-auto max-w-2xl text-xl font-medium leading-relaxed text-text/60'
+              }
+            >
+              {subtitle}
+            </p>
           </div>
-          <h1 className="relative mx-auto mb-8 max-w-4xl overflow-visible text-center text-5xl font-bold leading-[1.18] tracking-tight text-text sm:leading-[1.15] lg:max-w-5xl lg:text-8xl lg:leading-[1.14]">
-            <span className="relative z-30 inline-block w-full">{designTo}</span>
-            <br />
-            <span className="relative z-[1] flex flex-col items-center">
-              <HeroSimplifyAndExcellenceSpot
-                simplifyWord={simplifyWord}
-                excellenceWord={excellenceWord}
-                simplifyAnchorRef={simplifyAnchorRef}
-                festivalRevealActive={showFestivalReveal}
-              />
-            </span>
-          </h1>
-          <p className="relative z-[25] mx-auto mb-10 max-w-2xl text-xl font-medium leading-relaxed text-text/60">
-            {subtitle}
-          </p>
-          <div ref={ctaWrapRef} className="relative z-[25] flex flex-wrap justify-center gap-5">
+
+          <div
+            ref={ctaWrapRef}
+            className={`relative z-[25] flex flex-wrap justify-center gap-5 ${
+              showFestivalReveal ? 'mt-8 sm:mt-10' : 'mt-10'
+            }`}
+          >
             <CtaButton label={ctaLabel} colorProfile={colorProfile} onClick={onCtaClick} />
           </div>
         </motion.div>
