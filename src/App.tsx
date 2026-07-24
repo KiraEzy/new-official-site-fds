@@ -1069,7 +1069,7 @@ export default function App() {
             animate={{ height: FESTIVAL_BAR_HEIGHT }}
             exit={{ height: 0 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed top-0 left-0 right-0 z-52 overflow-hidden"
+            className="fixed top-0 left-0 right-0 z-[70] overflow-hidden"
           >
             <div className="relative flex h-14 items-center justify-center gap-3 border-b border-[#c9a227]/35 bg-[linear-gradient(90deg,#0a3324_0%,#145c38_42%,#0f5248_100%)] px-6 text-[#f0dfa0] shadow-[inset_0_1px_0_rgba(201,162,39,0.22)]">
               <Ship size={16} className="shrink-0 text-[#e8c547]" aria-hidden />
@@ -1113,6 +1113,7 @@ export default function App() {
           scrollHint={String(home.scrollHint ?? '')}
           colorProfile={colorProfile}
           showMintBlend={showHeroMintBlend}
+          showFestivalReveal={showFestivalBar}
           mintBlendAppearance={bentoSectionAppearance}
           onCtaClick={() => {
             bentoSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
