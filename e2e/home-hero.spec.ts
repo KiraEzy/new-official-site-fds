@@ -30,7 +30,7 @@ test.describe('home interactive hero', () => {
     await expect(hero).toBeVisible();
     const reveal = page.locator('[data-festival-reveal="pattern"]');
     await expect(reveal).toBeVisible();
-    await expect(reveal).toHaveCSS('background-image', /dragon-pattern/);
+    await expect(reveal).toHaveCSS('background-image', /dragon-boat-bg/);
   });
 
   test('removes festival pattern reveal when festival bar is closed', async ({ page }) => {

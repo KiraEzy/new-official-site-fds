@@ -170,9 +170,10 @@ export function HomeHero({
           data-festival-reveal="pattern"
           className="pointer-events-none absolute inset-0 z-[3]"
           style={{
-            backgroundImage: 'url(/festival/dragon-pattern.png)',
-            backgroundRepeat: 'repeat',
-            backgroundSize: '420px auto',
+            backgroundImage: 'url(/festival/dragon-boat-bg.png)',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
             WebkitMaskImage: festivalMask,
             maskImage: festivalMask,
             WebkitMaskRepeat: 'no-repeat',
