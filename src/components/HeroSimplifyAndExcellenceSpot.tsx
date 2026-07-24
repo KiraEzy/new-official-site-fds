@@ -44,11 +44,14 @@ function assignRef<T>(ref: Ref<T> | undefined, value: T | null) {
 export function HeroSimplifyAndExcellenceSpot({
   simplifyWord,
   excellenceWord,
-  simplifyAnchorRef
+  simplifyAnchorRef,
+  /** When true, skip the white knockout disc so a festival pattern reveal can show through the full mask. */
+  hideSurfaceKnockout = false
 }: {
   simplifyWord: string;
   excellenceWord: string;
   simplifyAnchorRef?: Ref<HTMLElement | null>;
+  hideSurfaceKnockout?: boolean;
 }) {
   const wrapRef = useRef<HTMLSpanElement>(null);
   const simplifyRootRef = useRef<HTMLSpanElement>(null);
@@ -232,19 +235,21 @@ export function HeroSimplifyAndExcellenceSpot({
           {simplifyWord}
         </span>
 
-        <motion.div
-          aria-hidden
-          className="pointer-events-none absolute z-[1] rounded-full"
-          style={{
-            width: SPOTLIGHT_RADIUS_PX * 2,
-            height: SPOTLIGHT_RADIUS_PX * 2,
-            left: knockPos.x,
-            top: knockPos.y,
-            translateX: '-50%',
-            translateY: '-50%',
-            background: featheredWhiteKnockout()
-          }}
-        />
+        {!hideSurfaceKnockout ? (
+          <motion.div
+            aria-hidden
+            className="pointer-events-none absolute z-[1] rounded-full"
+            style={{
+              width: SPOTLIGHT_RADIUS_PX * 2,
+              height: SPOTLIGHT_RADIUS_PX * 2,
+              left: knockPos.x,
+              top: knockPos.y,
+              translateX: '-50%',
+              translateY: '-50%',
+              background: featheredWhiteKnockout()
+            }}
+          />
+        ) : null}
 
         <motion.span
           ref={strokeLayerRef}

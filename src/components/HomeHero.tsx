@@ -219,6 +219,7 @@ export function HomeHero({
                 simplifyWord={simplifyWord}
                 excellenceWord={excellenceWord}
                 simplifyAnchorRef={simplifyAnchorRef}
+                hideSurfaceKnockout={showFestivalReveal}
               />
             </span>
           </h1>
