@@ -5,6 +5,7 @@ import { HeroSimplifyAndExcellenceSpot } from './HeroSimplifyAndExcellenceSpot';
 
 const FESTIVAL_REVEAL_RADIUS_PX = 118;
 const FESTIVAL_REVEAL_FEATHER_PX = 36;
+const FESTIVAL_REVEAL_OFF_CANVAS = -500;
 
 function featheredFestivalRevealMask(x: number, y: number) {
   const r = FESTIVAL_REVEAL_RADIUS_PX;
@@ -57,19 +58,37 @@ export function HomeHero({
   const ctaWrapRef = useRef<HTMLDivElement | null>(null);
   const [whiteGlow, setWhiteGlow] = useState<{ x: number; y: number; r: number } | null>(null);
 
-  const mouseX = useMotionValue(-500);
-  const mouseY = useMotionValue(-500);
+  const mouseX = useMotionValue(FESTIVAL_REVEAL_OFF_CANVAS);
+  const mouseY = useMotionValue(FESTIVAL_REVEAL_OFF_CANVAS);
   const springX = useSpring(mouseX, { stiffness: 300, damping: 30 });
   const springY = useSpring(mouseY, { stiffness: 300, damping: 30 });
-  const [festivalMask, setFestivalMask] = useState(() => featheredFestivalRevealMask(-500, -500));
+  const [festivalMask, setFestivalMask] = useState(() =>
+    featheredFestivalRevealMask(FESTIVAL_REVEAL_OFF_CANVAS, FESTIVAL_REVEAL_OFF_CANVAS),
+  );
 
   useEffect(() => {
     if (!showFestivalReveal) return;
+
+    mouseX.set(FESTIVAL_REVEAL_OFF_CANVAS);
+    mouseY.set(FESTIVAL_REVEAL_OFF_CANVAS);
+    setFestivalMask(
+      featheredFestivalRevealMask(FESTIVAL_REVEAL_OFF_CANVAS, FESTIVAL_REVEAL_OFF_CANVAS),
+    );
 
     const handleMove = (e: MouseEvent) => {
       const root = rootRef.current;
       if (!root) return;
       const rect = root.getBoundingClientRect();
+      const insideHero =
+        e.clientX >= rect.left &&
+        e.clientX <= rect.right &&
+        e.clientY >= rect.top &&
+        e.clientY <= rect.bottom;
+      if (!insideHero) {
+        mouseX.set(FESTIVAL_REVEAL_OFF_CANVAS);
+        mouseY.set(FESTIVAL_REVEAL_OFF_CANVAS);
+        return;
+      }
       mouseX.set(e.clientX - rect.left);
       mouseY.set(e.clientY - rect.top);
     };
