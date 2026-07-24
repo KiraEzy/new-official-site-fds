@@ -45,13 +45,13 @@ export function HeroSimplifyAndExcellenceSpot({
   simplifyWord,
   excellenceWord,
   simplifyAnchorRef,
-  /** When true, skip the white knockout disc so a festival pattern reveal can show through the full mask. */
-  hideSurfaceKnockout = false
+  /** Festival hero reveal: use glyph-shaped white fill instead of a disc knockout so the pattern stays visible. */
+  festivalRevealActive = false
 }: {
   simplifyWord: string;
   excellenceWord: string;
   simplifyAnchorRef?: Ref<HTMLElement | null>;
-  hideSurfaceKnockout?: boolean;
+  festivalRevealActive?: boolean;
 }) {
   const wrapRef = useRef<HTMLSpanElement>(null);
   const simplifyRootRef = useRef<HTMLSpanElement>(null);
@@ -235,7 +235,26 @@ export function HeroSimplifyAndExcellenceSpot({
           {simplifyWord}
         </span>
 
-        {!hideSurfaceKnockout ? (
+        {festivalRevealActive ? (
+          <motion.span
+            aria-hidden
+            className="pointer-events-none col-start-1 row-start-1 z-[1] mx-auto box-content inline-block max-w-none overflow-visible text-center italic font-bold tracking-tight text-white"
+            style={{
+              ...(padLeftPx != null && padRightPx != null
+                ? { paddingLeft: padLeftPx, paddingRight: padRightPx }
+                : null),
+              WebkitMaskImage: simpStrokeMask,
+              maskImage: simpStrokeMask,
+              WebkitMaskRepeat: 'no-repeat',
+              maskRepeat: 'no-repeat',
+              WebkitMaskSize: '100% 100%',
+              maskSize: '100% 100%',
+              pointerEvents: 'none'
+            }}
+          >
+            {simplifyWord}
+          </motion.span>
+        ) : (
           <motion.div
             aria-hidden
             className="pointer-events-none absolute z-[1] rounded-full"
@@ -249,7 +268,7 @@ export function HeroSimplifyAndExcellenceSpot({
               background: featheredWhiteKnockout()
             }}
           />
-        ) : null}
+        )}
 
         <motion.span
           ref={strokeLayerRef}
