@@ -5,6 +5,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useI18n } from './i18n/I18nContext';
+import fdsLogoUrl from './assets/fds-logo.png';
 import Navbar, { type NavbarLayoutMode } from './components/Navbar';
 import CapturePage from './components/CapturePage';
 import ProfilePage from './components/ProfilePage';
@@ -1737,7 +1738,7 @@ export default function App() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
             <div className="col-span-1 lg:col-span-1">
               <div className="flex items-center mb-6">
-                <img src="/assets/fds-logo.png" alt={footer.logoAlt} className="h-12 w-auto object-contain" />
+                <img src={fdsLogoUrl} alt={footer.logoAlt} className="h-12 w-auto object-contain" />
               </div>
               <p className="text-text/50 text-sm leading-relaxed mb-8">{footer.blurb}</p>
             </div>

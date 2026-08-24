@@ -24,6 +24,7 @@ import {
 } from '../content/pageHashes';
 import type { Locale } from '../i18n/types';
 import { useI18n } from '../i18n/I18nContext';
+import fdsLogoUrl from '../assets/fds-logo.png';
 
 const SOLUTIONS_HIGHLIGHT_SPRING = {
   type: 'spring' as const,
@@ -345,7 +346,8 @@ export default function Navbar({
     { name: t('nav.solutionWebContentManagement'), href: WEB_CONTENT_MANAGEMENT_HASH }
   ];
 
-  const logoUrl = '/assets/fds-logo.png';
+  // Bundled asset URL (not /assets/...) so LAN clients never resolve a host-local path.
+  const logoUrl = fdsLogoUrl;
   const clampedDropdownOpacity = Math.min(0.95, Math.max(0.25, dropdownGlassOpacity));
 
   const enquiryDesktopHover =
