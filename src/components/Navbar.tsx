@@ -20,7 +20,11 @@ import {
   FOCAL_AI_PAGE_HASH,
   PROFILE_HASH,
   SERVICES_HASH,
-  WEB_CONTENT_MANAGEMENT_HASH
+  WEB_CONTENT_MANAGEMENT_HASH,
+  FOCAL_WCMS_HASH,
+  FOCAL_FLOW_HASH,
+  FOCAL_BI_HASH,
+  FOCAL_ROOM_BOOKING_HASH
 } from '../content/pageHashes';
 import type { Locale } from '../i18n/types';
 import { useI18n } from '../i18n/I18nContext';
@@ -343,6 +347,10 @@ export default function Navbar({
     { name: t('nav.solutionFocalAi'), href: FOCAL_AI_PAGE_HASH },
     { name: t('nav.solutionWorkflowManagement'), href: WORKFLOW_MANAGEMENT_HASH },
     { name: t('nav.solutionDocumentManagement'), href: DOCUMENT_MANAGEMENT_HASH },
+    { name: t('nav.solutionFocalWcms'), href: FOCAL_WCMS_HASH },
+    { name: t('nav.solutionFocalFlow'), href: FOCAL_FLOW_HASH },
+    { name: t('nav.solutionFocalRoomBooking'), href: FOCAL_ROOM_BOOKING_HASH },
+    { name: t('nav.solutionFocalBi'), href: FOCAL_BI_HASH },
     { name: t('nav.solutionWebContentManagement'), href: WEB_CONTENT_MANAGEMENT_HASH }
   ];
 

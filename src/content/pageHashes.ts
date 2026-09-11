@@ -12,6 +12,10 @@ export const WHAT_WE_BUILD_HASH = '#what-we-build';
 export const CAPTURE_HASH = '#capture';
 export const DOCUMENT_MANAGEMENT_HASH = '#document-management';
 export const WEB_CONTENT_MANAGEMENT_HASH = '#web-content-management';
+export const FOCAL_WCMS_HASH = '#focal-wcms';
+export const FOCAL_FLOW_HASH = '#focal-flow';
+export const FOCAL_BI_HASH = '#focal-bi';
+export const FOCAL_ROOM_BOOKING_HASH = '#focal-room-booking';
 
 /** Primary route for the workflow / case operations solution page. */
 export const WORKFLOW_MANAGEMENT_HASH = '#workflow-management';

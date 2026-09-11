@@ -9,6 +9,10 @@ import {
   PROFILE_HASH,
   SERVICES_HASH,
   WEB_CONTENT_MANAGEMENT_HASH,
+  FOCAL_BI_HASH,
+  FOCAL_FLOW_HASH,
+  FOCAL_ROOM_BOOKING_HASH,
+  FOCAL_WCMS_HASH,
   WHAT_WE_BUILD_HASH,
   WORKFLOW_MANAGEMENT_HASH
 } from '../content/pageHashes';
@@ -25,6 +29,10 @@ export type ActivePage =
   | 'capture'
   | 'document-management'
   | 'web-content-management'
+  | 'focal-wcms'
+  | 'focal-flow'
+  | 'focal-bi'
+  | 'focal-room-booking'
   | 'news-article';
 
 const HASH_TO_PAGE: Record<string, ActivePage> = {
@@ -37,7 +45,11 @@ const HASH_TO_PAGE: Record<string, ActivePage> = {
   [CONTACT_US_HASH]: 'contact-us',
   [CAPTURE_HASH]: 'capture',
   [DOCUMENT_MANAGEMENT_HASH]: 'document-management',
-  [WEB_CONTENT_MANAGEMENT_HASH]: 'web-content-management'
+  [WEB_CONTENT_MANAGEMENT_HASH]: 'web-content-management',
+  [FOCAL_WCMS_HASH]: 'focal-wcms',
+  [FOCAL_FLOW_HASH]: 'focal-flow',
+  [FOCAL_BI_HASH]: 'focal-bi',
+  [FOCAL_ROOM_BOOKING_HASH]: 'focal-room-booking'
 };
 
 const NEWS_ARTICLE_HASH_PREFIX = '#news/';
@@ -83,6 +95,14 @@ export function titleForActivePage(page: ActivePage): string {
       return `Document Management · ${base}`;
     case 'web-content-management':
       return `Web Content Management · ${base}`;
+    case 'focal-wcms':
+      return `Focal WCMS · ${base}`;
+    case 'focal-flow':
+      return `Focal Flow · ${base}`;
+    case 'focal-bi':
+      return `Focal BI · ${base}`;
+    case 'focal-room-booking':
+      return `Room Booking · ${base}`;
     case 'news-article':
       return `News · ${base}`;
     default:

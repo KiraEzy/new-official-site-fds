@@ -1,4 +1,9 @@
 {
+  "heroLayoutLabel": "主視覺版型",
+  "heroLayoutHelp": "比較三款首頁設計，所選版型會儲存於預覽網址。",
+  "heroLayoutCentered": "替代方案 — 置中文字及下方圖片",
+  "heroLayoutAlternative": "替代方案 — 雜誌式版型",
+  "heroLayoutOriginal": "原有方案 — 圖片輪播",
   "controlsEyebrow": "演示控制台",
   "controlsTitle": "元素樣式",
   "navLayoutLabel": "導覽列版型",

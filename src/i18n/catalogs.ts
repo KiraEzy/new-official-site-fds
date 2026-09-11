@@ -18,6 +18,10 @@ import enServices from './locales/en/services.json';
 import enCapture from './locales/en/capture.json';
 import enDocumentManagement from './locales/en/documentManagement.json';
 import enWebContentManagement from './locales/en/webContentManagement.json';
+import enFocalWcms from './locales/en/focalWcms.json';
+import enFocalFlow from './locales/en/focalFlow.json';
+import enFocalBi from './locales/en/focalBi.json';
+import enFocalRoomBooking from './locales/en/focalRoomBooking.json';
 import enNewsArticles from './locales/en/newsArticles.json';
 
 import zhHantMeta from './locales/zh-Hant/meta.json';
@@ -37,6 +41,10 @@ import zhHantServices from './locales/zh-Hant/services.json';
 import zhHantCapture from './locales/zh-Hant/capture.json';
 import zhHantDocumentManagement from './locales/zh-Hant/documentManagement.json';
 import zhHantWebContentManagement from './locales/zh-Hant/webContentManagement.json';
+import zhHantFocalWcms from './locales/zh-Hant/focalWcms.json';
+import zhHantFocalFlow from './locales/zh-Hant/focalFlow.json';
+import zhHantFocalBi from './locales/zh-Hant/focalBi.json';
+import zhHantFocalRoomBooking from './locales/zh-Hant/focalRoomBooking.json';
 import zhHantNewsArticles from './locales/zh-Hant/newsArticles.json';
 
 import zhHansMeta from './locales/zh-Hans/meta.json';
@@ -56,6 +64,10 @@ import zhHansServices from './locales/zh-Hans/services.json';
 import zhHansCapture from './locales/zh-Hans/capture.json';
 import zhHansDocumentManagement from './locales/zh-Hans/documentManagement.json';
 import zhHansWebContentManagement from './locales/zh-Hans/webContentManagement.json';
+import zhHansFocalWcms from './locales/zh-Hans/focalWcms.json';
+import zhHansFocalFlow from './locales/zh-Hans/focalFlow.json';
+import zhHansFocalBi from './locales/zh-Hans/focalBi.json';
+import zhHansFocalRoomBooking from './locales/zh-Hans/focalRoomBooking.json';
 import zhHansNewsArticles from './locales/zh-Hans/newsArticles.json';
 
 export type MessageCatalog = Record<string, unknown>;
@@ -82,6 +94,10 @@ const enBuilt = {
   capture: enCapture,
   documentManagement: enDocumentManagement,
   webContentManagement: enWebContentManagement,
+  focalWcms: enFocalWcms,
+  focalFlow: enFocalFlow,
+  focalBi: enFocalBi,
+  focalRoomBooking: enFocalRoomBooking,
   newsArticles: enNewsArticles
 };
 
@@ -103,6 +119,10 @@ export type FullCatalog = {
   capture: Record<string, unknown>;
   documentManagement: Record<string, unknown>;
   webContentManagement: Record<string, unknown>;
+  focalWcms: Record<string, unknown>;
+  focalFlow: Record<string, unknown>;
+  focalBi: Record<string, unknown>;
+  focalRoomBooking: Record<string, unknown>;
   newsArticles: Record<string, unknown>;
 };
 
@@ -126,6 +146,10 @@ export const catalogs: Record<Locale, FullCatalog> = {
     capture: ns(enCapture, zhHantCapture),
     documentManagement: ns(enDocumentManagement, zhHantDocumentManagement),
     webContentManagement: ns(enWebContentManagement, zhHantWebContentManagement),
+    focalWcms: ns(enFocalWcms, zhHantFocalWcms),
+    focalFlow: ns(enFocalFlow, zhHantFocalFlow),
+    focalBi: ns(enFocalBi, zhHantFocalBi),
+    focalRoomBooking: ns(enFocalRoomBooking, zhHantFocalRoomBooking),
     newsArticles: ns(enNewsArticles, zhHantNewsArticles)
   },
   'zh-Hans': {
@@ -146,6 +170,10 @@ export const catalogs: Record<Locale, FullCatalog> = {
     capture: ns(enCapture, zhHansCapture),
     documentManagement: ns(enDocumentManagement, zhHansDocumentManagement),
     webContentManagement: ns(enWebContentManagement, zhHansWebContentManagement),
+    focalWcms: ns(enFocalWcms, zhHansFocalWcms),
+    focalFlow: ns(enFocalFlow, zhHansFocalFlow),
+    focalBi: ns(enFocalBi, zhHansFocalBi),
+    focalRoomBooking: ns(enFocalRoomBooking, zhHansFocalRoomBooking),
     newsArticles: ns(enNewsArticles, zhHansNewsArticles)
   }
 };

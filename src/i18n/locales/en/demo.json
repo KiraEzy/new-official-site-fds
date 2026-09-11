@@ -1,4 +1,9 @@
 {
+  "heroLayoutLabel": "Hero layout",
+  "heroLayoutHelp": "Compare all three homepage designs. The selected option is saved in the preview URL.",
+  "heroLayoutCentered": "Alternative — centered image",
+  "heroLayoutAlternative": "Alternative — editorial",
+  "heroLayoutOriginal": "Original — image carousel",
   "controlsEyebrow": "Demo Controls",
   "controlsTitle": "Element styles",
   "navLayoutLabel": "Navbar layout",

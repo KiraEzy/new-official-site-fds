@@ -123,3 +123,38 @@
   background: var(--color-interactive);
   opacity: 1;
 }
+
+.room-booking-scrub {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-interactive) 28%, #d7e6ee);
+  outline: none;
+  accent-color: var(--color-interactive);
+  cursor: pointer;
+}
+
+.room-booking-scrub:focus-visible {
+  outline: 2px solid var(--color-interactive);
+  outline-offset: 4px;
+}
+
+.room-booking-scrub::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: var(--color-interactive);
+  box-shadow: 0 4px 12px rgba(17, 184, 245, 0.45);
+}
+
+.room-booking-scrub::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--color-interactive);
+  box-shadow: 0 4px 12px rgba(17, 184, 245, 0.45);
+}

@@ -1,4 +1,9 @@
 {
+  "heroLayoutLabel": "主视觉布局",
+  "heroLayoutHelp": "比较三款首页设计，所选布局会保存于预览网址。",
+  "heroLayoutCentered": "替代方案 — 居中文字及下方图片",
+  "heroLayoutAlternative": "替代方案 — 杂志式布局",
+  "heroLayoutOriginal": "原有方案 — 图片轮播",
   "controlsEyebrow": "演示控制台",
   "controlsTitle": "元素样式",
   "navLayoutLabel": "导航栏布局",

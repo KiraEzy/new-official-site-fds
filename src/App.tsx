@@ -13,6 +13,10 @@ import CareerPage from './components/CareerPage';
 import ServicesPage from './components/ServicesPage';
 import DocumentManagementPage from './components/DocumentManagementPage';
 import WebContentManagementPage from './components/WebContentManagementPage';
+import FocalWcmsPage from './components/FocalWcmsPage';
+import FocalFlowPage from './components/FocalFlowPage';
+import FocalBiPage from './components/FocalBiPage';
+import FocalRoomBookingPage from './components/FocalRoomBookingPage';
 import GetInTouchSection from './components/GetInTouchSection';
 import MiniCaseFlow from './components/MiniCaseFlow';
 import ContactUsPage from './pages/ContactUsPage';
@@ -38,6 +42,8 @@ import { motion, AnimatePresence } from 'motion/react';
 // import Marquee from 'react-fast-marquee';
 import { ArrowRight, ArrowUp, X, Globe, Users, CheckCircle2, Database, Cpu, Phone, Mail, MapPin, Clock3, Send, SlidersHorizontal, Cloud, PencilRuler, ShieldCheck, Route, RefreshCw, ListChecks, Search, BarChart3, PlugZap, BadgeCheck, Printer, Sparkles, Zap, Rocket, GitBranch, LayoutDashboard, Smartphone, Puzzle, Building2, ClipboardList, Bell, AlarmClock, AlertCircle, UsersRound, Share2, Ship, type LucideIcon } from 'lucide-react';
 import { HomeHero } from './components/HomeHero';
+import { HomeHeroAlternative } from './components/HomeHeroAlternative';
+import { HomeHeroCentered } from './components/HomeHeroCentered';
 import '@xyflow/react/dist/style.css';
 
 const FESTIVAL_BAR_HEIGHT = 56;
@@ -723,6 +729,10 @@ export default function App() {
   const [forceNavbarTop, setForceNavbarTop] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [showStyleControls, setShowStyleControls] = useState(false);
+  const [heroLayout, setHeroLayout] = useState<'original' | 'alternative' | 'centered'>(() => {
+    const requested = new URLSearchParams(window.location.search).get('hero');
+    return requested === 'original' || requested === 'alternative' ? requested : 'centered';
+  });
   const [showBentoIcons, setShowBentoIcons] = useState(true);
   const [alignContactInfoBottom, setAlignContactInfoBottom] = useState(true);
   const [hideEnquiryButton, setHideEnquiryButton] = useState(false);
@@ -1017,6 +1027,7 @@ export default function App() {
   };
 
   const newsArticleSlug = newsSlugFromHash(window.location.hash);
+  const SelectedHomeHero = { original: HomeHero, alternative: HomeHeroAlternative, centered: HomeHeroCentered }[heroLayout];
   const scrolledSectionTopPad = showFestivalBar
     ? `calc(11rem + ${FESTIVAL_BAR_HEIGHT}px)`
     : '11rem';
@@ -1063,7 +1074,7 @@ export default function App() {
 
       {activePage === 'home' ? (
       <main>
-        <HomeHero
+        <SelectedHomeHero
           heroRef={heroRef}
           heroNavPortalRef={setHeroNavPortalEl}
           title={String(home.heroTitle ?? '')}
@@ -1510,6 +1521,14 @@ export default function App() {
         <DocumentManagementPage />
       ) : activePage === 'web-content-management' ? (
         <WebContentManagementPage />
+      ) : activePage === 'focal-wcms' ? (
+        <FocalWcmsPage />
+      ) : activePage === 'focal-flow' ? (
+        <FocalFlowPage />
+      ) : activePage === 'focal-bi' ? (
+        <FocalBiPage />
+      ) : activePage === 'focal-room-booking' ? (
+        <FocalRoomBookingPage />
       ) : activePage === 'services' ? (
         <ServicesPage />
       ) : activePage === 'career' ? (
@@ -1521,8 +1540,9 @@ export default function App() {
       )}
 
       {activePage === 'home' ? (
-      <div className="fixed bottom-8 left-8 z-50">
+      <div className="pointer-events-none fixed bottom-8 left-8 z-50">
         <motion.div
+          inert={!showStyleControls}
           initial={false}
           animate={{
             opacity: showStyleControls ? 1 : 0,
@@ -1536,6 +1556,27 @@ export default function App() {
             <p className="text-xs font-bold uppercase tracking-[0.26em] text-interactive">{demo.controlsEyebrow}</p>
             <h3 className="mt-1 text-lg font-bold">{demo.controlsTitle}</h3>
           </div>
+
+          <label className="mb-3 block rounded-2xl border border-white/10 bg-white/8 p-4">
+            <span className="block text-sm font-semibold text-interactive">{demo.heroLayoutLabel}</span>
+            <span className="mt-1 mb-2 block text-xs leading-5 text-white/55">{demo.heroLayoutHelp}</span>
+            <select
+              value={heroLayout}
+              onChange={(event) => {
+                const next = event.target.value as 'original' | 'alternative' | 'centered';
+                setHeroLayout(next);
+                const url = new URL(window.location.href);
+                url.searchParams.set('hero', next);
+                window.history.replaceState(window.history.state, '', url);
+              }}
+              aria-label={demo.heroLayoutLabel}
+              className="mt-1 w-full cursor-pointer rounded-xl border border-white/15 bg-[#0d1828] px-3 py-2.5 text-sm font-medium text-white outline-none focus-visible:ring-2 focus-visible:ring-interactive"
+            >
+              <option value="centered">{demo.heroLayoutCentered}</option>
+              <option value="alternative">{demo.heroLayoutAlternative}</option>
+              <option value="original">{demo.heroLayoutOriginal}</option>
+            </select>
+          </label>
 
           <label className="mb-3 block rounded-2xl border border-white/10 bg-white/8 p-4">
             <span className="block text-sm font-semibold text-interactive">{demo.navLayoutLabel}</span>
@@ -1703,7 +1744,7 @@ export default function App() {
         <button
           type="button"
           onClick={() => setShowStyleControls((isOpen) => !isOpen)}
-          className="flex h-14 w-14 items-center justify-center rounded-full border border-white/40 bg-[#07111f] text-white shadow-[0_18px_50px_rgba(0,0,0,0.32)] backdrop-blur transition-colors duration-300 hover:bg-interactive"
+          className="pointer-events-auto flex h-14 w-14 items-center justify-center rounded-full border border-white/40 bg-[#07111f] text-white shadow-[0_18px_50px_rgba(0,0,0,0.32)] backdrop-blur transition-colors duration-300 hover:bg-interactive"
           aria-expanded={showStyleControls}
           aria-label={demo.toggleAria}
         >
