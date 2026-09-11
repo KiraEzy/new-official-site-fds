@@ -11,6 +11,7 @@ coverage/
 .cursor/
 .playwright-mcp/
 .superpowers/
+.worktrees/
 
 # Playwright
 /test-results/

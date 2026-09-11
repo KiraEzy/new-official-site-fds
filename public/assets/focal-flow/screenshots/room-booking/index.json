@@ -1,0 +1,319 @@
+{
+  "product": "Focal Flow — Room booking",
+  "captured_at": "2026-09-02T09:47:32.833Z",
+  "source": "http://localhost:5173 (logged in as tester / user_id 5)",
+  "notes": [
+    "Desktop shots are 1920×1080. Files prefixed m are iPhone 14 (390×844 @2x).",
+    "Do not use demo=true door mode on the marketing site.",
+    "Door keypad needs a booking whose window includes now (BOK or ACT).",
+    "Suggested story order: 04 floor plan → 11 pin calendar → 13/14 form → 18 code → 25 QR → 31 keypad → 35–38 check in/out → 21 my bookings."
+  ],
+  "shots": [
+    {
+      "file": "01-login.png",
+      "title": "Login",
+      "use": "Hero / auth entry. Product starts here.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "02-login-filled.png",
+      "title": "Login filled",
+      "use": "Optional — signed-in intent.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "03-login-create-user.png",
+      "title": "Create user tab",
+      "use": "Onboarding / first-run.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "04-floor-plan.png",
+      "title": "Floor plan — live occupancy",
+      "use": "Primary hero for room booking. Pins + Gantt + time cursor.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "05-nav-room-booking.png",
+      "title": "Room Booking nav",
+      "use": "IA: Booking Form / My Booking / Floor Plan / QR Generator.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "06-floor-plan-morning.png",
+      "title": "Floor plan at 09:15",
+      "use": "Time scrub — morning occupancy (ended standup, rooms free).",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "07-floor-plan-afternoon.png",
+      "title": "Floor plan at 17:15",
+      "use": "Time scrub — afternoon (booked + active pins).",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "08-floor-plan-evening.png",
+      "title": "Floor plan at 20:15",
+      "use": "Time scrub — evening booked room.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "09-floor-plan-gantt.png",
+      "title": "Room timeline / Gantt",
+      "use": "Crop for “who has which room when”.",
+      "viewport": "element"
+    },
+    {
+      "file": "10-floor-plan-legend.png",
+      "title": "Occupancy legend",
+      "use": "Available / Booked / Active / Ended.",
+      "viewport": "element"
+    },
+    {
+      "file": "11-floor-plan-pin-calendar.png",
+      "title": "Pin → room calendar",
+      "use": "Click a pin, see that room’s week, Book this Room.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "12-floor-plan-calendar-room-tab.png",
+      "title": "Calendar room tabs",
+      "use": "Switch rooms inside the popover.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "13-booking-from-pin.png",
+      "title": "Booking form prefilled from pin",
+      "use": "Room / date carried from the floor plan.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "14-booking-form.png",
+      "title": "Booking form",
+      "use": "Full request form. Confirmed immediately when submitted.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "15-booking-form-filled.png",
+      "title": "Booking form filled",
+      "use": "Realistic demo data for the site.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "16-booking-form-calendar-modal.png",
+      "title": "In-form booking calendar",
+      "use": "Check the week before submitting.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "17-booking-overlap-error.png",
+      "title": "Overlap blocked",
+      "use": "Collision check — cannot double-book a room.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "18-booking-confirmed-code.png",
+      "title": "Booking confirmed — 5-digit code",
+      "use": "The payoff screen. Large access code + summary.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "19-booking-code-copied.png",
+      "title": "Code copied",
+      "use": "Copy-to-clipboard on the door code.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "20-booking-code-digits.png",
+      "title": "Access code digits (crop)",
+      "use": "Hero crop — five large digits.",
+      "viewport": "element"
+    },
+    {
+      "file": "21-my-bookings.png",
+      "title": "My Bookings — week calendar",
+      "use": "Colour by room, 07:00–23:00 week view.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "22-my-bookings-sidebar.png",
+      "title": "My Bookings sidebar",
+      "use": "Floor plan + claims from the same home.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "23-my-bookings-detail.png",
+      "title": "Booking detail popup",
+      "use": "Status, code, room, time from the week grid.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "24-my-bookings-embedded-floorplan.png",
+      "title": "Floor plan inside My Bookings",
+      "use": "Same map, launched from the dashboard.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "25-qr-generator-1001.png",
+      "title": "Room QR — 1001",
+      "use": "Printable door sticker. URL is /roomcode?roomid=.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "26-qr-card-1001.png",
+      "title": "QR card (crop)",
+      "use": "Sticker / print asset.",
+      "viewport": "element"
+    },
+    {
+      "file": "27-qr-generator-1003.png",
+      "title": "Room QR — 1003",
+      "use": "Same generator, different room.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "28-qr-generator-1005.png",
+      "title": "Room QR — 1005",
+      "use": "Full room set for facilities.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "29-roomcode-missing-id.png",
+      "title": "Door scan — no room id",
+      "use": "Edge: QR missing roomid.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "30-roomcode-no-active-booking.png",
+      "title": "Door — no booking right now",
+      "use": "Honest empty state at the door.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "31-roomcode-keypad.png",
+      "title": "Door keypad",
+      "use": "After scanning the wall QR. 5-digit entry.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "32-roomcode-keypad-card.png",
+      "title": "Keypad card (crop)",
+      "use": "Phone-kiosk crop.",
+      "viewport": "element"
+    },
+    {
+      "file": "33-roomcode-partial-code.png",
+      "title": "Code entry in progress",
+      "use": "Auto-advance across boxes.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "34-roomcode-wrong-code.png",
+      "title": "Wrong code — shake / red",
+      "use": "Gimmick: fail state at the door.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "35-roomcode-access-granted.png",
+      "title": "Access granted",
+      "use": "Code matched. Check in to start the meeting.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "36-roomcode-checkin-overlay.png",
+      "title": "Check-in success overlay",
+      "use": "Booked → Active. Room is now in meeting.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "37-roomcode-checked-in.png",
+      "title": "Checked in — meeting live",
+      "use": "Check Out is the only next action.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "40-approvals.png",
+      "title": "Pending approvals",
+      "use": "Manager inbox for PEN bookings.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "41-approvals-pending-detail.png",
+      "title": "Approve / reject a booking",
+      "use": "Comment + Approve / Reject.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "42-approvals-all-bookings.png",
+      "title": "All bookings (facilities)",
+      "use": "Status badges across the office.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "43-approvals-booking-record.png",
+      "title": "Facilities booking record",
+      "use": "Read-only detail when not pending.",
+      "viewport": "1920x1080"
+    },
+    {
+      "file": "m01-login.png",
+      "title": "Login (mobile)",
+      "use": "Phone-sized auth.",
+      "viewport": "390x844"
+    },
+    {
+      "file": "m02-floor-plan.png",
+      "title": "Floor plan (mobile)",
+      "use": "Map on a phone — expect tight layout.",
+      "viewport": "390x844"
+    },
+    {
+      "file": "m03-booking-form.png",
+      "title": "Booking form (mobile)",
+      "use": "Form stacked on phone.",
+      "viewport": "390x844"
+    },
+    {
+      "file": "m05-my-bookings.png",
+      "title": "My Bookings (mobile)",
+      "use": "Week grid on a phone.",
+      "viewport": "390x844"
+    },
+    {
+      "file": "m06-qr-generator.png",
+      "title": "QR generator (mobile)",
+      "use": "Facilities can generate from a phone.",
+      "viewport": "390x844"
+    },
+    {
+      "file": "m07-roomcode-keypad.png",
+      "title": "Door keypad (mobile)",
+      "use": "This is the scan-the-wall moment.",
+      "viewport": "390x844"
+    },
+    {
+      "file": "m08-roomcode-wrong.png",
+      "title": "Wrong code (mobile)",
+      "use": "Shake / red on a phone.",
+      "viewport": "390x844"
+    },
+    {
+      "file": "m10-roomcode-access-granted.png",
+      "title": "Access granted (mobile)",
+      "use": "Code matched on a phone.",
+      "viewport": "390x844"
+    },
+    {
+      "file": "m11-roomcode-checkin.png",
+      "title": "Check-in overlay (mobile)",
+      "use": "Booked → Active on a phone.",
+      "viewport": "390x844"
+    },
+    {
+      "file": "m09-roomcode-checked-in.png",
+      "title": "Already in meeting (mobile)",
+      "use": "Active booking at the door.",
+      "viewport": "390x844"
+    }
+  ]
+}

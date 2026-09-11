@@ -1,0 +1,321 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-02T10:45:00.000Z",
+  "title": "Design System: FDS Solutions Limited",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Focal Cyan",
+        "canonical": "#11b8f5",
+        "tonalRamp": ["#043044", "#06506e", "#0879a3", "#11b8f5", "#45c8f7", "#84dcfb", "#c4eefd", "#eaf8fe"]
+      },
+      "interactive": {
+        "role": "primary",
+        "displayName": "Interactive Cyan",
+        "canonical": "#11b8f5",
+        "tonalRamp": ["#043044", "#06506e", "#0879a3", "#11b8f5", "#45c8f7", "#84dcfb", "#c4eefd", "#eaf8fe"]
+      },
+      "secondary": {
+        "role": "secondary",
+        "displayName": "Desk Periwinkle",
+        "canonical": "#7f9bfa",
+        "tonalRamp": ["#1a2758", "#2a3d86", "#4d68d4", "#7f9bfa", "#9bb3fb", "#b9c9fc", "#d9e3fe", "#f0f4ff"]
+      },
+      "accent": {
+        "role": "tertiary",
+        "displayName": "Instrument Violet",
+        "canonical": "#514ef7",
+        "tonalRamp": ["#16145c", "#2622a0", "#3a37d4", "#514ef7", "#7a78f9", "#a4a2fb", "#d0cffe", "#eeedff"]
+      },
+      "text": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#01141a",
+        "tonalRamp": ["#01141a", "#0a2a33", "#1c4652", "#3d6a76", "#6a929c", "#9bb4bb", "#c9d7db", "#e8eef0"]
+      },
+      "background": {
+        "role": "neutral",
+        "displayName": "Canvas",
+        "canonical": "#f9fdff",
+        "tonalRamp": ["#6a7a82", "#8a9aa2", "#a8b8c0", "#c5d4db", "#dce8ee", "#edf6fa", "#f9fdff", "#ffffff"]
+      },
+      "ice": {
+        "role": "neutral",
+        "displayName": "Ice Ground",
+        "canonical": "#f6fbff",
+        "tonalRamp": ["#5c7382", "#7d93a0", "#9db3be", "#bdd0d9", "#d7e6ee", "#e8f3f9", "#f6fbff", "#ffffff"]
+      },
+      "navy": {
+        "role": "neutral",
+        "displayName": "Navy Band",
+        "canonical": "#071427",
+        "tonalRamp": ["#071427", "#0c2444", "#163a66", "#2a5a8a", "#4a7eac", "#7aa3c4", "#b3c9da", "#e4eef5"]
+      },
+      "utility-navy": {
+        "role": "neutral",
+        "displayName": "Utility Navy",
+        "canonical": "#0a1f44",
+        "tonalRamp": ["#0a1f44", "#122c5c", "#1c3f7a", "#2a5aa0", "#4a7cc4", "#7aa0d4", "#b3c6e4", "#e4ebf5"]
+      },
+      "enquiry-navy": {
+        "role": "neutral",
+        "displayName": "Enquiry Navy",
+        "canonical": "#294877",
+        "tonalRamp": ["#102033", "#1a3354", "#294877", "#3d6496", "#5d84b0", "#8aa8c8", "#c0d0e0", "#e8eef4"]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "White Plate",
+        "canonical": "#ffffff",
+        "tonalRamp": ["#6b7280", "#9ca3af", "#d1d5db", "#e5e7eb", "#f1f5f9", "#f8fafc", "#fcfdfe", "#ffffff"]
+      },
+      "chrome-bar": {
+        "role": "neutral",
+        "displayName": "Chrome Bar",
+        "canonical": "#f4f7fa",
+        "tonalRamp": ["#6b7680", "#8b959e", "#b0b8c0", "#cfd5db", "#e2e7ec", "#eef2f5", "#f4f7fa", "#ffffff"]
+      },
+      "chrome-well": {
+        "role": "neutral",
+        "displayName": "Chrome Well",
+        "canonical": "#eef4f8",
+        "tonalRamp": ["#5f6e78", "#7f8e98", "#a3b2bc", "#c5d2da", "#d9e4ea", "#e5eef3", "#eef4f8", "#ffffff"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Contact and flagship titles. Inter 700, tracking-tight."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Product-page h1. One cyan accent span on the key phrase."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Section h2 and card titles."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Leads and section copy in ink at reduced opacity."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Nav items and compact UI labels. Form captions are 14px semibold without forced uppercase."
+      }
+    },
+    "shadows": [
+      {
+        "name": "plate-rest",
+        "value": "0 18px 60px rgba(1,20,26,0.06)",
+        "purpose": "White cards resting on ice."
+      },
+      {
+        "name": "chrome-lift",
+        "value": "0 28px 80px rgba(1,20,26,0.12)",
+        "purpose": "Browser frames around product shots."
+      },
+      {
+        "name": "cyan-bloom",
+        "value": "0 12px 40px rgba(17,184,245,0.12)",
+        "purpose": "Card hover and cyan CTA presence."
+      },
+      {
+        "name": "cta-bloom",
+        "value": "0 20px 40px rgba(17,184,245,0.20)",
+        "purpose": "Primary marketing CTA rest."
+      },
+      {
+        "name": "nav-glass",
+        "value": "0 12px 44px -10px rgba(10,31,68,0.22), inset 0 1px 0 rgba(255,255,255,0.85)",
+        "purpose": "Fixed pill header."
+      },
+      {
+        "name": "menu",
+        "value": "0 28px 90px rgba(1,20,26,0.22)",
+        "purpose": "Solutions dropdown plate."
+      },
+      {
+        "name": "navy-chrome",
+        "value": "0 28px 80px rgba(0,0,0,0.35)",
+        "purpose": "Chrome frames sitting on navy bands."
+      },
+      {
+        "name": "focus-halo",
+        "value": "0 0 0 4px rgba(17,184,245,0.12)",
+        "purpose": "Text field focus."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-standard",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "Nav swipe, pagination, and explicit product fades."
+      },
+      {
+        "name": "duration-color",
+        "value": "200ms",
+        "purpose": "Link and color transitions."
+      },
+      {
+        "name": "duration-ui",
+        "value": "300ms",
+        "purpose": "Hover on pills, cards, and enquiry."
+      },
+      {
+        "name": "cta-hover-scale",
+        "value": "1.02",
+        "purpose": "Primary marketing CTA hover."
+      },
+      {
+        "name": "cta-tap-scale",
+        "value": "0.98",
+        "purpose": "Primary marketing CTA press."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" },
+      { "name": "container", "value": "80rem" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Rounded-full Focal cyan capsule for marketing and product-page enquiry.",
+      "html": "<button class=\"ds-btn-primary\" type=\"button\">Enquire now</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: #11b8f5; color: #ffffff; padding: 16px 32px; border: none; border-radius: 9999px; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 14px; font-weight: 700; line-height: 1.25; letter-spacing: -0.025em; box-shadow: 0 20px 40px rgba(17,184,245,0.20); cursor: pointer; transition: background-color 300ms cubic-bezier(0.22, 1, 0.36, 1), transform 200ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 300ms cubic-bezier(0.22, 1, 0.36, 1); } .ds-btn-primary:hover { background: #294877; transform: scale(1.02); box-shadow: 0 12px 36px rgba(41,72,119,0.45); } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px rgba(17,184,245,0.70); } .ds-btn-primary:active { transform: scale(0.98); }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "White capsule with hairline ink border; cyan label on hover.",
+      "html": "<button class=\"ds-btn-secondary\" type=\"button\">See the flow</button>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: #ffffff; color: rgba(1,20,26,0.80); padding: 16px 32px; border: 1px solid rgba(1,20,26,0.12); border-radius: 9999px; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 14px; font-weight: 700; line-height: 1.25; cursor: pointer; transition: border-color 200ms ease, color 200ms ease; } .ds-btn-secondary:hover { border-color: rgba(17,184,245,0.30); color: #11b8f5; } .ds-btn-secondary:focus-visible { outline: none; box-shadow: 0 0 0 2px rgba(17,184,245,0.70); }"
+    },
+    {
+      "name": "Inverse Button",
+      "kind": "button",
+      "refersTo": "button-inverse",
+      "description": "White capsule on a cyan enquiry band.",
+      "html": "<button class=\"ds-btn-inverse\" type=\"button\">Talk to FDS</button>",
+      "css": ".ds-btn-inverse { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: #ffffff; color: #11b8f5; padding: 16px 32px; border: none; border-radius: 9999px; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; box-shadow: 0 20px 25px rgba(1,20,26,0.10); cursor: pointer; transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1); } .ds-btn-inverse:hover { transform: scale(1.02); } .ds-btn-inverse:focus-visible { outline: none; box-shadow: 0 0 0 2px rgba(255,255,255,0.80); } .ds-btn-inverse:active { transform: scale(0.98); }"
+    },
+    {
+      "name": "Enquiry Button",
+      "kind": "button",
+      "refersTo": "button-enquiry",
+      "description": "Nav enquiry capsule: cyan at rest, enquiry navy on hover.",
+      "html": "<button class=\"ds-btn-enquiry\" type=\"button\">Enquiry</button>",
+      "css": ".ds-btn-enquiry { display: inline-flex; align-items: center; justify-content: center; background: #11b8f5; color: #ffffff; padding: 12px 32px; border: none; border-radius: 9999px; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; box-shadow: 0 4px 6px rgba(17,184,245,0.25); cursor: pointer; transition: background-color 300ms ease, box-shadow 300ms ease; } .ds-btn-enquiry:hover { background: #294877; box-shadow: 0 12px 36px rgba(41,72,119,0.45); } .ds-btn-enquiry:focus-visible { outline: none; box-shadow: 0 0 0 2px rgba(10,31,68,0.30); }"
+    },
+    {
+      "name": "Form Submit",
+      "kind": "button",
+      "refersTo": "button-form",
+      "description": "Full-width 16px-radius submit on the contact plate—exception to the capsule rule.",
+      "html": "<button class=\"ds-btn-form\" type=\"submit\">Send message</button>",
+      "css": ".ds-btn-form { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; height: 56px; background: #11b8f5; color: #ffffff; padding: 0 24px; border: none; border-radius: 16px; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 16px; font-weight: 700; box-shadow: 0 18px 45px rgba(17,184,245,0.28); cursor: pointer; transition: background-color 300ms ease, box-shadow 300ms ease; } .ds-btn-form:hover { background: #0a1f44; box-shadow: 0 22px 55px rgba(10,31,68,0.38); } .ds-btn-form:focus-visible { outline: none; box-shadow: 0 0 0 2px rgba(17,184,245,0.70); }"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input-text",
+      "description": "White 16px-radius field with cyan border and halo on focus.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-field-label\">Work email</span><input class=\"ds-input\" type=\"email\" placeholder=\"name@organisation.hk\" /></label>",
+      "css": ".ds-field { display: block; font-family: Inter, ui-sans-serif, system-ui, sans-serif; } .ds-field-label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: rgba(1,20,26,0.70); } .ds-input { width: 100%; height: 52px; padding: 0 16px; background: #ffffff; color: #01141a; border: 1px solid rgba(1,20,26,0.10); border-radius: 16px; font-family: inherit; font-size: 14px; font-weight: 500; outline: none; transition: border-color 200ms ease, box-shadow 200ms ease; } .ds-input::placeholder { color: rgba(1,20,26,0.30); } .ds-input:hover { border-color: rgba(1,20,26,0.16); } .ds-input:focus, .ds-input:focus-visible { border-color: rgba(17,184,245,0.50); box-shadow: 0 0 0 4px rgba(17,184,245,0.12); }"
+    },
+    {
+      "name": "Nav Pill",
+      "kind": "nav",
+      "refersTo": "nav-pill",
+      "description": "Frosted white capsule header with uppercase links and cyan enquiry.",
+      "html": "<nav class=\"ds-nav\"><span class=\"ds-nav-brand\">FDS</span><a class=\"ds-nav-link\" href=\"#\">Home</a><a class=\"ds-nav-link\" href=\"#\">Solutions</a><button class=\"ds-nav-enquiry\" type=\"button\">Enquiry</button></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; gap: 8px; padding: 12px 28px; background: rgba(255,255,255,0.80); border: 1px solid rgba(255,255,255,0.15); border-radius: 9999px; box-shadow: 0 12px 44px -10px rgba(10,31,68,0.22), inset 0 1px 0 rgba(255,255,255,0.85); font-family: Inter, ui-sans-serif, system-ui, sans-serif; } .ds-nav-brand { margin-right: auto; font-size: 14px; font-weight: 700; letter-spacing: -0.025em; color: #01141a; } .ds-nav-link { padding: 8px 16px; font-size: 14px; font-weight: 600; letter-spacing: -0.025em; text-transform: uppercase; text-decoration: none; color: rgba(1,20,26,0.80); transition: color 200ms ease; } .ds-nav-link:hover, .ds-nav-link:focus-visible { color: #11b8f5; outline: none; } .ds-nav-enquiry { margin-left: 8px; background: #11b8f5; color: #ffffff; padding: 12px 32px; border: none; border-radius: 9999px; font-family: inherit; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; box-shadow: 0 4px 6px rgba(17,184,245,0.25); cursor: pointer; } .ds-nav-enquiry:hover { background: #294877; } .ds-nav-enquiry:focus-visible { outline: none; box-shadow: 0 0 0 2px rgba(17,184,245,0.70); }"
+    },
+    {
+      "name": "Surface Card",
+      "kind": "card",
+      "refersTo": "card-surface",
+      "description": "White 24px plate on ice with hairline ink border and soft navy shadow.",
+      "html": "<article class=\"ds-card\"><h3 class=\"ds-card-title\">Document Management</h3><p class=\"ds-card-body\">Governed capture, search, and records for Hong Kong programmes.</p></article>",
+      "css": ".ds-card { background: #ffffff; color: #01141a; padding: 28px 36px; border: 1px solid rgba(1,20,26,0.06); border-radius: 24px; box-shadow: 0 18px 60px rgba(1,20,26,0.06); font-family: Inter, ui-sans-serif, system-ui, sans-serif; transition: transform 300ms ease, box-shadow 300ms ease; } .ds-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(17,184,245,0.12); } .ds-card-title { margin: 0; font-size: 18px; font-weight: 700; letter-spacing: -0.025em; } .ds-card-body { margin: 8px 0 0; font-size: 14px; line-height: 1.6; color: rgba(1,20,26,0.60); }"
+    },
+    {
+      "name": "Browser Chrome",
+      "kind": "custom",
+      "refersTo": "chrome-frame",
+      "description": "Lifted browser frame for Focal product shots: traffic lights, caption, ice well.",
+      "html": "<figure class=\"ds-chrome\"><div class=\"ds-chrome-bar\"><span class=\"ds-chrome-dot ds-chrome-dot--close\"></span><span class=\"ds-chrome-dot ds-chrome-dot--min\"></span><span class=\"ds-chrome-dot ds-chrome-dot--max\"></span><span class=\"ds-chrome-caption\">room-booking</span></div><div class=\"ds-chrome-well\"></div></figure>",
+      "css": ".ds-chrome { margin: 0; overflow: hidden; background: #ffffff; border: 1px solid rgba(1,20,26,0.08); border-radius: 1.75rem; box-shadow: 0 28px 80px rgba(1,20,26,0.12); font-family: Inter, ui-sans-serif, system-ui, sans-serif; } .ds-chrome-bar { display: flex; align-items: center; gap: 6px; padding: 10px 16px; background: #f4f7fa; border-bottom: 1px solid rgba(1,20,26,0.06); } .ds-chrome-dot { width: 10px; height: 10px; border-radius: 9999px; } .ds-chrome-dot--close { background: #ff5f57; } .ds-chrome-dot--min { background: #febc2e; } .ds-chrome-dot--max { background: #28c840; } .ds-chrome-caption { margin-left: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10px; font-weight: 500; letter-spacing: 0.025em; color: rgba(1,20,26,0.35); } .ds-chrome-well { height: 140px; background: #eef4f8; }"
+    },
+    {
+      "name": "Product Chip",
+      "kind": "chip",
+      "refersTo": "chip-product",
+      "description": "Cyan-washed capsule naming a Focal product on a hero—not a section kicker.",
+      "html": "<span class=\"ds-chip\">Focal Room Booking</span>",
+      "css": ".ds-chip { display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px; background: rgba(17,184,245,0.10); color: #11b8f5; border: 1px solid rgba(17,184,245,0.20); border-radius: 9999px; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Design to Simplify as a cyan-on-ice systems-integrator desk",
+    "overview": "This is the public desk of FDS Solutions Limited: a Hong Kong enterprise and government systems integrator with an owned Focal product suite. The room is ice-white and quiet. Cyan is the instrument on the desk—the enquiry pill, the interactive hover, the one accent word in a headline—not a consumer-SaaS glow and not a generic agency purple wash. Voice stays professional, governed, and low-drama. The binding line is Design to Simplify.\n\nDensity is scannable rather than sparse: a buyer should read who FDS is and what a Focal product does without decoding a concept poster. Product evidence sits in lifted chrome plates (browser frames around real UI). Marketing actions are capsules. Page ground is ice; navy is a band, not the default field.\n\nConfirmed visual rejections: government or client logos until consent exists; generic agency purple-to-blue gradients; recasting FDS as consumer SaaS or a creative shop.",
+    "keyCharacteristics": [
+      "Inter only, bold tracking-tight headlines, cyan accent word inside the title",
+      "Ice page ground with lifted white and chrome plates",
+      "Rounded-full primary CTAs; browser-chrome product shots",
+      "Cyan for action; navy for utility chrome and dark product bands",
+      "Trilingual surfaces (English, Traditional Chinese, Simplified Chinese) inherit the same type ramp and color roles"
+    ],
+    "rules": [
+      {
+        "name": "The Cyan Voice Rule",
+        "body": "Focal cyan is the only loud color. It marks CTAs, interactive states, and at most one accent span in a headline. Ice, white, and navy carry area.",
+        "section": "colors"
+      },
+      {
+        "name": "The Ice Desk Rule",
+        "body": "Page ground is ice or canvas. Do not fill a section with a purple-to-blue agency gradient.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Family Rule",
+        "body": "Inter is the only typeface. Weight and size carry hierarchy. Do not introduce a display serif or a second sans.",
+        "section": "typography"
+      },
+      {
+        "name": "The Accent Word Rule",
+        "body": "A headline may color one phrase in Focal cyan. Do not cyan the entire title.",
+        "section": "typography"
+      },
+      {
+        "name": "The Lifted Plate Rule",
+        "body": "White and chrome plates lift off ice with large, soft navy-tinted shadows. Hard offset drop-shadows are not this world. Hover tints the lift cyan; it does not invent a new silhouette.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do set page ground to ice or canvas and lift white/chrome plates off it.",
+      "Do use Inter at the recorded ramp, with a single cyan accent span in product headlines.",
+      "Do make marketing and nav CTAs rounded-full cyan capsules; put product screenshots in browser chrome frames.",
+      "Do keep navy for the utility bar and dark product bands, not as a purple-tinted page fill.",
+      "Do ship every visitor-facing surface in `en`, `zh-Hant`, and `zh-Hans` on the same layout.",
+      "Do treat new Focal product pages as extensions of this desk—same tokens, chrome, and capsules."
+    ],
+    "donts": [
+      "Don't display government or client logos until consent is confirmed.",
+      "Don't fill heroes or sections with generic agency purple-to-blue gradients.",
+      "Don't recast the site as consumer SaaS (playful display type, sticker UI, unearned metrics).",
+      "Don't invent a second palette or type family for an individual Focal product.",
+      "Don't square off primary CTAs or present product UI as unframed PDFs or spreadsheet dumps.",
+      "Don't use Unsplash or stock photography as if it were FDS or client evidence."
+    ]
+  }
+}
