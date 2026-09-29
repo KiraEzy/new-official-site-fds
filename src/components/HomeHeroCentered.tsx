@@ -46,7 +46,11 @@ export function HomeHeroCentered({
           <motion.p {...entrance(0.14)} className="centered-hero-lead">{lead}</motion.p>
 
           <motion.div {...entrance(0.22)} className="centered-hero-actions">
-            <button type="button" className="centered-hero-cta" onClick={onDiscoverClick}>
+            <button
+              type="button"
+              className="centered-hero-cta inline-flex items-center justify-center gap-2.5 rounded-full bg-interactive px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-interactive/25 transition-colors hover:bg-[#294877] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive/50 focus-visible:ring-offset-2"
+              onClick={onDiscoverClick}
+            >
               {ctaSecondary}
               <ArrowRight size={17} strokeWidth={1.8} aria-hidden="true" />
             </button>

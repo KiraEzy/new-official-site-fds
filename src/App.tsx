@@ -44,7 +44,18 @@ import { ArrowRight, ArrowUp, X, Globe, Users, CheckCircle2, Database, Cpu, Phon
 import { HomeHero } from './components/HomeHero';
 import { HomeHeroAlternative } from './components/HomeHeroAlternative';
 import { HomeHeroCentered } from './components/HomeHeroCentered';
+import { HomeHeroRibbon } from './components/HomeHeroRibbon';
+import { HomeHeroRings } from './components/HomeHeroRings';
+import { parseRibbonStripMode, type RibbonStripMode } from './components/ribbonStripMode';
 import '@xyflow/react/dist/style.css';
+
+type HeroLayout = 'original' | 'alternative' | 'centered' | 'ribbon' | 'rings';
+
+function parseHeroLayout(value: string | null): HeroLayout {
+  return value === 'original' || value === 'alternative' || value === 'ribbon' || value === 'rings'
+    ? value
+    : 'centered';
+}
 
 const FESTIVAL_BAR_HEIGHT = 56;
 
@@ -729,10 +740,12 @@ export default function App() {
   const [forceNavbarTop, setForceNavbarTop] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [showStyleControls, setShowStyleControls] = useState(false);
-  const [heroLayout, setHeroLayout] = useState<'original' | 'alternative' | 'centered'>(() => {
-    const requested = new URLSearchParams(window.location.search).get('hero');
-    return requested === 'original' || requested === 'alternative' ? requested : 'centered';
-  });
+  const [heroLayout, setHeroLayout] = useState<HeroLayout>(() =>
+    parseHeroLayout(new URLSearchParams(window.location.search).get('hero'))
+  );
+  const [ribbonStrip, setRibbonStrip] = useState<RibbonStripMode>(() =>
+    parseRibbonStripMode(new URLSearchParams(window.location.search).get('strip'))
+  );
   const [showBentoIcons, setShowBentoIcons] = useState(true);
   const [alignContactInfoBottom, setAlignContactInfoBottom] = useState(true);
   const [hideEnquiryButton, setHideEnquiryButton] = useState(false);
@@ -828,6 +841,11 @@ export default function App() {
 
     if (activePage !== 'home') {
       snapLog('listeners not attached', { reason: 'activePage !== home', activePage });
+      return;
+    }
+
+    if (heroLayout === 'centered' || heroLayout === 'rings') {
+      snapLog('listeners not attached', { reason: 'hero has no scroll snap', heroLayout });
       return;
     }
 
@@ -1005,7 +1023,7 @@ export default function App() {
         window.clearTimeout(snapTimeoutRef.current);
       }
     };
-  }, [activePage]);
+  }, [activePage, heroLayout]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -1027,7 +1045,55 @@ export default function App() {
   };
 
   const newsArticleSlug = newsSlugFromHash(window.location.hash);
-  const SelectedHomeHero = { original: HomeHero, alternative: HomeHeroAlternative, centered: HomeHeroCentered }[heroLayout];
+  const SelectedHomeHero = {
+    original: HomeHero,
+    alternative: HomeHeroAlternative,
+    centered: HomeHeroCentered,
+    rings: HomeHeroRings
+  }[heroLayout === 'ribbon' ? 'centered' : heroLayout];
+  const homeHeroProps = {
+    heroRef,
+    heroNavPortalRef: setHeroNavPortalEl,
+    title: String(home.heroTitle ?? ''),
+    lead: String(home.heroLead ?? ''),
+    ctaSecondary: String(home.heroCtaSecondary ?? ''),
+    imageSrc: String(home.heroImageSrc ?? ''),
+    imageAlt: String(home.heroImageAlt ?? ''),
+    cards: [
+      {
+        title: String(home.heroCard0Title ?? ''),
+        href: LATEST_NEWS_HASH,
+        imageSrc: String(home.heroCard0ImageSrc ?? ''),
+        imageAlt: String(home.heroCard0ImageAlt ?? ''),
+        onNavigate: () => {
+          newsSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      },
+      {
+        title: String(home.heroCard1Title ?? ''),
+        href: SERVICES_HASH,
+        imageSrc: String(home.heroCard1ImageSrc ?? ''),
+        imageAlt: String(home.heroCard1ImageAlt ?? '')
+      },
+      {
+        title: String(home.heroCard2Title ?? ''),
+        href: PROFILE_HASH,
+        imageSrc: String(home.heroCard2ImageSrc ?? ''),
+        imageAlt: String(home.heroCard2ImageAlt ?? '')
+      },
+      {
+        title: String(home.heroCard3Title ?? ''),
+        href: CONTACT_US_HASH,
+        imageSrc: String(home.heroCard3ImageSrc ?? ''),
+        imageAlt: String(home.heroCard3ImageAlt ?? '')
+      }
+    ],
+    onDiscoverClick: () => {
+      bentoSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+  const isRibbonHome = activePage === 'home' && heroLayout === 'ribbon';
+  const hideHomeFestivalBar = isRibbonHome || (activePage === 'home' && heroLayout === 'rings');
   const scrolledSectionTopPad = showFestivalBar
     ? `calc(11rem + ${FESTIVAL_BAR_HEIGHT}px)`
     : '11rem';
@@ -1035,7 +1101,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-background font-sans">
       <AnimatePresence>
-        {showFestivalBar && (
+        {showFestivalBar && !hideHomeFestivalBar && (
           <motion.div
             key="festival-bar"
             initial={{ height: 0 }}
@@ -1069,52 +1135,16 @@ export default function App() {
         colorProfile={colorProfile}
         navLayout={navLayoutDemo}
         heroNavPortalEl={activePage === 'home' ? heroNavPortalEl : null}
-        topOffset={showFestivalBar ? FESTIVAL_BAR_HEIGHT : 0}
+        topOffset={showFestivalBar && !hideHomeFestivalBar ? FESTIVAL_BAR_HEIGHT : 0}
       />
 
       {activePage === 'home' ? (
       <main>
-        <SelectedHomeHero
-          heroRef={heroRef}
-          heroNavPortalRef={setHeroNavPortalEl}
-          title={String(home.heroTitle ?? '')}
-          lead={String(home.heroLead ?? '')}
-          ctaSecondary={String(home.heroCtaSecondary ?? '')}
-          imageSrc={String(home.heroImageSrc ?? '')}
-          imageAlt={String(home.heroImageAlt ?? '')}
-          cards={[
-            {
-              title: String(home.heroCard0Title ?? ''),
-              href: LATEST_NEWS_HASH,
-              imageSrc: String(home.heroCard0ImageSrc ?? ''),
-              imageAlt: String(home.heroCard0ImageAlt ?? ''),
-              onNavigate: () => {
-                newsSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }
-            },
-            {
-              title: String(home.heroCard1Title ?? ''),
-              href: SERVICES_HASH,
-              imageSrc: String(home.heroCard1ImageSrc ?? ''),
-              imageAlt: String(home.heroCard1ImageAlt ?? '')
-            },
-            {
-              title: String(home.heroCard2Title ?? ''),
-              href: PROFILE_HASH,
-              imageSrc: String(home.heroCard2ImageSrc ?? ''),
-              imageAlt: String(home.heroCard2ImageAlt ?? '')
-            },
-            {
-              title: String(home.heroCard3Title ?? ''),
-              href: CONTACT_US_HASH,
-              imageSrc: String(home.heroCard3ImageSrc ?? ''),
-              imageAlt: String(home.heroCard3ImageAlt ?? '')
-            }
-          ]}
-          onDiscoverClick={() => {
-            bentoSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }}
-        />
+        {heroLayout === 'ribbon' ? (
+          <HomeHeroRibbon {...homeHeroProps} stripMode={ribbonStrip} />
+        ) : (
+          <SelectedHomeHero {...homeHeroProps} />
+        )}
 
         {/* Latest News */}
         <section
@@ -1563,7 +1593,7 @@ export default function App() {
             <select
               value={heroLayout}
               onChange={(event) => {
-                const next = event.target.value as 'original' | 'alternative' | 'centered';
+                const next = parseHeroLayout(event.target.value);
                 setHeroLayout(next);
                 const url = new URL(window.location.href);
                 url.searchParams.set('hero', next);
@@ -1572,11 +1602,37 @@ export default function App() {
               aria-label={demo.heroLayoutLabel}
               className="mt-1 w-full cursor-pointer rounded-xl border border-white/15 bg-[#0d1828] px-3 py-2.5 text-sm font-medium text-white outline-none focus-visible:ring-2 focus-visible:ring-interactive"
             >
+              <option value="rings">{t('home.heroRingsLayout')}</option>
+              <option value="ribbon">{t('home.heroRibbonLayout')}</option>
               <option value="centered">{demo.heroLayoutCentered}</option>
               <option value="alternative">{demo.heroLayoutAlternative}</option>
               <option value="original">{demo.heroLayoutOriginal}</option>
             </select>
           </label>
+
+          {heroLayout === 'ribbon' ? (
+          <label className="mb-3 block rounded-2xl border border-white/10 bg-white/8 p-4">
+            <span className="block text-sm font-semibold text-interactive">{demo.ribbonStripLabel}</span>
+            <span className="mt-1 mb-2 block text-xs leading-5 text-white/55">{demo.ribbonStripHelp}</span>
+            <select
+              value={ribbonStrip}
+              onChange={(event) => {
+                const next = parseRibbonStripMode(event.target.value);
+                setRibbonStrip(next);
+                const url = new URL(window.location.href);
+                url.searchParams.set('strip', next);
+                window.history.replaceState(window.history.state, '', url);
+              }}
+              aria-label={demo.ribbonStripAria}
+              className="mt-1 w-full cursor-pointer rounded-xl border border-white/15 bg-[#0d1828] px-3 py-2.5 text-sm font-medium text-white outline-none focus-visible:ring-2 focus-visible:ring-interactive"
+            >
+              <option value="credentials">{demo.ribbonStripCredentials}</option>
+              <option value="products">{demo.ribbonStripProducts}</option>
+              <option value="partners">{demo.ribbonStripPartners}</option>
+              <option value="none">{demo.ribbonStripNone}</option>
+            </select>
+          </label>
+          ) : null}
 
           <label className="mb-3 block rounded-2xl border border-white/10 bg-white/8 p-4">
             <span className="block text-sm font-semibold text-interactive">{demo.navLayoutLabel}</span>
